@@ -18,6 +18,12 @@
 # include <string.h>
 # include <fcntl.h>
 
+typedef enum 	e_bool
+{
+	TRUE = 1,
+	FALSE = 0,
+}				t_bool;
+
 typedef struct	s_color
 {
 	unsigned char	r;

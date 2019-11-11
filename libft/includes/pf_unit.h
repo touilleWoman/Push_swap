@@ -18,12 +18,6 @@
 
 # define PRECISION_NULL -1
 
-typedef enum 	e_bool
-{
-	TRUE = 1,
-	FALSE = 0,
-}				t_bool;
-
 typedef	enum			e_unit_type
 {
 	TYPE_LTR = 1,
