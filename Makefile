@@ -6,7 +6,8 @@ CFLAGS ?= -Wall -Werror -Wextra
 
 NAME = checker
 
-SRCS_NAME = main_checker.c execute_instructions.c instructions.c
+SRCS_NAME = main_checker.c execute_instructions.c instructions.c \
+			instructions2.c\
 
 SRCS_PATH = ./srcs
 

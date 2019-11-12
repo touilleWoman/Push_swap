@@ -56,10 +56,10 @@ void		show_stack(t_stack *stk)
 t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len)
 {
 	t_stack	*stk;
-	// t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}
-	t_funs	funs[4] = {{SA, sa}, {SB, sb}, {PA, pa}, {PB, pb}};
+	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
+	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
+	};
 	int		index;
-
 
 	index = 0;
 	if (init_stack_succeed(tab, tab_len, &stk))
@@ -68,7 +68,7 @@ t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len)
 		show_stack(stk);
 		while (ins_lst != NULL)
 		{
-			while (index < 4)
+			while (index < INSTRUCTION_NB)
 			{
 				if (funs[index].ins == *(int*)(ins_lst->content))
 				{
@@ -80,10 +80,9 @@ t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len)
 			ins_lst = ins_lst->next;
 			index = 0;
 		}
-
 	}
 	else
-		ft_printf("cant init stack");
+		ft_putendl_fd("Init stack failed!", 2);
 	return (stk);
 
 }

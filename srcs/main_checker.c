@@ -96,7 +96,7 @@ void		check_instruction_then_convert(char *s, t_instruction *ins)
 		(s[1] == 'r' && s[2] == 0) ? (*ins = RR) : 0;
 		(s[1] == 'r' && s[2] == 'a' && s[3] == 0) ? (*ins = RRA) : 0;
 		(s[1] == 'r' && s[2] == 'b' && s[3] == 0) ? (*ins = RRB) : 0;
-		(s[1] == 'r' && s[2] == 'r' && s[3] == 0) ? (*ins = RRB) : 0;
+		(s[1] == 'r' && s[2] == 'r' && s[3] == 0) ? (*ins = RRR) : 0;
 	}
 }
 

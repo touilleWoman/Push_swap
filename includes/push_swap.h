@@ -51,10 +51,19 @@ t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len);
 void		show_tab(int *tab, int tab_len);
 void		show_stack(t_stack *stk);
 
+
 void		sa(t_stack **stk);
 void		sb(t_stack **stk);
+void		ss(t_stack **stk);
 void		pa(t_stack **stk);
 void		pb(t_stack **stk);
+void		ra(t_stack **stk);
+void		rb(t_stack **stk);
+void		rr(t_stack **stk);
+void		rra(t_stack **stk);
+void		rrb(t_stack **stk);
+void		rrr(t_stack **stk);
+
 
 
 

@@ -18,7 +18,7 @@ void		sa(t_stack **stk)
 	int		len;
 
 	len = (*stk)->a_len;
-	if (len >= 2)
+	if (len > 1)
 	{
 		ft_printf("execute sa\n");
 		tmp = (*stk)->a[len - 1];
@@ -33,7 +33,7 @@ void		sb(t_stack **stk)
 	int		len;
 
 	len = (*stk)->b_len;
-	if (len >= 2)
+	if (len > 1)
 	{
 		ft_printf("execute sb\n");
 		tmp = (*stk)->b[len - 1];
@@ -70,6 +70,3 @@ void		pb(t_stack **stk)
 		(*stk)->a_len--;
 	}
 }
-
-
-
