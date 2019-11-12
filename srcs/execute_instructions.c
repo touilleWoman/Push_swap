@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_commands.c                                 :+:      :+:    :+:   */
+/*   execute_instructions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/11 16:37:54 by jleblond          #+#    #+#             */
-/*   Updated: 2019/11/11 16:37:57 by jleblond         ###   ########.fr       */
+/*   Created: 2019/11/12 15:29:25 by jleblond          #+#    #+#             */
+/*   Updated: 2019/11/12 15:29:28 by jleblond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "push_swap.h"
 
 int			init_stack_succeed(int *tab, int tab_len, t_stack **stk)
@@ -51,13 +50,40 @@ void		show_stack(t_stack *stk)
 	ft_printf("-----\na   b\n");
 }
 
-t_stack		*execute_commands(char *commands, int *tab, int tab_len)
+
+
+
+t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len)
 {
 	t_stack	*stk;
+	// t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}
+	t_funs	funs[4] = {{SA, sa}, {SB, sb}, {PA, pa}, {PB, pb}};
+	int		index;
 
-	(void)commands;
+
+	index = 0;
 	if (init_stack_succeed(tab, tab_len, &stk))
+	{
+		ft_printf("original stack:\n");
 		show_stack(stk);
+		while (ins_lst != NULL)
+		{
+			while (index < 4)
+			{
+				if (funs[index].ins == *(int*)(ins_lst->content))
+				{
+					funs[index].f(&stk);
+					show_stack(stk);
+				}
+				index++;
+			}
+			ins_lst = ins_lst->next;
+			index = 0;
+		}
+
+	}
+	else
+		ft_printf("cant init stack");
 	return (stk);
 
 }

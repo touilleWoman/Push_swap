@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "push_swap.h"
 
 int		is_digit_string(const char *str)
@@ -44,14 +43,14 @@ int		args_check(int argc, char const **argv)
 	return (TRUE);
 }
 
-int		*parse(int argc, char const **argv)
+int		*parse_args(int argc, char const **argv)
 {
 	int	*tab;
 	int	i;
 	int	j;
 
 	tab = (int*)malloc(sizeof(int) * (argc - 1));
-	if (tab == NULL)
+	if (!tab)
 		return (0);
 	j = 1;
 	i = argc - 2;
@@ -77,55 +76,93 @@ void	show_tab(int *tab, int tab_len)
 	}
 }
 
-int		command_valid(char *s)
+void		check_instruction_then_convert(char *s, t_instruction *ins)
 {
-	if (ft_strcmp(s, "sa") == 0 || ft_strcmp(s, "sb") == 0 || ft_strcmp(s, "ss")
-		== 0 || ft_strcmp(s, "pa")== 0 || ft_strcmp(s, "pb") == 0 || ft_strcmp(s, "ra")
-		== 0 || ft_strcmp(s, "rb")== 0 || ft_strcmp(s, "rr")== 0 || ft_strcmp(s, "rra")
-		== 0 || ft_strcmp(s, "rrb") == 0 || ft_strcmp(s, "rrr") == 0)
-		return (TRUE);
-	else
-		return (FALSE);
-}
-
-int		read_command(char *commands)
-{
-	char *line;
-	char space[2];
-
-	space[0] = ' ';
-	space[1] = 0;
-	while (get_next_line(0, &line))
+	*ins = ERROR;
+	if (s[0] == 's')
 	{
-		if (command_valid(line) == FALSE)
-			return (FALSE);
-		ft_strcat(commands, line);
-		ft_strcat(commands, space);
+		(s[1] == 'a' && s[2] == 0) ? (*ins = SA) : 0;
+		(s[1] == 'b' && s[2] == 0) ? (*ins = SB) : 0;
 	}
-	return (TRUE);
-
+	else if (s[0] == 'p')
+	{
+		(s[1] == 'a' && s[2] == 0) ? (*ins = PA) : 0;
+		(s[1] == 'b' && s[2] == 0) ? (*ins = PB) : 0;
+	}
+	else if (s[0] == 'r')
+	{
+		(s[1] == 'a' && s[2] == 0) ? (*ins = RA) : 0;
+		(s[1] == 'b' && s[2] == 0) ? (*ins = RB) : 0;
+		(s[1] == 'r' && s[2] == 0) ? (*ins = RR) : 0;
+		(s[1] == 'r' && s[2] == 'a' && s[3] == 0) ? (*ins = RRA) : 0;
+		(s[1] == 'r' && s[2] == 'b' && s[3] == 0) ? (*ins = RRB) : 0;
+		(s[1] == 'r' && s[2] == 'r' && s[3] == 0) ? (*ins = RRB) : 0;
+	}
 }
 
+int			parse_instructions(t_list **lst)
+{
+	char				*line;
+	t_instruction		ins;
+	t_list				*new;
+	int					gnl_ret;
+	int					len;
+
+	while ((gnl_ret = get_next_line(0, &line)))
+	{
+		len = ft_strlen(line);
+		if ( len < 2 || len > 3 )
+			return (FALSE);
+		check_instruction_then_convert(line, &ins);
+		if (ins != ERROR)
+		{
+			new = ft_lstnew(&ins, sizeof(int));
+			ft_lstadd_bot(lst, new);
+		}
+		else
+			return (FALSE);
+	}
+	return (gnl_ret == -1 ? FALSE : TRUE);
+}
+
+void	print_lst(t_list *lst)
+{
+	int 	i = 0;
+	while (lst != NULL)
+	{
+		ft_printf("%d eme elem of ins list:%d\n", i, *((int*)(lst->content)));
+		lst = lst->next;
+		i++;
+	}
+}
+
+//convert instructions to int
 int 	main(int argc, char const **argv)
 {
 	int		i;
 	int		*tab;
-	char	commands[1000]; //if commands too long???
+	t_list	*ins_lst;
 
 	i = 0;
+	ins_lst = NULL;
 	if (argc >= 2 && args_check(argc, argv))
 	{
-		tab = parse(argc, argv);
-		// show_tab(tab, argc - 1);
-		if(read_command(commands) == FALSE)
+		tab = parse_args(argc, argv);
+		if (tab)
 		{
+			if(parse_instructions(&ins_lst))
+			{
+				// print_lst(ins_lst);
+				execute_instructions(ins_lst, tab, argc - 1);
+				return (0);
+			}
+			//Codes to add here:freee list
 			ft_putendl_fd("Error", 2);
 			return (0);
 		}
-		execute_commands(commands, tab, argc - 1);
-		// ft_printf("%s", commands);
-	}
-	else
 		ft_putendl_fd("Error", 2);
+		return (0);
+	}
+	ft_putendl_fd("Error", 2);
 	return (0);
 }

@@ -13,6 +13,10 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# define INSTRUCTION_NB 11
+
+#include "libft.h"
+
 typedef	struct	stack
 {
 	int		*a;
@@ -21,9 +25,37 @@ typedef	struct	stack
 	int		b_len;
 }				t_stack;
 
-void	show_tab(int *tab, int tab_len);
-t_stack		*execute_commands(char *commands, int *tab, int tab_len);
+typedef	enum	e_instruction
+{
+	ERROR = 0,
+	SA,
+	SB,
+	SS,
+	PA,
+	PB,
+	RA,
+	RB,
+	RR,
+	RRA,
+	RRB,
+	RRR,
+}				t_instruction;
+
+typedef struct		s_funs
+{
+	t_instruction	ins;
+	void			(*f)(t_stack**);
+}					t_funs;
+
+t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len);
+void		show_tab(int *tab, int tab_len);
 void		show_stack(t_stack *stk);
+
+void		sa(t_stack **stk);
+void		sb(t_stack **stk);
+void		pa(t_stack **stk);
+void		pb(t_stack **stk);
+
 
 
 
