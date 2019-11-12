@@ -30,7 +30,7 @@ void		check_order(t_stack *stk, int tab_len)
 
 void		usage_then_quit(void)
 {
-	ft_printf("Usage: ./checker [-v (optional):to show stack at every step] "
+	ft_printf("Usage: ./checker [-v (optional):to show stack at every step]\n "
 		"[a list of integer numbers seperated by space]\n");
 	exit(0);
 }
@@ -51,17 +51,17 @@ int			main(int argc, char const **argv)
 	int		*args;
 	t_list	*ins_lst;
 	t_stack	*stk;
-	char	flag;
+	char	flags;
 
 	ins_lst = NULL;
-	ft_bzero(&flag, sizeof(char));
+	flags = 0;
 	if (argc < 2)
 		usage_then_quit();
 	if (args_check(argc, argv) == FALSE)
 		error_freelst_exit(ins_lst);
-	args = parse_args(argc, argv);
-	if (args == NULL)
-		error_freelst_exit(ins_lst);
+	args = parse_args(argc, argv, &flags);
+	// if (args == NULL)
+	// 	error_freelst_exit(ins_lst);
 	if (parse_instructions(&ins_lst) == FALSE)
 		error_freelst_exit(ins_lst);
 	stk = execute_instructions(ins_lst, args, argc - 1);
