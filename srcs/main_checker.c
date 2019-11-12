@@ -151,18 +151,15 @@ int 	main(int argc, char const **argv)
 		if (tab)
 		{
 			if(parse_instructions(&ins_lst))
-			{
-				// print_lst(ins_lst);
 				execute_instructions(ins_lst, tab, argc - 1);
-				return (0);
-			}
-			//Codes to add here:freee list
-			ft_putendl_fd("Error", 2);
-			return (0);
+			else
+				//Codes to add here:free list
+				ft_putendl_fd("Error", 2);
 		}
-		ft_putendl_fd("Error", 2);
-		return (0);
+		else
+			ft_putendl_fd("Error", 2);
 	}
-	ft_putendl_fd("Error", 2);
+	else
+		ft_putendl_fd("Error", 2);
 	return (0);
 }
