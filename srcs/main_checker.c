@@ -136,12 +136,28 @@ void	print_lst(t_list *lst)
 	}
 }
 
-//convert instructions to int
+void	check_order(t_stack *stk, int tab_len)
+{
+	if (stk->b_len == 0 && stk->a_len == tab_len)
+	{
+		while (tab_len - 1)
+		{
+			if (stk->a[tab_len - 1] >= stk->a[tab_len - 2])
+				break;
+			tab_len--;
+		}
+		tab_len == 1 ? ft_printf("OK\n") : ft_printf("KO\n");
+	}
+	else
+		ft_printf("KO\n");
+}
+
 int 	main(int argc, char const **argv)
 {
 	int		i;
 	int		*tab;
 	t_list	*ins_lst;
+	t_stack	*stk;
 
 	i = 0;
 	ins_lst = NULL;
@@ -151,7 +167,10 @@ int 	main(int argc, char const **argv)
 		if (tab)
 		{
 			if(parse_instructions(&ins_lst))
-				execute_instructions(ins_lst, tab, argc - 1);
+			{
+				stk = execute_instructions(ins_lst, tab, argc - 1);
+				check_order(stk, argc - 1);
+			}
 			else
 				//Codes to add here:free list
 				ft_putendl_fd("Error", 2);
