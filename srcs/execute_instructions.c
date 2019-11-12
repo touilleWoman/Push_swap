@@ -12,14 +12,14 @@
 
 #include "push_swap.h"
 
-int			init_stack_succeed(int *tab, int tab_len, t_stack **stk)
+int			init_stack_succeed(int *args, int args_len, t_stack **stk)
 {
 	*stk = (t_stack*)malloc(sizeof(t_stack));
 	if (stk == NULL)
 		return (FALSE);
-	(*stk)->a = tab;
-	(*stk)->a_len = tab_len;
-	(*stk)->b = (int*)malloc(sizeof(int) * tab_len);
+	(*stk)->a = args;
+	(*stk)->a_len = args_len;
+	(*stk)->b = (int*)malloc(sizeof(int) * args_len);
 	if ((*stk)->b == NULL)
 		return (FALSE);
 	(*stk)->b_len = 0;
@@ -50,10 +50,7 @@ void		show_stack(t_stack *stk)
 	ft_printf("-----\na   b\n");
 }
 
-
-
-
-t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len)
+t_stack		*execute_instructions(t_list *ins_lst, int *args, int args_len)
 {
 	t_stack	*stk;
 	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
@@ -62,7 +59,7 @@ t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len)
 	int		index;
 
 	index = 0;
-	if (init_stack_succeed(tab, tab_len, &stk))
+	if (init_stack_succeed(args, args_len, &stk))
 	{
 		ft_printf("original stack:\n");
 		show_stack(stk);
@@ -84,5 +81,4 @@ t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len)
 	else
 		ft_putendl_fd("Init stack failed!", 2);
 	return (stk);
-
 }

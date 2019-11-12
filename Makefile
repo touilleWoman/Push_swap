@@ -1,13 +1,27 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jleblond <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/11/12 18:24:07 by jleblond          #+#    #+#              #
+#    Updated: 2019/11/12 18:24:10 by jleblond         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 .PHONY: all clean fclean re
 
 CC ?= gcc
 
 CFLAGS ?= -Wall -Werror -Wextra
 
-NAME = checker
+NAME_CK = checker
 
-SRCS_NAME = main_checker.c execute_instructions.c instructions.c \
-			instructions2.c instructions3.c\
+NAME_PS = push_swap
+
+SRCS_NAME = main_checker.c parse_instructions.c execute_instructions.c instructions.c \
+			instructions2.c instructions3.c parse_args.c list_related.c \
 
 SRCS_PATH = ./srcs
 
@@ -26,10 +40,10 @@ LIBFTA = ./libft/libft.a
 
 DEBUG =  -g -fsanitize=address
 
-all: $(NAME)
+all: $(NAME_CK)
 
-$(NAME): $(OBJ)
-	$(CC)  $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFTA) $(DEBUG)
+$(NAME_CK): $(OBJ)
+	$(CC)  $(CFLAGS) -o $(NAME_CK) $(OBJ) $(LIBFTA) $(DEBUG)
 
 %.o: %.c $(HEADER) $(LIBFTA)
 	$(CC) $(CFLAGS) -o $@ -c $< $(IFLAG)

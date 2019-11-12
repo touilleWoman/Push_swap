@@ -46,10 +46,16 @@ typedef struct		s_funs
 	t_instruction	ins;
 	void			(*f)(t_stack**);
 }					t_funs;
-
+int			args_check(int argc, char const **argv);
+int			*parse_args(int argc, char const **argv);
+int			parse_instructions(t_list **lst);
 t_stack		*execute_instructions(t_list *ins_lst, int *tab, int tab_len);
 void		show_tab(int *tab, int tab_len);
 void		show_stack(t_stack *stk);
+void		error_freelst_exit(t_list *lst);
+
+void		usage(void);
+void		free_list(t_list *lst);
 
 
 void		sa(t_stack **stk);
