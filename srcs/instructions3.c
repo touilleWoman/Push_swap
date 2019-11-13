@@ -17,7 +17,6 @@ void		ra(t_stack **stk, char *flags)
 	int		tmp;
 	int		len;
 
-
 	if ((*flags) & SHOW_INS)
 		ft_printf("ra\n");
 	len = (*stk)->a_len;

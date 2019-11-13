@@ -13,9 +13,13 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# define INSTRUCTION_NB 11
 
 # include "libft.h"
+
+# define INSTRUCTION_NB	11
+# define V_FLAG	1 << 0
+# define WRITE_IN_FILE	1 << 1
+# define SHOW_INS 1 << 2
 
 typedef	struct	stack
 {
@@ -42,9 +46,7 @@ typedef	enum	e_instruction
 }				t_instruction;
 
 
-# define	V_FLAG		1 << 0
-# define	C_FLAG		1 << 1
-# define	SHOW_INS	1 << 2
+
 
 typedef struct	s_funs
 {

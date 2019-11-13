@@ -36,7 +36,6 @@ void		usage_then_quit(void)
 }
 
 
-
 // oublie de verifier les doublons!!!???
 /*
 ** 	no need to free(stk->a), because stk->a == args
@@ -49,7 +48,6 @@ int			main(int argc, char const **argv)
 	t_stack	*stk;
 	char	flags;
 	int		nb_args;
-
 
 	ins_lst = NULL;
 	flags = 0;

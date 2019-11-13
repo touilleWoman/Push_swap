@@ -71,7 +71,8 @@ int				args_check(int argc, char const **argv)
 	while (i + 1 < argc)
 	{
 		if (is_integer_string(argv[i + 1]) == FALSE
-			&& ft_strcmp(argv[i + 1], "-v"))
+			&& ft_strcmp(argv[i + 1], "-v")
+			&& ft_strcmp(argv[i + 1], "-f"))
 			return (FALSE);
 		i++;
 	}
@@ -80,7 +81,7 @@ int				args_check(int argc, char const **argv)
 
 int		*parse_args_and_flags(int argc, char const **argv, char *flags)
 {
-	int	*tab;
+	int	*args;
 	int	i;
 	int	j;
 	int	args_nb;
@@ -91,24 +92,17 @@ int		*parse_args_and_flags(int argc, char const **argv, char *flags)
 		*flags = (*flags) | V_FLAG;
 		args_nb--;
 	}
-	tab = (int*)malloc(sizeof(int) * args_nb);
-	if (!tab)
+	args = (int*)malloc(sizeof(int) * args_nb);
+	if (!args)
 		return (0);
 	j = argc - args_nb;
 	i = args_nb - 1;
 	while (i >= 0)
 	{
-		tab[i] = ft_atoi(argv[j]);
+		args[i] = ft_atoi(argv[j]);
 		i--;
 		j++;
 	}
-	return (tab);
+	return (args);
 }
 
-void	error_freelst_exit(t_list *lst)
-{
-	ft_putendl_fd("Error", 2);
-	if (lst != NULL)
-		free_list(lst);
-	exit(0);
-}

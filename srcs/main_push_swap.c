@@ -11,10 +11,8 @@
 
 #include "push_swap.h"
 
-
-
 /*
-** error_freelst_exit(), this functions is taken from checker, here it has no
+** error_freelst_exit(), this function is taken from checker, here it has no
 **	list to free, so give NULL as parameter
 */
 
