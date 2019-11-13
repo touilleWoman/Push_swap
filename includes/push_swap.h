@@ -42,8 +42,8 @@ typedef	enum	e_instruction
 }				t_instruction;
 
 
-# define	V_FLAG		1 << 0;
-# define	C_FLAG		1 << 1;
+# define	V_FLAG		1 << 0
+# define	C_FLAG		1 << 1
 
 typedef struct	s_funs
 {
@@ -53,7 +53,8 @@ typedef struct	s_funs
 int				args_check(int argc, char const **argv);
 int		*parse_args(int argc, char const **argv, char *flags);
 int				parse_instructions(t_list **lst);
-t_stack			*execute_instructions(t_list *ins_lst, int *tab, int tab_len);
+t_stack			*execute_instructions(t_list *ins_lst, int *args, int args_len, char *flags);
+
 void			show_tab(int *tab, int tab_len);
 void			show_stack(t_stack *stk);
 void			error_freelst_exit(t_list *lst);

@@ -40,10 +40,13 @@ void		usage_then_quit(void)
 */
 void		free_all(t_stack *stk, t_list *ins_lst, int *args)
 {
-	free(stk->b);
-	free(stk);
-	free(args);
-	free_list(ins_lst);
+	if (stk != NULL)
+	{
+		stk->b != NULL ? free(stk->b) : 0;
+		free(stk);
+	}
+	args != NULL ? free(args) : 0;
+	ins_lst != NULL ? free_list(ins_lst) : 0;
 }
 
 int			main(int argc, char const **argv)
@@ -60,11 +63,11 @@ int			main(int argc, char const **argv)
 	if (args_check(argc, argv) == FALSE)
 		error_freelst_exit(ins_lst);
 	args = parse_args(argc, argv, &flags);
-	// if (args == NULL)
-	// 	error_freelst_exit(ins_lst);
+	if (args == NULL)
+		error_freelst_exit(ins_lst);
 	if (parse_instructions(&ins_lst) == FALSE)
 		error_freelst_exit(ins_lst);
-	stk = execute_instructions(ins_lst, args, argc - 1);
+	stk = execute_instructions(ins_lst, args, argc, &flags);
 	check_order(stk, argc - 1);
 	free_all(stk, ins_lst, args);
 	return (0);
