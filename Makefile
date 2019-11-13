@@ -21,6 +21,7 @@ SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
 			instructions2.c instructions3.c parse_args.c list_related.c \
 			display_functions.c \
 
+
 SRCS_PATH = ./srcs
 
 FILE_CK = main_checker.c

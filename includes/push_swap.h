@@ -58,6 +58,7 @@ t_stack		*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *fl
 t_stack			*init_stack(int *args, int nb_args);
 
 void			show_args(int *args, int args_nb);
+
 void			show_stack(t_stack *stk);
 void			error_freelst_exit(t_list *lst);
 

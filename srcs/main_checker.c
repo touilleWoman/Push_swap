@@ -36,6 +36,10 @@ void		usage_then_quit(void)
 }
 
 // oublie de verifier les doublons!!!???
+/*
+** 	no need to free(stk->a), because stk->a == args
+*/
+
 int			main(int argc, char const **argv)
 {
 	int		*args;
