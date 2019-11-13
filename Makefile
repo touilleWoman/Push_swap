@@ -13,20 +13,20 @@
 .PHONY: all clean fclean re
 
 CC ?= gcc
-
 CFLAGS ?= -Wall -Werror -Wextra
-
 NAME_CK = checker
-
 NAME_PS = push_swap
-
-SRCS_NAME = main_checker.c parse_instructions.c execute_instructions.c instructions.c \
-			instructions2.c instructions3.c parse_args.c list_related.c display_functions.c \
+SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
+			instructions2.c instructions3.c parse_args.c list_related.c display_functions.c
 
 SRCS_PATH = ./srcs
 
+FILE_CK = main_checker.c
+FILE_PW = main_push_swap.c
 
 SRCS = $(addprefix $(SRCS_PATH)/, $(SRCS_NAME))
+SRC_CK = $(addprefix $(SRCS_PATH)/, $(FILE_CK))
+SRC_PS = $(addprefix $(SRCS_PATH)/, $(FILE_PW))
 
 OBJ = $(SRCS:.c=.o)
 
@@ -38,12 +38,16 @@ HEADER = $(shell find includes -type f) $(shell find libft/includes -type f)
 
 LIBFTA = ./libft/libft.a
 
-DEBUG =  -g -fsanitize=address
+# DEBUG =  -g -fsanitize=address
+DEBUG =  -g
 
-all: $(NAME_CK)
+all: $(NAME_CK) $(NAME_PS)
+
+$(NAME_PS):$(OBJ)
+	$(CC)  $(CFLAGS) -o $(NAME_PS) $(SRC_PS) $(OBJ) $(LIBFTA) $(DEBUG) $(IFLAG)
 
 $(NAME_CK): $(OBJ)
-	$(CC)  $(CFLAGS) -o $(NAME_CK) $(OBJ) $(LIBFTA) $(DEBUG)
+	$(CC)  $(CFLAGS) -o $(NAME_CK) $(SRC_CK) $(OBJ) $(LIBFTA) $(DEBUG) $(IFLAG)
 
 %.o: %.c $(HEADER) $(LIBFTA)
 	$(CC) $(CFLAGS) -o $@ -c $< $(IFLAG)

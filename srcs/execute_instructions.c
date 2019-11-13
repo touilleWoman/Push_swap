@@ -50,7 +50,7 @@ t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 		{
 			if (funs[index].ins == *(int*)(ins_lst->content))
 			{
-				funs[index].f(&stk);
+				funs[index].f(&stk, flags);
 				(*flags) & V_FLAG ? show_stack(stk) : 0;
 			}
 			index++;
