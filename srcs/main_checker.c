@@ -35,6 +35,8 @@ void		usage_then_quit(void)
 	exit(0);
 }
 
+
+
 // oublie de verifier les doublons!!!???
 /*
 ** 	no need to free(stk->a), because stk->a == args
