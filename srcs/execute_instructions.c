@@ -61,14 +61,10 @@ t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 	return (stk);
 }
 
-t_stack		*execute_instructions(t_list *ins_lst, int *args, int argc, char *flags)
+t_stack		*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags)
 {
 	t_stack	*stk;
-	int		nb_args;
 
-	nb_args = argc -1;
-	if ((*flags) & V_FLAG)
-		nb_args--;
 	stk = init_stack(args, nb_args);
 	if (stk == NULL)
 	{

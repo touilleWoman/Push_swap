@@ -16,17 +16,19 @@ CC ?= gcc
 CFLAGS ?= -Wall -Werror -Wextra
 NAME_CK = checker
 NAME_PS = push_swap
+
 SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
-			instructions2.c instructions3.c parse_args.c list_related.c display_functions.c
+			instructions2.c instructions3.c parse_args.c list_related.c \
+			display_functions.c \
 
 SRCS_PATH = ./srcs
 
 FILE_CK = main_checker.c
-FILE_PW = main_push_swap.c
+FILE_PS = main_push_swap.c launch_algo.c
 
 SRCS = $(addprefix $(SRCS_PATH)/, $(SRCS_NAME))
 SRC_CK = $(addprefix $(SRCS_PATH)/, $(FILE_CK))
-SRC_PS = $(addprefix $(SRCS_PATH)/, $(FILE_PW))
+SRC_PS = $(addprefix $(SRCS_PATH)/, $(FILE_PS))
 
 OBJ = $(SRCS:.c=.o)
 
@@ -66,3 +68,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+	# when modify main, doesn't recompile !!!???

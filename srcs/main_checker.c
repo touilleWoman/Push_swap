@@ -12,17 +12,17 @@
 
 #include "push_swap.h"
 
-void		check_order(t_stack *stk, int tab_len)
+void		check_order(t_stack *stk, int nb_args)
 {
-	if (stk->b_len == 0 && stk->a_len == tab_len)
+	if (stk->b_len == 0 && stk->a_len == nb_args)
 	{
-		while (tab_len - 1)
+		while (nb_args - 1)
 		{
-			if (stk->a[tab_len - 1] >= stk->a[tab_len - 2])
+			if (stk->a[nb_args - 1] > stk->a[nb_args - 2])
 				break ;
-			tab_len--;
+			nb_args--;
 		}
-		tab_len == 1 ? ft_printf("OK\n") : ft_printf("KO\n");
+		nb_args == 1 ? ft_printf("OK\n") : ft_printf("KO\n");
 	}
 	else
 		ft_printf("KO\n");
@@ -35,40 +35,32 @@ void		usage_then_quit(void)
 	exit(0);
 }
 
-/*
-** 	no need to free(stk->a), because stk->a == args
-*/
-void		free_all(t_stack *stk, t_list *ins_lst, int *args)
-{
-	if (stk != NULL)
-	{
-		stk->b != NULL ? free(stk->b) : 0;
-		free(stk);
-	}
-	args != NULL ? free(args) : 0;
-	ins_lst != NULL ? free_list(ins_lst) : 0;
-}
-
+// oublie de verifier les doublons!!!???
 int			main(int argc, char const **argv)
 {
 	int		*args;
 	t_list	*ins_lst;
 	t_stack	*stk;
 	char	flags;
+	int		nb_args;
+
 
 	ins_lst = NULL;
 	flags = 0;
+	nb_args = argc - 1;
 	if (argc < 2)
 		usage_then_quit();
 	if (args_check(argc, argv) == FALSE)
 		error_freelst_exit(ins_lst);
-	args = parse_args(argc, argv, &flags);
+	args = parse_args_and_flags(argc, argv, &flags);
 	if (args == NULL)
 		error_freelst_exit(ins_lst);
+	if (flags & V_FLAG)
+		nb_args--;
 	if (parse_instructions(&ins_lst) == FALSE)
 		error_freelst_exit(ins_lst);
-	stk = execute_instructions(ins_lst, args, argc, &flags);
-	check_order(stk, argc - 1);
+	stk = execute_instructions(ins_lst, args, nb_args, &flags);
+	check_order(stk, nb_args);
 	free_all(stk, ins_lst, args);
 	return (0);
 }
