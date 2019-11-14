@@ -25,6 +25,7 @@
 # define V_FLAG	1 << 0
 # define F_FLAG	1 << 1
 # define INS_STDOUT 1 << 2
+# define PUSH_SWAP  1 << 3
 
 typedef	struct	stack
 {
@@ -60,7 +61,7 @@ typedef struct	s_funs
 int				args_check(int argc, char const **argv, int *args_nb);
 int				*parse_args_and_flags(int argc, char const **argv,
 									char *flags, int *args_nb);
-int				parse_instructions(t_list **lst);
+int				parse_instructions(t_list **lst, char flags);
 t_stack			*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags);
 t_stack			*init_stack(int *args, int nb_args);
 
@@ -76,6 +77,7 @@ long long		a_to_long(const char *str);
 int				is_flag_then_activate(char const *str, char *flags);
 void		print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk);
+void	print_lst(t_list *lst);
 
 
 

@@ -25,6 +25,7 @@ int main(int argc, char const **argv)
 
 
 	flags = 0;
+	flags = flags | PUSH_SWAP;
 	nb_args = 0;
 	if (argc < 2)
 		return (0);

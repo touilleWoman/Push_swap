@@ -49,8 +49,9 @@ int			main(int argc, char const **argv)
 	if (argc < 2)
 		usage_then_quit();
 	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
-	if (parse_instructions(&ins_lst) == FALSE)
+	if (parse_instructions(&ins_lst, flags) == FALSE)
 		error_freelst_exit(ins_lst);
+	// print_lst(ins_lst);
 	stk = execute_instructions(ins_lst, args, nb_args, &flags);
 	check_order(stk, nb_args);
 	free_all(stk, ins_lst, args);

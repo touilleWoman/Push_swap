@@ -40,15 +40,46 @@ void		check_instruction_then_convert(char *s, t_instruction *ins)
 	}
 }
 
-int			parse_instructions(t_list **lst)
+
+int			get_fd(char flags)
+{
+	int			fd;
+	char		filename[2];
+	int			len;
+
+	if (flags & F_FLAG)
+	{
+		ft_printf("Pleases give the path of file:\n");
+		if(fgets(filename, 2, stdin))
+		{
+			len = ft_strlen(filename);
+			if (filename[len - 1] == '\n')
+				filename[len - 1] = 0;
+			fd = open(filename, O_RDONLY);
+			if (fd < 0)
+				ft_putendl_fd("Failed to read file!", 2);
+		}
+		else
+			return (-1);
+	}
+	else
+		fd = 0;
+	return (fd);
+}
+
+int			parse_instructions(t_list **lst, char flags)
 {
 	char				*line;
 	t_instruction		ins;
 	t_list				*new;
 	int					gnl_ret;
 	int					len;
+	int					fd;
 
-	while ((gnl_ret = get_next_line(0, &line)))
+	fd = get_fd(flags);
+	if (fd < 0)
+		return (FALSE);
+	while ((gnl_ret = get_next_line(fd, &line)))
 	{
 		len = ft_strlen(line);
 		if ( len < 2 || len > 3 )
