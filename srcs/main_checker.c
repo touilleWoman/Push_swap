@@ -35,12 +35,6 @@ void		usage_then_quit(void)
 	exit(0);
 }
 
-
-// oublie de verifier les doublons!!!???
-/*
-** 	no need to free(stk->a), because stk->a == args
-*/
-
 int			main(int argc, char const **argv)
 {
 	int		*args;
@@ -54,9 +48,7 @@ int			main(int argc, char const **argv)
 	nb_args = argc - 1;
 	if (argc < 2)
 		usage_then_quit();
-	args = parse_args_and_flags(argc, argv, &flags);
-	if (flags & V_FLAG)
-		nb_args--;
+	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
 	if (parse_instructions(&ins_lst) == FALSE)
 		error_freelst_exit(ins_lst);
 	stk = execute_instructions(ins_lst, args, nb_args, &flags);

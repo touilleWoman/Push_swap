@@ -51,15 +51,14 @@ typedef	enum	e_instruction
 }				t_instruction;
 
 
-
-
 typedef struct	s_funs
 {
 	t_instruction	ins;
 	void			(*f)(t_stack**, char *flags);
 }				t_funs;
 int				args_check(int argc, char const **argv, int *args_nb);
-int		*parse_args_and_flags(int argc, char const **argv, char *flags);
+int				*parse_args_and_flags(int argc, char const **argv,
+									char *flags, int *args_nb);
 int				parse_instructions(t_list **lst);
 t_stack		*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags);
 t_stack			*init_stack(int *args, int nb_args);
@@ -72,6 +71,8 @@ void			error_freelst_exit(t_list *lst);
 void			usage(void);
 void			free_list(t_list *lst);
 void		free_all(t_stack *stk, t_list *ins_lst, int *args);
+long long	a_to_long(const char *str);
+int			is_flag_then_activate(char const *str, char *flags);
 
 
 

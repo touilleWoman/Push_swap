@@ -23,15 +23,14 @@ int main(int argc, char const **argv)
 	char	flags;
 	int		nb_args;
 
+
 	flags = 0;
-	nb_args = argc - 1;
+	nb_args = 0;
 	if (argc < 2)
 		return (0);
-	args = parse_args_and_flags(argc, argv, &flags);
+	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
 	if (args == NULL)
 		error_freelst_exit(NULL);
-	if (flags & V_FLAG)
-		nb_args--;
 	stk = launch_algo(args, argc, &flags);
 	free_all(stk, NULL, args);
 	return (0);

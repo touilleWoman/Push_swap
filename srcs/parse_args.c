@@ -12,30 +12,7 @@
 
 #include "push_swap.h"
 
-long long		a_to_long(const char *str)
-{
-	int				i;
-	long long		ret;
-	int				neg;
-
-	neg = 1;
-	i = 0;
-	ret = 0;
-	if ((str[i] == '+') || (str[i] == '-'))
-	{
-		if (str[i] == '-')
-			neg = -neg;
-		i++;
-	}
-	while ((str[i] != 0) && (str[i] >= '0') && (str[i] <= '9'))
-	{
-		ret = ret * 10 + str[i] - '0';
-		i++;
-	}
-	return (ret * neg);
-}
-
-int				is_integer_string(const char *str)
+int			is_integer_string(const char *str)
 {
 	int			i;
 	int			len;
@@ -47,7 +24,7 @@ int				is_integer_string(const char *str)
 		return (FALSE);
 	if ((str[i] == '+') || (str[i] == '-'))
 		i++;
-	while(i < len)
+	while (i < len)
 	{
 		if (ft_isdigit(str[i]) == FALSE)
 			return (FALSE);
@@ -62,7 +39,7 @@ int				is_integer_string(const char *str)
 	return (TRUE);
 }
 
-int				args_check(int argc, char const **argv, int *args_nb)
+int			args_check(int argc, char const **argv, int *args_nb)
 {
 	int		i;
 
@@ -79,32 +56,13 @@ int				args_check(int argc, char const **argv, int *args_nb)
 	return (TRUE);
 }
 
-
-int				is_flag(char const *str, char *flags)
-{
-	int		ret;
-
-	ret = FALSE;
-	if (ft_strcmp(str, "-v") == 0)
-	{
-		*flags = (*flags) | V_FLAG;
-		ret = TRUE;
-	}
-	else if (ft_strcmp(str, "-f") == 0)
-	{
-		*flags = (*flags) | F_FLAG;
-		ret = TRUE;
-	}
-	return (ret);
-}
-
 /*
 **	args_nb is the number of integers, not including flags.
 **  Initialed "argc -1", then will change in args_check()
 */
 
-int				*read_args_and_flags(int argc, char const **argv, char *flags,
-									 int args_nb)
+int			*read_args_and_flags(int argc, char const **argv, char *flags,
+								int args_nb)
 {
 	int	i;
 	int	j;
@@ -117,7 +75,7 @@ int				*read_args_and_flags(int argc, char const **argv, char *flags,
 		return (NULL);
 	while (j < argc)
 	{
-		if (is_flag(argv[j], flags) == FALSE)
+		if (is_flag_then_activate(argv[j], flags) == FALSE)
 		{
 			args[i] = ft_atoi(argv[j]);
 			i--;
@@ -133,22 +91,46 @@ int				*read_args_and_flags(int argc, char const **argv, char *flags,
 	return (args);
 }
 
-int				*parse_args_and_flags(int argc,
-									char const **argv,
-									char *flags)
+int			duplicate_args_exist(int *args, int args_nb)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = i + 1;
+	while (i < args_nb - 1)
+	{
+		while (j < args_nb)
+		{
+			if (args[i] == args[j])
+				return (TRUE);
+			j++;
+		}
+		i++;
+		j = i + 1;
+	}
+	return (FALSE);
+}
+
+int			*parse_args_and_flags(int argc, char const **argv,
+									char *flags, int *args_nb)
 {
 	int	*args;
-	int	args_nb;
 
-	args_nb = argc - 1;
-	if (args_check(argc, argv, &args_nb) == FALSE)
+	*args_nb = argc - 1;
+	if (args_check(argc, argv, args_nb) == FALSE)
 		return (NULL);
-	args = read_args_and_flags(argc, argv, flags, args_nb);
+	args = read_args_and_flags(argc, argv, flags, *args_nb);
 	if (args == NULL)
 	{
 		ft_putendl_fd("Error", 2);
 		exit(0);
 	}
+	if (duplicate_args_exist(args, *args_nb))
+	{
+		free(args);
+		ft_putendl_fd("Error", 2);
+		exit(0);
+	}
 	return (args);
 }
-
