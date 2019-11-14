@@ -68,7 +68,6 @@ t_stack			*init_stack(int *args, int nb_args);
 void			show_args(int *args, int args_nb);
 
 void			show_stack(t_stack *stk);
-void			error_freelst_exit(t_list *lst);
 
 void			usage(void);
 void			free_list(t_list *lst);
@@ -92,6 +91,7 @@ void			rr(t_stack **stk, char flags, FILE *fp, int *count);
 void			rra(t_stack **stk, char flags, FILE *fp, int *count);
 void			rrb(t_stack **stk, char flags, FILE *fp, int *count);
 void			rrr(t_stack **stk, char flags, FILE *fp, int *count);
+void	algo(t_stack *stk, int nb_args, char flags, FILE *fp);
 
 
 

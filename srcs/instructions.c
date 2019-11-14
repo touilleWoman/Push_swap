@@ -49,14 +49,16 @@ void		sb(t_stack **stk, char flags, FILE *fp, int *count)
 
 void		ss(t_stack **stk, char flags, FILE *fp, int *count)
 {
-	char flags_copy;
+	char	flags_copy;
+	int		silence;
 
 	flags_copy = flags;
 	flags_copy -= INS_STDOUT;
 	flags_copy -= V_FLAG;
 	flags_copy -= F_FLAG;
-	sa(stk, flags_copy, fp, count);
-	sb(stk, flags_copy, fp, count);
+	silence = 0;
+	sa(stk, flags_copy, fp, &silence);
+	sb(stk, flags_copy, fp, &silence);
 	print_according_to_flags(flags, fp, "ss\n", stk);
 	(*count)++;
 }

@@ -11,10 +11,6 @@
 
 #include "push_swap.h"
 
-/*
-** error_freelst_exit(), this function is taken from checker, here it has no
-**	list to free, so give NULL as parameter
-*/
 
 int main(int argc, char const **argv)
 {
@@ -31,7 +27,10 @@ int main(int argc, char const **argv)
 		return (0);
 	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
 	if (args == NULL)
-		error_freelst_exit(NULL);
+	{
+		ft_putendl_fd("Error", 2);
+		return (0);
+	}
 	stk = launch_push_swap(args, &flags, nb_args);
 	free_all(stk, NULL, args);
 	return (0);

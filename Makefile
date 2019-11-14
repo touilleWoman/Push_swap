@@ -19,7 +19,7 @@ NAME_PS = push_swap
 
 SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
 			instructions2.c instructions3.c parse_args.c list_related.c \
-			display_functions.c tools.c launch_push_swap.c\
+			display_functions.c tools.c launch_push_swap.c algo.c\
 
 
 SRCS_PATH = ./srcs

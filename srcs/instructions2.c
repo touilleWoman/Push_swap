@@ -35,18 +35,21 @@ void		rb(t_stack **stk, char flags, FILE *fp, int *count)
 
 /*
 ** deactivate flags so information will not be printed again in ra and rb
+** don't give *count, because ra and rb shouldn't be counted
 ** Same thing for ss and rrr.
 */
 void		rr(t_stack **stk, char flags, FILE *fp, int *count)
 {
 	char flags_copy;
+	int		silence;
 
+	silence = 0;
 	flags_copy = flags;
 	flags_copy -= INS_STDOUT;
 	flags_copy -= V_FLAG;
 	flags_copy -= F_FLAG;
-	ra(stk, flags_copy, fp, count);
-	rb(stk, flags_copy, fp, count);
+	ra(stk, flags_copy, fp, &silence);
+	rb(stk, flags_copy, fp, &silence);
 	print_according_to_flags(flags, fp, "rr\n", stk);
 	(*count)++;
 }
@@ -102,13 +105,15 @@ void		rrb(t_stack **stk, char flags, FILE *fp, int *count)
 void		rrr(t_stack **stk, char flags, FILE *fp, int *count)
 {
 	char flags_copy;
+	int		silence;
 
+	silence = 0;
 	flags_copy = flags;
 	flags_copy -= INS_STDOUT;
 	flags_copy -= V_FLAG;
 	flags_copy -= F_FLAG;
-	rra(stk, flags_copy, fp, count);
-	rrb(stk, flags_copy, fp, count);
+	rra(stk, flags_copy, fp, &silence);
+	rrb(stk, flags_copy, fp, &silence);
 	print_according_to_flags(flags, fp, "rrr\n", stk);
 	(*count)++;
 }

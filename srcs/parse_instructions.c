@@ -44,13 +44,13 @@ void		check_instruction_then_convert(char *s, t_instruction *ins)
 int			get_fd(char flags)
 {
 	int			fd;
-	char		filename[2];
+	char		filename[50];
 	int			len;
 
 	if (flags & F_FLAG)
 	{
 		ft_printf("Pleases give the path of file:\n");
-		if(fgets(filename, 2, stdin))
+		if(fgets(filename, 50, stdin))
 		{
 			len = ft_strlen(filename);
 			if (filename[len - 1] == '\n')
