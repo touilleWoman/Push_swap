@@ -16,9 +16,14 @@
 
 # include "libft.h"
 
+/*
+** V_FLAG is to show stack at each operation
+** F_FLAG is to read and write on file instead of STD
+*/
+
 # define INSTRUCTION_NB	11
 # define V_FLAG	1 << 0
-# define WRITE_IN_FILE	1 << 1
+# define F_FLAG	1 << 1
 # define SHOW_INS 1 << 2
 
 typedef	struct	stack
@@ -53,7 +58,7 @@ typedef struct	s_funs
 	t_instruction	ins;
 	void			(*f)(t_stack**, char *flags);
 }				t_funs;
-int				args_check(int argc, char const **argv);
+int				args_check(int argc, char const **argv, int *args_nb);
 int		*parse_args_and_flags(int argc, char const **argv, char *flags);
 int				parse_instructions(t_list **lst);
 t_stack		*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags);

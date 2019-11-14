@@ -27,8 +27,6 @@ int main(int argc, char const **argv)
 	nb_args = argc - 1;
 	if (argc < 2)
 		return (0);
-	if (args_check(argc, argv) == FALSE)
-		error_freelst_exit(NULL);
 	args = parse_args_and_flags(argc, argv, &flags);
 	if (args == NULL)
 		error_freelst_exit(NULL);

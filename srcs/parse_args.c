@@ -62,46 +62,92 @@ int				is_integer_string(const char *str)
 	return (TRUE);
 }
 
-int				args_check(int argc, char const **argv)
+int				args_check(int argc, char const **argv, int *args_nb)
 {
 	int		i;
 
-	i = 0;
-
-	while (i + 1 < argc)
+	i = 1;
+	while (i < argc)
 	{
-		if (is_integer_string(argv[i + 1]) == FALSE
-			&& ft_strcmp(argv[i + 1], "-v")
-			&& ft_strcmp(argv[i + 1], "-f"))
+		if (ft_strcmp(argv[i], "-v") == 0
+			|| ft_strcmp(argv[i], "-f") == 0)
+			(*args_nb)--;
+		else if (is_integer_string(argv[i]) == FALSE)
 			return (FALSE);
 		i++;
 	}
 	return (TRUE);
 }
 
-int		*parse_args_and_flags(int argc, char const **argv, char *flags)
+
+int				is_flag(char const *str, char *flags)
 {
-	int	*args;
+	int		ret;
+
+	ret = FALSE;
+	if (ft_strcmp(str, "-v") == 0)
+	{
+		*flags = (*flags) | V_FLAG;
+		ret = TRUE;
+	}
+	else if (ft_strcmp(str, "-f") == 0)
+	{
+		*flags = (*flags) | F_FLAG;
+		ret = TRUE;
+	}
+	return (ret);
+}
+
+/*
+**	args_nb is the number of integers, not including flags.
+**  Initialed "argc -1", then will change in args_check()
+*/
+
+int				*read_args_and_flags(int argc, char const **argv, char *flags,
+									 int args_nb)
+{
 	int	i;
 	int	j;
+	int	*args;
+
+	j = 1;
+	i = args_nb - 1;
+	args = (int*)malloc(sizeof(int) * args_nb);
+	if (!args)
+		return (NULL);
+	while (j < argc)
+	{
+		if (is_flag(argv[j], flags) == FALSE)
+		{
+			args[i] = ft_atoi(argv[j]);
+			i--;
+		}
+		j++;
+	}
+	if (i != -1)
+	{
+		ft_putendl_fd("Error in parser", 2);
+		free(args);
+		args = NULL;
+	}
+	return (args);
+}
+
+int				*parse_args_and_flags(int argc,
+									char const **argv,
+									char *flags)
+{
+	int	*args;
 	int	args_nb;
 
 	args_nb = argc - 1;
-	if (ft_strcmp(argv[1], "-v") == 0)
+	if (args_check(argc, argv, &args_nb) == FALSE)
+		return (NULL);
+	args = read_args_and_flags(argc, argv, flags, args_nb);
+	if (args == NULL)
 	{
-		*flags = (*flags) | V_FLAG;
-		args_nb--;
-	}
-	args = (int*)malloc(sizeof(int) * args_nb);
-	if (!args)
-		return (0);
-	j = argc - args_nb;
-	i = args_nb - 1;
-	while (i >= 0)
-	{
-		args[i] = ft_atoi(argv[j]);
-		i--;
-		j++;
+		ft_putendl_fd("Error", 2);
+		exit(0);
 	}
 	return (args);
 }

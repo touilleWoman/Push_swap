@@ -54,11 +54,7 @@ int			main(int argc, char const **argv)
 	nb_args = argc - 1;
 	if (argc < 2)
 		usage_then_quit();
-	if (args_check(argc, argv) == FALSE)
-		error_freelst_exit(ins_lst);
 	args = parse_args_and_flags(argc, argv, &flags);
-	if (args == NULL)
-		error_freelst_exit(ins_lst);
 	if (flags & V_FLAG)
 		nb_args--;
 	if (parse_instructions(&ins_lst) == FALSE)
