@@ -39,10 +39,3 @@ void	free_all(t_stack *stk, t_list *ins_lst, int *args)
 	ins_lst != NULL ? free_list(ins_lst) : 0;
 }
 
-void	error_freelst_exit(t_list *lst)
-{
-	ft_putendl_fd("Error", 2);
-	if (lst != NULL)
-		free_list(lst);
-	exit(0);
-}
