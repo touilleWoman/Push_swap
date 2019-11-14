@@ -117,19 +117,17 @@ int			*parse_args_and_flags(int argc, char const **argv,
 	int	*args;
 
 	*args_nb = argc - 1;
-	if (args_check(argc, argv, args_nb) == FALSE)
-		return (NULL);
-	args = read_args_and_flags(argc, argv, flags, *args_nb);
-	if (args == NULL)
+	if (args_check(argc, argv, args_nb))
 	{
-		ft_putendl_fd("Error", 2);
-		exit(0);
+		args = read_args_and_flags(argc, argv, flags, *args_nb);
+		if (args != NULL)
+		{
+			if (duplicate_args_exist(args, *args_nb) == FALSE)
+				return (args);
+			else
+				free(args);
+		}
 	}
-	if (duplicate_args_exist(args, *args_nb))
-	{
-		free(args);
-		ft_putendl_fd("Error", 2);
-		exit(0);
-	}
-	return (args);
+	ft_putendl_fd("Error", 2);
+	exit(0);
 }
