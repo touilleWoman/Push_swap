@@ -28,7 +28,7 @@ void	free_list(t_list *lst)
 /*
 ** 	no need to free(stk->a), because stk->a == args
 */
-void		free_all(t_stack *stk, t_list *ins_lst, int *args)
+void	free_all(t_stack *stk, t_list *ins_lst, int *args)
 {
 	if (stk != NULL)
 	{

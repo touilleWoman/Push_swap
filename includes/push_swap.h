@@ -13,7 +13,7 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-
+# include <stdio.h>
 # include "libft.h"
 
 /*
@@ -24,7 +24,7 @@
 # define INSTRUCTION_NB	11
 # define V_FLAG	1 << 0
 # define F_FLAG	1 << 1
-# define SHOW_INS 1 << 2
+# define INS_STDOUT 1 << 2
 
 typedef	struct	stack
 {
@@ -54,13 +54,14 @@ typedef	enum	e_instruction
 typedef struct	s_funs
 {
 	t_instruction	ins;
-	void			(*f)(t_stack**, char *flags);
+	void			(*f)(t_stack **stk, char flags, FILE *fp, int *count);
 }				t_funs;
+
 int				args_check(int argc, char const **argv, int *args_nb);
 int				*parse_args_and_flags(int argc, char const **argv,
 									char *flags, int *args_nb);
 int				parse_instructions(t_list **lst);
-t_stack		*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags);
+t_stack			*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags);
 t_stack			*init_stack(int *args, int nb_args);
 
 void			show_args(int *args, int args_nb);
@@ -70,28 +71,29 @@ void			error_freelst_exit(t_list *lst);
 
 void			usage(void);
 void			free_list(t_list *lst);
-void		free_all(t_stack *stk, t_list *ins_lst, int *args);
-long long	a_to_long(const char *str);
-int			is_flag_then_activate(char const *str, char *flags);
+void			free_all(t_stack *stk, t_list *ins_lst, int *args);
+long long		a_to_long(const char *str);
+int				is_flag_then_activate(char const *str, char *flags);
+void		print_according_to_flags(char flags, FILE *fp, char *str,
+									t_stack **stk);
 
 
 
-
-void			sa(t_stack **stk, char *flags);
-void			sb(t_stack **stk, char *flags);
-void			ss(t_stack **stk, char *flags);
-void			pa(t_stack **stk, char *flags);
-void			pb(t_stack **stk, char *flags);
-void			ra(t_stack **stk, char *flags);
-void			rb(t_stack **stk, char *flags);
-void			rr(t_stack **stk, char *flags);
-void			rra(t_stack **stk, char *flags);
-void			rrb(t_stack **stk, char *flags);
-void			rrr(t_stack **stk, char *flags);
-
+void			sa(t_stack **stk, char flags, FILE *fp, int *count);
+void			sb(t_stack **stk, char flags, FILE *fp, int *count);
+void			ss(t_stack **stk, char flags, FILE *fp, int *count);
+void			pa(t_stack **stk, char flags, FILE *fp, int *count);
+void			pb(t_stack **stk, char flags, FILE *fp, int *count);
+void			ra(t_stack **stk, char flags, FILE *fp, int *count);
+void			rb(t_stack **stk, char flags, FILE *fp, int *count);
+void			rr(t_stack **stk, char flags, FILE *fp, int *count);
+void			rra(t_stack **stk, char flags, FILE *fp, int *count);
+void			rrb(t_stack **stk, char flags, FILE *fp, int *count);
+void			rrr(t_stack **stk, char flags, FILE *fp, int *count);
 
 
-t_stack		*launch_algo(int *args, int argc, char *flags);
+
+t_stack		*launch_push_swap(int *args, char *flags, int args_nb);
 
 
 

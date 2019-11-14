@@ -31,7 +31,7 @@ int main(int argc, char const **argv)
 	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
 	if (args == NULL)
 		error_freelst_exit(NULL);
-	stk = launch_algo(args, argc, &flags);
+	stk = launch_push_swap(args, &flags, nb_args);
 	free_all(stk, NULL, args);
 	return (0);
 }

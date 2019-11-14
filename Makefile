@@ -19,7 +19,7 @@ NAME_PS = push_swap
 
 SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
 			instructions2.c instructions3.c parse_args.c list_related.c \
-			display_functions.c tools.c launch_algo.c\
+			display_functions.c tools.c launch_push_swap.c\
 
 
 SRCS_PATH = ./srcs
@@ -66,7 +66,7 @@ FORCE:
 
 clean:
 	make clean -C libft
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(OBJ_PS) $(OBJ_CK)
 
 
 fclean: clean

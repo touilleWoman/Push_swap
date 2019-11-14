@@ -58,3 +58,14 @@ void		show_stack(t_stack *stk)
 	}
 	ft_printf("-----\na   b\n");
 }
+
+void		print_according_to_flags(char flags, FILE *fp, char *str,
+									t_stack **stk)
+{
+	if ((flags) & INS_STDOUT)
+		ft_printf(str);
+	else if (((flags) & F_FLAG))
+		fputs(str, fp);
+	if ((flags) & V_FLAG)
+		show_stack(*stk);
+}

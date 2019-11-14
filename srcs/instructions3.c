@@ -12,13 +12,11 @@
 
 #include "push_swap.h"
 
-void		ra(t_stack **stk, char *flags)
+void		ra(t_stack **stk, char flags, FILE *fp, int *count)
 {
 	int		tmp;
 	int		len;
 
-	if ((*flags) & SHOW_INS)
-		ft_printf("ra\n");
 	len = (*stk)->a_len;
 	if (len > 1)
 	{
@@ -29,11 +27,7 @@ void		ra(t_stack **stk, char *flags)
 			len--;
 		}
 		(*stk)->a[0] = tmp;
-
 	}
-	// else
-	// {
-	// 	if ((*flags) & V_FLAG)
-	// 		ft_printf("Pile a too short, sa not executed \n");
-	// }
+	print_according_to_flags(flags, fp, "ra\n", stk);
+	(*count)++;
 }

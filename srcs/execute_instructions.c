@@ -37,7 +37,9 @@ t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
 	int		index;
+	int		count_ins;
 
+	count_ins = 0;
 	index = 0;
 	if ((*flags) & V_FLAG)
 	{
@@ -50,8 +52,8 @@ t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 		{
 			if (funs[index].ins == *(int*)(ins_lst->content))
 			{
-				funs[index].f(&stk, flags);
-				(*flags) & V_FLAG ? show_stack(stk) : 0;
+				funs[index].f(&stk, *flags, NULL, &count_ins);
+				// (*flags) & V_FLAG ? show_stack(stk) : 0;
 			}
 			index++;
 		}

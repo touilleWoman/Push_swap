@@ -12,35 +12,29 @@
 
 #include "push_swap.h"
 
-void		sa(t_stack **stk, char *flags)
+void		sa(t_stack **stk, char flags, FILE *fp, int *count)
 {
 	int		tmp;
 	int		len;
 
-	if ((*flags) & SHOW_INS)
-		ft_printf("sa\n");
+
 	len = (*stk)->a_len;
 	if (len > 1)
 	{
 		tmp = (*stk)->a[len - 1];
 		(*stk)->a[len - 1] = (*stk)->a[len - 2];
 		(*stk)->a[len - 2] = tmp;
-
 	}
-	// else
-	// {
-	// 	if ((*flags) & SHOW_INS)
-	// 		ft_printf("Pile a too short, sa not executed \n");
-	// }
+	print_according_to_flags(flags, fp, "sa\n", stk);
+	(*count)++;
 }
 
-void		sb(t_stack **stk, char *flags)
+void		sb(t_stack **stk, char flags, FILE *fp, int *count)
 {
 	int		tmp;
 	int		len;
 
-	if ((*flags) & SHOW_INS)
-		ft_printf("sb\n");
+
 	len = (*stk)->b_len;
 	if (len > 1)
 	{
@@ -49,58 +43,46 @@ void		sb(t_stack **stk, char *flags)
 		(*stk)->b[len - 1] = (*stk)->b[len - 2];
 		(*stk)->b[len - 2] = tmp;
 	}
-
+	print_according_to_flags(flags, fp, "sb\n", stk);
+	(*count)++;
 }
 
-void		ss(t_stack **stk, char *flags)
+void		ss(t_stack **stk, char flags, FILE *fp, int *count)
 {
-	if ((*flags) & SHOW_INS)
-	{
-		ft_printf("ss:\n");
-		(*flags) -= SHOW_INS;
-		sa(stk, flags);
-		sb(stk, flags);
-		(*flags) = (*flags) | SHOW_INS;
-	}
-	else
-	{
-		sa(stk, flags);
-		sb(stk, flags);
-	}
+	char flags_copy;
+
+	flags_copy = flags;
+	flags_copy -= INS_STDOUT;
+	flags_copy -= V_FLAG;
+	flags_copy -= F_FLAG;
+	sa(stk, flags_copy, fp, count);
+	sb(stk, flags_copy, fp, count);
+	print_according_to_flags(flags, fp, "ss\n", stk);
+	(*count)++;
 }
 
-void		pa(t_stack **stk, char *flags)
+void		pa(t_stack **stk, char flags, FILE *fp, int *count)
 {
-	if ((*flags) & SHOW_INS)
-		ft_printf("pa\n");
+
 	if ((*stk)->b_len)
 	{
 		(*stk)->a_len++;
 		(*stk)->a[(*stk)->a_len - 1] = (*stk)->b[(*stk)->b_len - 1];
 		(*stk)->b_len--;
-
 	}
-	// else
-	// {
-	// 	if ((*flags) & SHOW_INS)
-	// 		ft_printf("Pile b too short, pa not executed \n");
-	// }
+	print_according_to_flags(flags, fp, "pa\n", stk);
+	(*count)++;
 }
 
-void		pb(t_stack **stk, char *flags)
+void		pb(t_stack **stk, char flags, FILE *fp, int *count)
 {
-	if ((*flags) & SHOW_INS)
-		ft_printf("pb\n");
+
 	if ((*stk)->a_len)
 	{
 		(*stk)->b_len++;
 		(*stk)->b[(*stk)->b_len - 1] = (*stk)->a[(*stk)->a_len - 1];
 		(*stk)->a_len--;
-
 	}
-	// else
-	// {
-	// 	if ((*flags) & SHOW_INS)
-	// 		ft_printf("Pile a too short, pb not executed \n");
-	// }
+	print_according_to_flags(flags, fp, "pb\n", stk);
+	(*count)++;
 }
