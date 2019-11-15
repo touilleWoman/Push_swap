@@ -12,12 +12,12 @@
 
 #include "push_swap.h"
 
-int		in_right_order(t_stack *stk, int nb_args)
+int		in_right_order(t_stack *stk)
 {
 	int		count;
 
-	count = nb_args - 1;
-	if (stk->b_len == 0 && stk->a_len == nb_args)
+	count = stk->max_len - 1;
+	if (stk->b_len == 0 && stk->a_len == stk->max_len)
 	{
 		while (count)
 		{
@@ -36,25 +36,26 @@ int		in_right_order(t_stack *stk, int nb_args)
 
 /*
 ** I want to swap or rotate a or b, but if rr or ss shold be used,
-** it will choose rr or ss
+** it will choose rr or ss rather than sa ra sb rb
 */
-int		swap_or_rotate_a_done(t_stack *stk, FILE *fp, int *count, char flags)
+int		swap_or_rotate_a_done(t_stack *stk, FILE *fp, char flags)
 {
-	if(stk->a[stk->a_len - 1] > stk->a[stk->a_len - 2])
+
+	if(top2_exist(stk, 'a') && top1(stk, 'a') > top2(stk, 'a'))
 	{
-		if (stk->a[stk->a_len - 1] > stk->a[0])
+		if (top1(stk, 'a') > stk->a[0])
 		{
-			if (stk->b[stk->b_len - 1] < stk->b[stk->a_len - 2])
-				rr(&stk, flags, fp, count);
+			if (top2_exist(stk, 'b') &&  top1(stk, 'b') < top2(stk, 'b'))
+				rr(&stk, flags, fp);
 			else
-				ra(&stk, flags, fp, count);
+				ra(&stk, flags, fp);
 		}
 		else
 		{
-			if (stk->b[stk->b_len - 1] < stk->b[stk->a_len - 2])
-				ss(&stk, flags, fp, count);
+			if (top2_exist(stk, 'b') && top1(stk, 'b') < top2(stk, 'b'))
+				ss(&stk, flags, fp);
 			else
-				sa(&stk, flags, fp, count);
+				sa(&stk, flags, fp);
 		}
 		return (TRUE);
 	}
@@ -62,23 +63,23 @@ int		swap_or_rotate_a_done(t_stack *stk, FILE *fp, int *count, char flags)
 		return (FALSE);
 }
 
-int		swap_or_rotate_b_done(t_stack *stk, FILE *fp, int *count, char flags)
+int		swap_or_rotate_b_done(t_stack *stk, FILE *fp, char flags)
 {
-	if(stk->b[stk->b_len - 1] < stk->b[stk->b_len - 2])
+	if(top2_exist(stk, 'b') && top1(stk, 'b') < top2(stk, 'b'))
 	{
-		if (stk->b[stk->b_len - 1] < stk->b[0])
+		if (top1(stk, 'b') < stk->b[0])
 		{
-			if (stk->a[stk->a_len - 1] > stk->a[stk->b_len - 2])
-				rr(&stk, flags, fp, count);
+			if (top2_exist(stk, 'a') && top1(stk, 'a') > top2(stk, 'a'))
+				rr(&stk, flags, fp);
 			else
-				rb(&stk, flags, fp, count);
+				rb(&stk, flags, fp);
 		}
 		else
 		{
-			if (stk->a[stk->a_len - 1] > stk->a[stk->b_len - 2])
-				ss(&stk, flags, fp, count);
+			if ( top2_exist(stk, 'a') && top1(stk, 'a') > top2(stk, 'a'))
+				ss(&stk, flags, fp);
 			else
-				sb(&stk, flags, fp, count);
+				sb(&stk, flags, fp);
 		}
 		return (TRUE);
 	}
@@ -86,33 +87,76 @@ int		swap_or_rotate_b_done(t_stack *stk, FILE *fp, int *count, char flags)
 		return (FALSE);
 }
 
-void	one_round(t_stack *stk, char flags, FILE *fp, int *count, int nb_args)
+void	one_round(t_stack *stk, char flags, FILE *fp)
 {
 	while (stk->a_len > 1)
 	{
-		while (swap_or_rotate_a_done(stk, fp, count, flags));
-		if (in_right_order(stk, nb_args))
+		while (swap_or_rotate_a_done(stk, fp, flags));
+		if (in_right_order(stk))
 			return;
-		pb(&stk, flags, fp, count);
-		swap_or_rotate_b_done(stk, fp, count, flags);
+		pb(&stk, flags, fp);
+		swap_or_rotate_b_done(stk, fp, flags);
 	}
 	while (stk->b_len > 1)
 	{
-		while (swap_or_rotate_b_done(stk, fp, count, flags));
-		if (in_right_order(stk, nb_args))
+		while (swap_or_rotate_b_done(stk, fp, flags));
+		if (in_right_order(stk))
 			return;
-		pa(&stk, flags, fp, count);
-		swap_or_rotate_b_done(stk, fp, count, flags);
+		pa(&stk, flags, fp);
+		swap_or_rotate_b_done(stk, fp, flags);
 	}
-	pa(&stk, flags, fp, count);
+	pa(&stk, flags, fp);
 }
 
-void	algo(t_stack *stk, int nb_args, char flags, FILE *fp)
-{
-	int		count;
+// void	swap_or_rotate_a(t_stack *stk, int median)
+// {
+// 	int top1;
+// 	int	top2;
+// 	int	top3;
 
-	count = 0;
-	while (in_right_order(stk, nb_args) == FALSE)
-		one_round(stk, flags, fp, &count, nb_args);
-	ft_printf("%d operations\n", count);
+// 	if (top)
+// 	{
+// 		/* code */
+// 	}
+
+
+// }
+
+// void	push_half_to_b(t_stack *stk, char flags, FILE *fp)
+// {
+// 	int		median;
+// 	int		i;
+
+// 	i = 0;
+// 	median = find_median(stk->a, stk->a_len);
+// 	while (i < (a_len / 2))
+// 	{
+// 		while (top1(stk, 'a') > median)
+// 		{
+
+// 		}
+// 		pb();
+// 		i++;
+// 	}
+
+// }
+
+// void	median_algo(t_stack *stk, char flags, FILE *fp)
+// {
+// 	while (in_right_order(stk) == FALSE)
+// 	{
+// 		if (stk->a_len == 2)
+// 			sa();
+// 		else
+// 			push_half_to_b(stk, flags, fp);
+// 	}
+// 	ft_printf("%d operations in total\n", stk->count);
+// }
+
+void	algo(t_stack *stk, char flags, FILE *fp)
+{
+	find_median(stk->a, stk->a_len);
+	while (in_right_order(stk) == FALSE)
+		one_round(stk, flags, fp);
+	ft_printf("%d operations in total\n", stk->count);
 }

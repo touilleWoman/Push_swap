@@ -12,22 +12,4 @@
 
 #include "push_swap.h"
 
-void		ra(t_stack **stk, char flags, FILE *fp, int *count)
-{
-	int		tmp;
-	int		len;
 
-	len = (*stk)->a_len;
-	if (len > 1)
-	{
-		tmp = (*stk)->a[len - 1];
-		while (len - 1)
-		{
-			(*stk)->a[len - 1] = (*stk)->a[len - 2];
-			len--;
-		}
-		(*stk)->a[0] = tmp;
-	}
-	print_according_to_flags(flags, fp, "ra\n", stk);
-	(*count)++;
-}
