@@ -93,6 +93,7 @@ t_stack		*launch_push_swap(int *args, char *flags, int nb_args)
 		ft_putendl_fd("Init stack failed!", 2);
 		return (NULL);
 	}
+	ft_printf("Inital score:%d\n", calculate_score(stk));
 	read_flags_then_algo(stk, flags);
 	return (stk);
 }

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int		in_right_order(t_stack *stk)
+int		final_order_check(t_stack *stk)
 {
 	int		count;
 
@@ -92,7 +92,7 @@ void	one_round(t_stack *stk, char flags, FILE *fp)
 	while (stk->a_len > 1)
 	{
 		while (swap_or_rotate_a_done(stk, fp, flags));
-		if (in_right_order(stk))
+		if (final_order_check(stk))
 			return;
 		pb(&stk, flags, fp);
 		swap_or_rotate_b_done(stk, fp, flags);
@@ -100,7 +100,7 @@ void	one_round(t_stack *stk, char flags, FILE *fp)
 	while (stk->b_len > 1)
 	{
 		while (swap_or_rotate_b_done(stk, fp, flags));
-		if (in_right_order(stk))
+		if (final_order_check(stk))
 			return;
 		pa(&stk, flags, fp);
 		swap_or_rotate_b_done(stk, fp, flags);
@@ -126,7 +126,9 @@ void	one_round(t_stack *stk, char flags, FILE *fp)
 // {
 // 	int		median;
 // 	int		i;
+// 	int		sorted[stk->max_len];
 
+// 	ft_memcpy(sorted, args, sizeof(int) * nb_args);
 // 	i = 0;
 // 	median = find_median(stk->a, stk->a_len);
 // 	while (i < (a_len / 2))
@@ -141,22 +143,93 @@ void	one_round(t_stack *stk, char flags, FILE *fp)
 
 // }
 
-// void	median_algo(t_stack *stk, char flags, FILE *fp)
-// {
-// 	while (in_right_order(stk) == FALSE)
-// 	{
-// 		if (stk->a_len == 2)
-// 			sa();
-// 		else
-// 			push_half_to_b(stk, flags, fp);
-// 	}
-// 	ft_printf("%d operations in total\n", stk->count);
-// }
+int			find_min(int *score, int len, int *min)
+{
+	int		i;
+	int		min_index;
+
+	*min = score[0];
+	i = 1;
+	min_index = 0;
+	while(i < len)
+	{
+		if (score[i] < *min)
+		{
+			min_index = 1;
+			*min = score[i];
+		}
+		i++;
+	}
+	return(min_index);
+
+}
+
+void		who_has_lowest_score(t_stack *stk, int flags)
+{
+	(void)flags;
+	int	score[11];
+	int	min_score;
+	int	min_index;
+	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
+	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
+	};
+	int	i;
+
+	i = 0;
+	min_score = 100;
+	try_ins(stk, score, flags);
+	min_index = find_min(score, 11, &min_score);
+	if (min_score < calculate_score(stk))
+	{
+		while (i < INSTRUCTION_NB)
+		{
+			if (funs[i].ins == min_index)
+			{
+				funs[i].f(&stk, flags, NULL);
+				break;
+			}
+			i++;
+		}
+	}
+	ft_printf("functions index :%d, min_score=%d\n", i, min_score);
+
+
+	// for (int i = 0; i < 11; ++i)
+	// {
+	// 	ft_printf("score[%d]==%d\n",i, score[i]);
+	// }
+}
+
+
+void	score_algo(t_stack *stk, char flags, FILE *fp)
+{
+	(void)fp;
+	if  (final_order_check(stk) == FALSE)
+	{
+		// while(both_ab_right_order(stk) == FALSE)
+		// {
+			who_has_lowest_score(stk, flags);
+		// }
+		// while (stk->a_len != stk->max_len)
+		// 	pa();
+		// if (stk->max_len == 2)
+		// 	sa();
+		// else
+		// {
+		// 	// push_back_to_a()
+		// }
+
+
+	}
+	ft_printf("%d operations in total\n", stk->count);
+}
 
 void	algo(t_stack *stk, char flags, FILE *fp)
 {
-	find_median(stk->a, stk->a_len);
-	while (in_right_order(stk) == FALSE)
-		one_round(stk, flags, fp);
-	ft_printf("%d operations in total\n", stk->count);
+	// find_median(stk->a, stk->a_len);
+	// while (final_order_check(stk) == FALSE)
+	// 	one_round(stk, flags, fp);
+	// ft_printf("%d operations in total\n", stk->count);
+
+	score_algo(stk, flags, fp);
 }

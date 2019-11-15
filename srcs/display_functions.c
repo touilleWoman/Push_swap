@@ -72,6 +72,8 @@ void		print_according_to_flags(char flags, FILE *fp, char *str,
 		fputs(str, fp);
 	if (flags & V_FLAG)
 		show_stack(*stk);
+	// ft_printf("score:%d\n", calculate_score(*stk));
+
 	// if (str[0] == 's' && str[1] == 'a')
 	// {
 	// 	ft_printf("INS_STDOUT%d\n", flags & INS_STDOUT);

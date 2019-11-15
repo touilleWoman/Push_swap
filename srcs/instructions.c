@@ -18,7 +18,7 @@ void		sa(t_stack **stk, char flags, FILE *fp)
 	int		len;
 
 
-	len = (*stk)->a_len;
+	len = (*stk)->a_len;F
 	if (len > 1)
 	{
 		tmp = (*stk)->a[len - 1];

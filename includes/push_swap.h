@@ -104,6 +104,8 @@ int		top2(t_stack *stk, char a_or_b);
 int		find_median(int *tab, int tab_len);
 int		top1_exist(t_stack *stk, char a_or_b);
 int		top2_exist(t_stack *stk, char a_or_b);
+int		calculate_score(t_stack *stk);
+void		try_ins(t_stack *cp, int *score, int flags);
 
 
 
