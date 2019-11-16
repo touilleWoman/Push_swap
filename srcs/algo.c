@@ -192,21 +192,24 @@ int			find_min(int *score_tab, int len, int *min_score)
 // }
 void		execute_ins(int fun_index, int flags, FILE *fp, t_stack *stk)
 {
-	t_funs	funs[9] = {{SA, sa}, {SB, sb}, {SS, ss},
-	 {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
+	t_funs	funs[9] = {{SA, sa}, {SB, sb}, {SS, ss}, {RA, ra}, {RB, rb},
+	{RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
-	int	i;
+	// int	i;
 
-	i = 0;
-	while (i < 9)
-	{
-		if (funs[i].ins == fun_index)
-		{
-			funs[i].f(&stk, flags, fp);
-			break;
-		}
-		i++;
-	}
+	// i = 0;
+	// while (i < 9)
+	// {
+	// 	// if (funs[i].ins == fun_index)
+	// 	// {
+	// 		funs[i].f(&stk, flags, fp);
+	// 		// break;
+	// 	}
+	// 	i++;
+	// }
+	funs[fun_index].f(&stk, flags, fp);
+	ft_printf("fun_index:%d\n", fun_index);
+	//
 }
 
 int			get_min_score(t_stack *stk, int *min_fun_index, int *min_score)
@@ -225,24 +228,23 @@ int			get_min_score(t_stack *stk, int *min_fun_index, int *min_score)
 	return (FALSE);
 }
 
-void	execute_if_score_smaler(t_stack *stk, char flags, FILE *fp, int *min_score)
+int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 {
 	int	min_fun_index;
-	// int	min_score;
-	int last_score;
+	int	min_score;
+	int present_score;
 
-	last_score = calculate_score(stk);
-	get_min_score(stk, &min_fun_index, min_score);
-
-	while (*min_score < last_score)
+	while (TRUE)
 	{
-		ft_printf("min_score=%d, min_fun_index=%d, last_score=%d\n", *min_score, min_fun_index, last_score);
-
-		execute_ins(min_fun_index, flags, fp, stk);
-		last_score = calculate_score(stk);
-		get_min_score(stk, &min_fun_index, min_score);
-
+		get_min_score(stk, &min_fun_index, &min_score);
+		present_score = calculate_score(stk);
+		if (min_score < present_score)
+			execute_ins(min_fun_index, flags, fp, stk);
+		if (min_score == 0 || min_score >= present_score)
+			break;
+		ft_printf("min_score=%d, present_score=%d, min_fun_index=%d\n", min_score, present_score, min_fun_index);
 	}
+	return (min_score);
 }
 
 void	score_algo(t_stack *stk, char flags, FILE *fp)
@@ -253,15 +255,17 @@ void	score_algo(t_stack *stk, char flags, FILE *fp)
 	min_fun_index = 0;
 	min_score = 1000;
 
-	while  (final_order_check(stk) == FALSE)
-	{
-		execute_if_score_smaler(stk, flags, fp, &min_score);
+	// while  (final_order_check(stk) == FALSE)
+	// {
+		min_score = execute_if_score_smaler(stk, flags, fp);
 		while(min_score != 0)
 		{
 			while (stk->a_len > 1  && min_score != 0)
 			{
 				pb(&stk, flags, fp);
-				execute_if_score_smaler(stk, flags, fp, &min_score);
+				min_score = execute_if_score_smaler(stk, flags, fp);
+				// printf("============%d\n", min_score);
+
 				if (min_score == 0)
 				{
 					break;
@@ -270,14 +274,14 @@ void	score_algo(t_stack *stk, char flags, FILE *fp)
 			while (stk->b_len > 1 && min_score != 0)
 			{
 				pa(&stk, flags, fp);
-				execute_if_score_smaler(stk, flags, fp, &min_score);
+				min_score = execute_if_score_smaler(stk, flags, fp);
 				if (min_score == 0)
 				{
 					break;
 				}
 			}
 		}
-		execute_if_score_smaler(stk, flags, fp, &min_score);
+		min_score = execute_if_score_smaler(stk, flags, fp);
  		while (stk->a_len != stk->max_len)
 			pa(&stk, flags, fp);
 		// if (stk->max_len == 2)
@@ -288,7 +292,7 @@ void	score_algo(t_stack *stk, char flags, FILE *fp)
 		// }
 
 
-	}
+	// }
 	ft_printf("%d operations in total\n", stk->count);
 }
 
