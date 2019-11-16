@@ -224,10 +224,10 @@ void		who_has_lowest_score(t_stack *stk, int flags)
 	}
 
 
-	for (int i = 0; i < 11; ++i)
-	{
-		ft_printf("score_tab[%d]==%d\n",i, score_tab[i]);
-	}
+	// for (int i = 0; i < 11; ++i)
+	// {
+	// 	ft_printf("score_tab[%d]==%d\n",i, score_tab[i]);
+	// }
 }
 
 

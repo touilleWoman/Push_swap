@@ -30,6 +30,9 @@
 # define PUSH_SWAP  1 << 3
 # define COUNT 1 << 4
 
+/*
+** in checker, only a, a_len, b, b_len are used
+*/
 typedef	struct	stack
 {
 	int		*a;
@@ -38,6 +41,8 @@ typedef	struct	stack
 	int		b_len;
 	int		max_len;
 	int		count;
+	int		*origin_index;
+	int		*args;
 }				t_stack;
 
 
@@ -69,8 +74,9 @@ int				*parse_args_and_flags(int argc, char const **argv,
 									char *flags, int *args_nb);
 int				parse_instructions(t_list **lst, char flags);
 t_stack			*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags);
-t_stack			*init_stack(int *args, int nb_args);
-
+t_stack			*init_stack_checker(int *args, int nb_args);
+t_stack			*init_stack_push_swap(int *args, int nb_args,
+									int *origin_index, int *index);
 void			show_args(int *args, int args_nb);
 
 void			show_stack(t_stack *stk);

@@ -43,7 +43,7 @@ t_stack		*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *fl
 {
 	t_stack	*stk;
 
-	stk = init_stack(args, nb_args);
+	stk = init_stack_checker(args, nb_args);
 	if (stk == NULL)
 	{
 		ft_putendl_fd("Init stack failed!", 2);

@@ -85,6 +85,8 @@ int			*copy_int_array(int	*tab, int tab_len)
 	return (ret);
 }
 
+
+
 /*
 ** repalce args(list of integers) by a list of index,
 ** so it will be two stacks of indexs that we work on,
@@ -105,13 +107,13 @@ t_stack		*launch_push_swap(int *args, char *flags, int nb_args)
 	index = copy_int_array(origin_index, nb_args);
 	if (!index)
 		return (NULL);
-	stk = init_stack(index, nb_args);
+	stk = init_stack_push_swap(args, nb_args, origin_index, index);
 	if (stk == NULL)
 	{
 		ft_putendl_fd("Init stack failed!", 2);
 		return (NULL);
 	}
-	ft_printf("Inital score:%d\n", calculate_score(stk));
+	// ft_printf("Inital score:%d\n", calculate_score(stk));
 	read_flags_then_algo(stk, flags);
 	return (stk);
 }
