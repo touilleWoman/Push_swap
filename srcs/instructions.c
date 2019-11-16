@@ -18,7 +18,7 @@ void		sa(t_stack **stk, char flags, FILE *fp)
 	int		len;
 
 
-	len = (*stk)->a_len;F
+	len = (*stk)->a_len;
 	if (len > 1)
 	{
 		tmp = (*stk)->a[len - 1];
@@ -39,7 +39,6 @@ void		sb(t_stack **stk, char flags, FILE *fp)
 	len = (*stk)->b_len;
 	if (len > 1)
 	{
-
 		tmp = (*stk)->b[len - 1];
 		(*stk)->b[len - 1] = (*stk)->b[len - 2];
 		(*stk)->b[len - 2] = tmp;

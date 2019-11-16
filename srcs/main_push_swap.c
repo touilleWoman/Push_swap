@@ -12,6 +12,11 @@
 
 #include "push_swap.h"
 
+/*
+** args are the list of integers that we read from stdin or a file,
+** after excluding flags
+*/
+
 int main(int argc, char const **argv)
 {
 	int		*args;

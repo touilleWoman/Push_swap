@@ -43,8 +43,7 @@ typedef	struct	stack
 
 typedef	enum	e_instruction
 {
-	ERROR = 0,
-	SA,
+	SA = 0,
 	SB,
 	SS,
 	PA,
@@ -55,6 +54,7 @@ typedef	enum	e_instruction
 	RRA,
 	RRB,
 	RRR,
+	ERROR,
 }				t_instruction;
 
 
@@ -84,7 +84,7 @@ void			print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk);
 void			print_lst(t_list *lst);
 
-void	increasing_tab_sort(int *tab, int tab_len);
+void			sort_an_increasing_tab(int *tab, int tab_len);
 
 
 void			sa(t_stack **stk, char flags, FILE *fp);
@@ -98,14 +98,14 @@ void			rr(t_stack **stk, char flags, FILE *fp);
 void			rra(t_stack **stk, char flags, FILE *fp);
 void			rrb(t_stack **stk, char flags, FILE *fp);
 void			rrr(t_stack **stk, char flags, FILE *fp);
-void	algo(t_stack *stk, char flags, FILE *fp);
-int		top1(t_stack *stk, char a_or_b);
-int		top2(t_stack *stk, char a_or_b);
-int		find_median(int *tab, int tab_len);
-int		top1_exist(t_stack *stk, char a_or_b);
-int		top2_exist(t_stack *stk, char a_or_b);
-int		calculate_score(t_stack *stk);
-void		try_ins(t_stack *cp, int *score, int flags);
+void			algo(t_stack *stk, char flags, FILE *fp);
+int				top1(t_stack *stk, char a_or_b);
+int				top2(t_stack *stk, char a_or_b);
+int				find_median(int *tab, int tab_len);
+int				top1_exist(t_stack *stk, char a_or_b);
+int				top2_exist(t_stack *stk, char a_or_b);
+int				calculate_score(t_stack *stk);
+void			try_ins(t_stack *cp, int *score, int flags);
 
 
 

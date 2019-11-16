@@ -69,24 +69,42 @@ int 		*index_array_of_args(int *args, int nb_args)
 	int	*index;
 
 	ft_memcpy(sorted, args, sizeof(int) * nb_args);
-	increasing_tab_sort(sorted, nb_args);
+	sort_an_increasing_tab(sorted, nb_args);
 	index = create_index_array_succeed(sorted, args, nb_args);
 		return (index);
 }
 
+int			*copy_int_array(int	*tab, int tab_len)
+{
+	int		*ret;
+
+	ret = (int*)malloc(sizeof(int) * tab_len);
+	if (!ret)
+		return (NULL);
+	ft_memcpy(ret, tab, sizeof(int) * tab_len);
+	return (ret);
+}
+
+/*
+** repalce args(list of integers) by a list of index,
+** so it will be two stacks of indexs that we work on,
+** it will be easier to do the algo on consecutive index then on args
+** when coming to print results, with index, we can find the origin
+** integer then print.
+*/
 t_stack		*launch_push_swap(int *args, char *flags, int nb_args)
 {
 	t_stack		*stk;
 	int			*origin_index;
 	int			*index;
 
-	index = (int*)malloc(sizeof(int) * nb_args);
-	if (!index)
-		return (NULL);
-	origin_index = index_array_of_args(args, nb_args); //free origin index
+
+	origin_index = index_array_of_args(args, nb_args); //remember free origin index!!!
 	if (!origin_index)
 		return (NULL);
-	ft_memcpy(index, origin_index, sizeof(int) * nb_args);
+	index = copy_int_array(origin_index, nb_args);
+	if (!index)
+		return (NULL);
 	stk = init_stack(index, nb_args);
 	if (stk == NULL)
 	{

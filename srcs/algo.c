@@ -34,6 +34,31 @@ int		final_order_check(t_stack *stk)
 		return (FALSE);
 }
 
+int		both_ab_right_order(t_stack *stk)
+{
+	int		count;
+
+	count = stk->a_len - 1;
+	while (count)
+	{
+		if (stk->a[count] > stk->a[count - 1])
+			break;
+		count--;
+	}
+	if (count != 0)
+		return (FALSE);
+	count = stk->b_len - 1;
+	while (count)
+	{
+		if (stk->b[count] < stk->b[count - 1])
+			break;
+		count--;
+	}
+	if (count != 0)
+		return (FALSE);
+	return (TRUE);
+}
+
 /*
 ** I want to swap or rotate a or b, but if rr or ss shold be used,
 ** it will choose rr or ss rather than sa ra sb rb
@@ -143,47 +168,47 @@ void	one_round(t_stack *stk, char flags, FILE *fp)
 
 // }
 
-int			find_min(int *score, int len, int *min)
+int			find_min(int *score_tab, int len, int *min_score)
 {
 	int		i;
-	int		min_index;
+	int		min_fun_index;
 
-	*min = score[0];
-	i = 1;
-	min_index = 0;
+	i = 0;
+	min_fun_index = 0;
 	while(i < len)
 	{
-		if (score[i] < *min)
+		if (score_tab[i] < *min_score)
 		{
-			min_index = 1;
-			*min = score[i];
+			min_fun_index = i;
+			*min_score = score_tab[i];
 		}
 		i++;
 	}
-	return(min_index);
+	return(min_fun_index);
 
 }
 
 void		who_has_lowest_score(t_stack *stk, int flags)
 {
 	(void)flags;
-	int	score[11];
+	int	score_tab[11];
 	int	min_score;
-	int	min_index;
+	int	min_fun_index;
 	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
 	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
 	int	i;
 
 	i = 0;
-	min_score = 100;
-	try_ins(stk, score, flags);
-	min_index = find_min(score, 11, &min_score);
+	min_score = 1000;
+	try_ins(stk, score_tab, flags);
+	min_fun_index = find_min(score_tab, INSTRUCTION_NB, &min_score);
+	ft_printf("functions index :%d, min_score=%d\n", min_fun_index, min_score);
 	if (min_score < calculate_score(stk))
 	{
 		while (i < INSTRUCTION_NB)
 		{
-			if (funs[i].ins == min_index)
+			if (funs[i].ins == min_fun_index)
 			{
 				funs[i].f(&stk, flags, NULL);
 				break;
@@ -191,27 +216,26 @@ void		who_has_lowest_score(t_stack *stk, int flags)
 			i++;
 		}
 	}
-	ft_printf("functions index :%d, min_score=%d\n", i, min_score);
 
 
-	// for (int i = 0; i < 11; ++i)
-	// {
-	// 	ft_printf("score[%d]==%d\n",i, score[i]);
-	// }
+	for (int i = 0; i < 11; ++i)
+	{
+		ft_printf("score_tab[%d]==%d\n",i, score_tab[i]);
+	}
 }
 
 
 void	score_algo(t_stack *stk, char flags, FILE *fp)
 {
 	(void)fp;
-	if  (final_order_check(stk) == FALSE)
+	while  (final_order_check(stk) == FALSE)
 	{
-		// while(both_ab_right_order(stk) == FALSE)
-		// {
+		while(both_ab_right_order(stk) == FALSE)
+		{
 			who_has_lowest_score(stk, flags);
-		// }
-		// while (stk->a_len != stk->max_len)
-		// 	pa();
+		}
+		while (stk->a_len != stk->max_len)
+			pa(&stk, flags, NULL);
 		// if (stk->max_len == 2)
 		// 	sa();
 		// else

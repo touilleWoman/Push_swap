@@ -83,7 +83,7 @@ int		top2(t_stack *stk, char a_or_b)
 /*
 ** sort a increasing array
 */
-void	increasing_tab_sort(int *tab, int tab_len)
+void	sort_an_increasing_tab(int *tab, int tab_len)
 {
 	int	i;
 	int	j;
@@ -120,7 +120,7 @@ int 	find_median(int *tab, int tab_len)
 		copy_tab[i] = tab[i];
 		i++;
 	}
-	increasing_tab_sort(copy_tab, tab_len);
+	sort_an_increasing_tab(copy_tab, tab_len);
 	if (tab_len % 2 == 0)
 		return (copy_tab[tab_len / 2]);
 	else
