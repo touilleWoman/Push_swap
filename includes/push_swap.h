@@ -111,6 +111,7 @@ int				top1_exist(t_stack *stk, char a_or_b);
 int				top2_exist(t_stack *stk, char a_or_b);
 int				calculate_score(t_stack *stk);
 int				try_ins(t_stack *cp, int *score);
+t_stack 	*copy_stack(t_stack *stk);
 
 
 void			free_push_swap_stack(t_stack *stk);

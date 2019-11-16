@@ -20,7 +20,12 @@ void	free_push_swap_stack(t_stack *stk)
 		stk->a != NULL ? free(stk->a) : 0;
 		stk->origin_index != NULL ? free(stk->origin_index) : 0;
 		stk->args != NULL ? free(stk->args) : 0;
+		stk->b = NULL;
+		stk->a = NULL;
+		stk->origin_index = NULL;
+		stk->args = NULL;
 		free(stk);
+		stk = NULL;
 	}
 }
 
@@ -67,4 +72,28 @@ t_stack			*init_stack_push_swap(int *args, int nb_args,
 	stk->origin_index = origin_index;
 	stk->args = args;
 	return (stk);
+}
+
+t_stack 	*copy_stack(t_stack *stk)
+{
+	t_stack	*cp;
+
+	cp = (t_stack*)malloc(sizeof(t_stack));
+	if (!cp)
+		return (NULL);
+	ft_memcpy(cp, stk, sizeof(t_stack));
+	cp->a = (int*)malloc(sizeof(int) * stk->max_len);
+	cp->b = (int*)malloc(sizeof(int) * stk->max_len);
+	cp->origin_index = (int*)malloc(sizeof(int) * stk->max_len);
+	cp->args = (int*)malloc(sizeof(int) * stk->max_len);
+	if (!cp->a || !cp->b || !cp->origin_index || !cp->args)
+	{
+		free_push_swap_stack(cp);
+		return (NULL);
+	}
+	ft_memcpy(cp->a, stk->a, sizeof(int) * stk->max_len);
+	ft_memcpy(cp->b, stk->b, sizeof(int) * stk->max_len);
+	ft_memcpy(cp->origin_index, stk->origin_index, sizeof(int) * stk->max_len);
+	ft_memcpy(cp->args, stk->args, sizeof(int) * stk->max_len);
+	return (cp);
 }

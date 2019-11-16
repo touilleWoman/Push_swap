@@ -236,7 +236,6 @@ void		who_has_lowest_score(t_stack *stk, int flags)
 
 void	score_algo(t_stack *stk, char flags, FILE *fp)
 {
-	(void)fp;
 	while  (final_order_check(stk) == FALSE)
 	{
 		while(both_ab_right_order(stk) == FALSE)
@@ -244,7 +243,7 @@ void	score_algo(t_stack *stk, char flags, FILE *fp)
 			who_has_lowest_score(stk, flags);
 		}
 		while (stk->a_len != stk->max_len)
-			pa(&stk, flags, NULL);
+			pa(&stk, flags, fp);
 		// if (stk->max_len == 2)
 		// 	sa();
 		// else
@@ -259,10 +258,13 @@ void	score_algo(t_stack *stk, char flags, FILE *fp)
 
 void	algo(t_stack *stk, char flags, FILE *fp)
 {
-	// find_median(stk->a, stk->a_len);
+	// t_stack *cp;
+
+	// cp = copy_stack(stk);
 	// while (final_order_check(stk) == FALSE)
 	// 	one_round(stk, flags, fp);
 	// ft_printf("%d operations in total\n", stk->count);
 
-	score_algo(stk, flags, fp);
+	score_algo(cp, flags, fp);
+
 }

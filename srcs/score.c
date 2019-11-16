@@ -12,8 +12,7 @@
 
 #include "push_swap.h"
 
-
-t_stack 	*copy_stack(t_stack *stk)
+t_stack 	*incomplete_copy_stack_for_try(t_stack *stk)
 {
 	t_stack	*cp;
 
@@ -49,18 +48,14 @@ int 	try_ins(t_stack *stk, int *score)
 	int	i;
 	t_stack *cp;
 
-
 	i = 0;
 	while (i < INSTRUCTION_NB)
 	{
-		cp = copy_stack(stk);
+		cp = incomplete_copy_stack_for_try(stk);
 		if (!cp)
 			return (FALSE);
 		funs[i].f(&cp, 0 , NULL);
 		score[i] = calculate_score(cp);
-		// if (score[i] == 0)
-		// 	break;
-		// printf("run score test%d\n", score);
 		free_push_swap_stack(cp);
 		i++;
 	}
