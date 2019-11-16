@@ -47,6 +47,8 @@ int		both_ab_right_order(t_stack *stk)
 	}
 	if (count != 0)
 		return (FALSE);
+	if (stk->b_len == 0)
+		return (TRUE);
 	count = stk->b_len - 1;
 	while (count)
 	{
@@ -215,6 +217,10 @@ void		who_has_lowest_score(t_stack *stk, int flags)
 			}
 			i++;
 		}
+	}
+	else
+	{
+		pb(&stk, flags, NULL);
 	}
 
 

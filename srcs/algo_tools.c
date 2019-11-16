@@ -140,7 +140,7 @@ int		calculate_score(t_stack *stk)
 	score = 0;
 	if (al > 0 && bl > 0)
 	{
-		if (stk->a[0] - stk->b[bl - 1] != 1)
+		if (stk->a[al - 1] - stk->b[bl - 1] != 1)
 			score++;
 	}
 	while (al > 1)
