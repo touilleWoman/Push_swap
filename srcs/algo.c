@@ -203,25 +203,28 @@ void		who_has_lowest_score(t_stack *stk, int flags)
 
 	i = 0;
 	min_score = 1000;
-	try_ins(stk, score_tab, flags);
-	min_fun_index = find_min(score_tab, INSTRUCTION_NB, &min_score);
-	ft_printf("functions index :%d, min_score=%d\n", min_fun_index, min_score);
-	if (min_score < calculate_score(stk))
+	if (try_ins(stk, score_tab))
 	{
-		while (i < INSTRUCTION_NB)
+		min_fun_index = find_min(score_tab, INSTRUCTION_NB, &min_score);
+		ft_printf("functions index :%d, min_score=%d\n", min_fun_index, min_score);
+		if (min_score < calculate_score(stk))
 		{
-			if (funs[i].ins == min_fun_index)
+			while (i < INSTRUCTION_NB)
 			{
-				funs[i].f(&stk, flags, NULL);
-				break;
+				if (funs[i].ins == min_fun_index)
+				{
+					funs[i].f(&stk, flags, NULL);
+					break;
+				}
+				i++;
 			}
-			i++;
 		}
-	}
-	else
-	{
-		pb(&stk, flags, NULL);
-	}
+		else
+		{
+			pb(&stk, flags, NULL);
+		}
+	};
+
 
 
 	// for (int i = 0; i < 11; ++i)

@@ -12,6 +12,18 @@
 
 #include "push_swap.h"
 
+void	free_push_swap_stack(t_stack *stk)
+{
+	if (stk != NULL)
+	{
+		stk->b != NULL ? free(stk->b) : 0;
+		stk->a != NULL ? free(stk->a) : 0;
+		stk->origin_index != NULL ? free(stk->origin_index) : 0;
+		stk->args != NULL ? free(stk->args) : 0;
+		free(stk);
+	}
+}
+
 t_stack			*init_stack_checker(int *args, int nb_args)
 {
 	t_stack		*stk;

@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
+
 /*
 ** args are the list of integers that we read from stdin or a file,
 ** after excluding flags
 */
-
 int main(int argc, char const **argv)
 {
 	int		*args;
@@ -36,6 +36,6 @@ int main(int argc, char const **argv)
 		return (0);
 	}
 	stk = launch_push_swap(args, &flags, nb_args);
-	free_all(stk, NULL, args);
+	free_push_swap_stack(stk);
 	return (0);
 }

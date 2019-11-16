@@ -39,9 +39,7 @@ void	read_flags_then_algo(t_stack *stk, char *flags)
 		fclose(fp);
 }
 
-
-
-int		*create_index_array_succeed(int *sorted, int *args, int nb_args)
+int		*create_index_array(int *sorted, int *args, int nb_args)
 {
 	int		*index;
 	int		i;
@@ -65,13 +63,17 @@ int		*create_index_array_succeed(int *sorted, int *args, int nb_args)
 
 int 		*index_array_of_args(int *args, int nb_args)
 {
-	int sorted[nb_args];//change to malloc later???!!!
+	int *sorted;
 	int	*index;
 
+	sorted = (int*)malloc(sizeof(int) * nb_args);
+	if (!sorted)
+		return (NULL);
 	ft_memcpy(sorted, args, sizeof(int) * nb_args);
 	sort_an_increasing_tab(sorted, nb_args);
-	index = create_index_array_succeed(sorted, args, nb_args);
-		return (index);
+	index = create_index_array(sorted, args, nb_args);
+	free(sorted);
+	return (index);
 }
 
 int			*copy_int_array(int	*tab, int tab_len)
@@ -84,7 +86,6 @@ int			*copy_int_array(int	*tab, int tab_len)
 	ft_memcpy(ret, tab, sizeof(int) * tab_len);
 	return (ret);
 }
-
 
 
 /*
@@ -101,17 +102,20 @@ t_stack		*launch_push_swap(int *args, char *flags, int nb_args)
 	int			*index;
 
 
-	origin_index = index_array_of_args(args, nb_args); //remember free origin index!!!
+	origin_index = index_array_of_args(args, nb_args);
 	if (!origin_index)
 		return (NULL);
 	index = copy_int_array(origin_index, nb_args);
 	if (!index)
+	{
+		free(origin_index);
 		return (NULL);
+	}
 	stk = init_stack_push_swap(args, nb_args, origin_index, index);
 	if (stk == NULL)
 	{
 		ft_putendl_fd("Init stack failed!", 2);
-		return (NULL);
+		return (stk);
 	}
 	// ft_printf("Inital score:%d\n", calculate_score(stk));
 	read_flags_then_algo(stk, flags);

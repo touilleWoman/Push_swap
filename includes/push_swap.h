@@ -83,7 +83,6 @@ void			show_stack(t_stack *stk);
 
 void			usage(void);
 void			free_list(t_list *lst);
-void			free_all(t_stack *stk, t_list *ins_lst, int *args);
 long long		a_to_long(const char *str);
 int				is_flag_then_activate(char const *str, char *flags);
 void			print_according_to_flags(char flags, FILE *fp, char *str,
@@ -111,9 +110,10 @@ int				find_median(int *tab, int tab_len);
 int				top1_exist(t_stack *stk, char a_or_b);
 int				top2_exist(t_stack *stk, char a_or_b);
 int				calculate_score(t_stack *stk);
-void			try_ins(t_stack *cp, int *score, int flags);
+int				try_ins(t_stack *cp, int *score);
 
 
+void			free_push_swap_stack(t_stack *stk);
 
 t_stack		*launch_push_swap(int *args, char *flags, int args_nb);
 

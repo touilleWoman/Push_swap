@@ -36,6 +36,19 @@ void		usage_then_quit(void)
 	exit(0);
 }
 
+
+void	free_all(t_stack *stk, t_list *ins_lst)
+{
+	if (stk != NULL)
+	{
+		stk->b != NULL ? free(stk->b) : 0;
+		stk->a != NULL ? free(stk->a) : 0;
+		free(stk);
+	}
+	// args != NULL ? free(args) : 0;
+	ins_lst != NULL ? free_list(ins_lst) : 0;
+}
+
 int			main(int argc, char const **argv)
 {
 	int		*args;
@@ -53,12 +66,12 @@ int			main(int argc, char const **argv)
 	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
 	if (parse_instructions(&ins_lst, flags) == FALSE)
 	{
-		free_all(stk, ins_lst, args);
+		free_all(stk, ins_lst);
 		ft_putendl_fd("Error", 2);
 		return (0);
 	}
 	stk = execute_instructions(ins_lst, args, nb_args, &flags);
 	check_order(stk, nb_args);
-	free_all(stk, ins_lst, args);
+	free_all(stk, ins_lst);
 	return (0);
 }
