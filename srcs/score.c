@@ -40,16 +40,38 @@ t_stack 	*incomplete_copy_stack_for_try(t_stack *stk)
 	return (cp);
 }
 
+// int 	try_ins(t_stack *stk, int *score)
+// {
+// 	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
+// 	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
+// 	};
+// 	int	i;
+// 	t_stack *cp;
+
+// 	i = 0;
+// 	while (i < INSTRUCTION_NB)
+// 	{
+// 		cp = incomplete_copy_stack_for_try(stk);
+// 		if (!cp)
+// 			return (FALSE);
+// 		funs[i].f(&cp, 0 , NULL);
+// 		score[i] = calculate_score(cp);
+// 		free_push_swap_stack(cp);
+// 		i++;
+// 	}
+// 	return (TRUE);
+// }
+
 int 	try_ins(t_stack *stk, int *score)
 {
-	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
-	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
+	t_funs	funs[9] = {{SA, sa}, {SB, sb}, {SS, ss},
+	{RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
 	int	i;
 	t_stack *cp;
 
 	i = 0;
-	while (i < INSTRUCTION_NB)
+	while (i < 9)
 	{
 		cp = incomplete_copy_stack_for_try(stk);
 		if (!cp)
