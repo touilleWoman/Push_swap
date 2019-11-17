@@ -104,17 +104,12 @@ void			rr(t_stack **stk, char flags, FILE *fp);
 void			rra(t_stack **stk, char flags, FILE *fp);
 void			rrb(t_stack **stk, char flags, FILE *fp);
 void			rrr(t_stack **stk, char flags, FILE *fp);
-void			algo(t_stack *stk, char flags, FILE *fp);
-int				top1(t_stack *stk, char a_or_b);
-int				top2(t_stack *stk, char a_or_b);
-int				find_median(int *tab, int tab_len);
-int				top1_exist(t_stack *stk, char a_or_b);
-int				top2_exist(t_stack *stk, char a_or_b);
 int				calculate_score(t_stack *stk);
 int				try_ins(t_stack *cp, int *score);
 t_stack 	*copy_stack(t_stack *stk);
 int		both_ab_right_order(t_stack *stk);
 int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp);
+void	choose_algo(t_stack *stk, char flags, FILE *fp);
 
 
 void			free_push_swap_stack(t_stack *stk);

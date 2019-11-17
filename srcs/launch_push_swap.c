@@ -17,7 +17,7 @@
 ** INS_STDOUT flag to print on stdout
 ** COUNT flag to count each instruction when activated
 */
-void	read_flags_then_algo(t_stack *stk, char *flags)
+void	read_flags_then_choose_algo(t_stack *stk, char *flags)
 {
 	FILE		*fp;
 
@@ -34,7 +34,7 @@ void	read_flags_then_algo(t_stack *stk, char *flags)
 	}
 	else
 		(*flags) = (*flags) | INS_STDOUT;
-	algo(stk, *flags, fp);
+	choose_algo(stk, *flags, fp);
 	if ((*flags) & F_FLAG)
 		fclose(fp);
 }
@@ -117,7 +117,6 @@ t_stack		*launch_push_swap(int *args, char *flags, int nb_args)
 		ft_putendl_fd("Init stack failed!", 2);
 		return (stk);
 	}
-	// ft_printf("Inital score:%d\n", calculate_score(stk));
-	read_flags_then_algo(stk, flags);
+	read_flags_then_choose_algo(stk, flags);
 	return (stk);
 }

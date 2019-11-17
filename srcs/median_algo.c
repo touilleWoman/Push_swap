@@ -23,7 +23,6 @@ void 	push_median(t_stack *stk, char flags, FILE *fp, int median)
 {
 	int value_pos;
 
-
 	value_pos = position_on_stack(stk->a, stk->a_len, median);
 	if (value_pos < 0)
 		return ;
@@ -47,6 +46,8 @@ void	median_algo(t_stack *stk, char flags, FILE *fp)
 	int		diff;
 	int		need_two_round;
 
+	int		i = 0;
+
 	min_score = 1000;
 	median = stk->max_len / 2;
 	diff = 1;
@@ -54,7 +55,7 @@ void	median_algo(t_stack *stk, char flags, FILE *fp)
 	min_score = execute_if_score_smaler(stk, flags, fp);
 	if (min_score != 0)
 		push_median(stk, flags, fp, median);
-	while (both_ab_right_order(stk) == FALSE && min_score != 0)
+	while (stk->a_len != 0)
 	{
 		while (stk->a[stk->a_len - 1] - median != diff && stk->a[stk->a_len - 1] - median != -diff)
 			ra(&stk, flags, fp);
@@ -67,8 +68,9 @@ void	median_algo(t_stack *stk, char flags, FILE *fp)
 			diff++;
 			need_two_round = 0;
 		}
+		i++;
 	}
  	while (stk->a_len != stk->max_len)
 		pa(&stk, flags, fp);
-	ft_printf("%d operations in total\n", stk->count);
+	// ft_printf("%d operations in total\n", stk->count);
 }
