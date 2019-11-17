@@ -247,54 +247,141 @@ int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 	return (min_score);
 }
 
-void	score_algo(t_stack *stk, char flags, FILE *fp)
+void 	push_half_to_b(t_stack *stk, char flags, FILE *fp, int median)
+{
+	int		i;
+	int	min_fun_index;
+	int	min_score;
+
+	min_fun_index = 0;
+	min_score = 1000;
+	i = 0;
+	while (i < median)
+	{
+		if (stk->a[stk->a_len - 1] < median)
+		{
+			pb(&stk, flags, fp);
+			min_score = execute_if_score_smaler(stk, flags, fp);
+			i++;
+		}
+		rra(&stk, flags, fp);
+	}
+}
+
+void 	push_back_to_a(t_stack *stk, char flags, FILE *fp)
 {
 	int	min_fun_index;
 	int	min_score;
 
 	min_fun_index = 0;
 	min_score = 1000;
-
-	// while  (final_order_check(stk) == FALSE)
-	// {
+	while (stk->a_len < stk->max_len - 1)
+	{
+		pa(&stk, flags, fp);
 		min_score = execute_if_score_smaler(stk, flags, fp);
-		while(min_score != 0)
-		{
-			while (stk->a_len > 1  && min_score != 0)
-			{
-				pb(&stk, flags, fp);
-				min_score = execute_if_score_smaler(stk, flags, fp);
-				// printf("============%d\n", min_score);
-
-				if (min_score == 0)
-				{
-					break;
-				}
-			}
-			while (stk->b_len > 1 && min_score != 0)
-			{
-				pa(&stk, flags, fp);
-				min_score = execute_if_score_smaler(stk, flags, fp);
-				if (min_score == 0)
-				{
-					break;
-				}
-			}
-		}
-		min_score = execute_if_score_smaler(stk, flags, fp);
- 		while (stk->a_len != stk->max_len)
-			pa(&stk, flags, fp);
-		// if (stk->max_len == 2)
-		// 	sa();
-		// else
-		// {
-		// 	// push_back_to_a()
-		// }
-
-
-	// }
-	ft_printf("%d operations in total\n", stk->count);
+	}
 }
+
+void 	push_median(t_stack *stk, char flags, FILE *fp, int median)
+{
+	// int		i;
+	// int	min_fun_index;
+	// int	min_score;
+
+	// min_fun_index = 0;
+	// min_score = 1000;
+	// i = 0;
+
+	while (stk->a[stk->a_len - 1] != median)
+	{
+		rra(&stk, flags, fp);
+	}
+	pb(&stk, flags, fp);
+}
+
+void	median_algo(t_stack *stk, char flags, FILE *fp)
+{
+	int		median;
+	int	min_fun_index;
+	int	min_score;
+	int		diff;
+	int		need_two;
+
+	min_fun_index = 0;
+	min_score = 1000;
+	median = stk->max_len / 2;
+	diff = 1;
+	need_two = 0;
+	min_score = execute_if_score_smaler(stk, flags, fp);
+	if (min_score != 0)
+		push_median(stk, flags, fp, median);
+
+	while (stk->b_len != stk->max_len && min_score != 0)
+	{
+		while (stk->a[stk->a_len - 1] - median != diff && stk->a[stk->a_len - 1] - median != -diff)
+		{
+			ft_printf("diff========%d\n", diff);
+			ra(&stk, flags, fp);
+		}
+		need_two++;
+		pb(&stk, flags, fp);
+		if (stk->b[stk->b_len - 1] < stk->b[stk->b_len - 2])
+		{
+			rb(&stk, flags, fp);
+		}
+		if (need_two == 2)
+		{
+			diff++;
+			need_two = 0;
+		}
+	}
+ 	while (stk->a_len != stk->max_len)
+		pa(&stk, flags, fp);
+	ft_printf("%d operations in total\n", stk->count);
+
+
+}
+
+// void	perfect_b_algo(t_stack *stk, char flags, FILE *fp)
+// {
+// 	int	min_fun_index;
+// 	int	min_score;
+// 	int 	to_b = 0;
+
+
+// 	min_fun_index = 0;
+// 	min_score = 1000;
+// 	min_score = execute_if_score_smaler(stk, flags, fp);
+// 	while(to_b < stk->max_len - 1)
+// 	{
+// 		while (stk->a_len > 1  && min_score != 0)
+// 		{
+// 			pb(&stk, flags, fp);
+// 			min_score = execute_if_score_smaler(stk, flags, fp);
+// 			// printf("============%d\n", min_score);
+
+// 		if (min_score == 0)
+// 			{
+// 				break;
+// 			}
+// 		}
+// 		while (stk->b_len > 1 && min_score != 0)
+// 		{
+// 			pa(&stk, flags, fp);
+// 			min_score = execute_if_score_smaler(stk, flags, fp);
+// 			if (min_score == 0)
+// 			{
+// 				break;
+// 			}
+// 		}
+// 	}
+// 	while (stk->a_len != stk->max_len)
+// 		pa(&stk, flags, fp);
+
+
+// }
+
+
 
 void	algo(t_stack *stk, char flags, FILE *fp)
 {
@@ -304,7 +391,7 @@ void	algo(t_stack *stk, char flags, FILE *fp)
 	// while (final_order_check(stk) == FALSE)
 	// 	one_round(stk, flags, fp);
 	// ft_printf("%d operations in total\n", stk->count);
-
-	score_algo(stk, flags, fp);
+	median_algo(stk, flags, fp);
+	// perfect_b_algo(stk, flags, fp);
 
 }
