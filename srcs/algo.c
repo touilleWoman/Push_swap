@@ -65,89 +65,6 @@ int		both_ab_right_order(t_stack *stk)
 ** I want to swap or rotate a or b, but if rr or ss shold be used,
 ** it will choose rr or ss rather than sa ra sb rb
 */
-int		swap_or_rotate_a_done(t_stack *stk, FILE *fp, char flags)
-{
-
-	if(top2_exist(stk, 'a') && top1(stk, 'a') > top2(stk, 'a'))
-	{
-		if (top1(stk, 'a') > stk->a[0])
-		{
-			if (top2_exist(stk, 'b') &&  top1(stk, 'b') < top2(stk, 'b'))
-				rr(&stk, flags, fp);
-			else
-				ra(&stk, flags, fp);
-		}
-		else
-		{
-			if (top2_exist(stk, 'b') && top1(stk, 'b') < top2(stk, 'b'))
-				ss(&stk, flags, fp);
-			else
-				sa(&stk, flags, fp);
-		}
-		return (TRUE);
-	}
-	else
-		return (FALSE);
-}
-
-int		swap_or_rotate_b_done(t_stack *stk, FILE *fp, char flags)
-{
-	if(top2_exist(stk, 'b') && top1(stk, 'b') < top2(stk, 'b'))
-	{
-		if (top1(stk, 'b') < stk->b[0])
-		{
-			if (top2_exist(stk, 'a') && top1(stk, 'a') > top2(stk, 'a'))
-				rr(&stk, flags, fp);
-			else
-				rb(&stk, flags, fp);
-		}
-		else
-		{
-			if ( top2_exist(stk, 'a') && top1(stk, 'a') > top2(stk, 'a'))
-				ss(&stk, flags, fp);
-			else
-				sb(&stk, flags, fp);
-		}
-		return (TRUE);
-	}
-	else
-		return (FALSE);
-}
-
-void	one_round(t_stack *stk, char flags, FILE *fp)
-{
-	while (stk->a_len > 1)
-	{
-		while (swap_or_rotate_a_done(stk, fp, flags));
-		if (final_order_check(stk))
-			return;
-		pb(&stk, flags, fp);
-		swap_or_rotate_b_done(stk, fp, flags);
-	}
-	while (stk->b_len > 1)
-	{
-		while (swap_or_rotate_b_done(stk, fp, flags));
-		if (final_order_check(stk))
-			return;
-		pa(&stk, flags, fp);
-		swap_or_rotate_b_done(stk, fp, flags);
-	}
-	pa(&stk, flags, fp);
-}
-
-// void	swap_or_rotate_a(t_stack *stk, int median)
-// {
-// 	int top1;
-// 	int	top2;
-// 	int	top3;
-
-// 	if (top)
-// 	{
-// 		/* code */
-// 	}
-
-
-// }
 
 
 
@@ -195,21 +112,9 @@ void		execute_ins(int fun_index, int flags, FILE *fp, t_stack *stk)
 	t_funs	funs[9] = {{SA, sa}, {SB, sb}, {SS, ss}, {RA, ra}, {RB, rb},
 	{RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
-	// int	i;
 
-	// i = 0;
-	// while (i < 9)
-	// {
-	// 	// if (funs[i].ins == fun_index)
-	// 	// {
-	// 		funs[i].f(&stk, flags, fp);
-	// 		// break;
-	// 	}
-	// 	i++;
-	// }
 	funs[fun_index].f(&stk, flags, fp);
-	ft_printf("fun_index:%d\n", fun_index);
-	//
+	// ft_printf("fun_index:%d\n", fun_index);
 }
 
 int			get_min_score(t_stack *stk, int *min_fun_index, int *min_score)
@@ -280,66 +185,6 @@ void 	push_back_to_a(t_stack *stk, char flags, FILE *fp)
 		pa(&stk, flags, fp);
 		min_score = execute_if_score_smaler(stk, flags, fp);
 	}
-}
-
-void 	push_median(t_stack *stk, char flags, FILE *fp, int median)
-{
-	// int		i;
-	// int	min_fun_index;
-	// int	min_score;
-
-	// min_fun_index = 0;
-	// min_score = 1000;
-	// i = 0;
-
-	while (stk->a[stk->a_len - 1] != median)
-	{
-		rra(&stk, flags, fp);
-	}
-	pb(&stk, flags, fp);
-}
-
-void	median_algo(t_stack *stk, char flags, FILE *fp)
-{
-	int		median;
-	int	min_fun_index;
-	int	min_score;
-	int		diff;
-	int		need_two;
-
-	min_fun_index = 0;
-	min_score = 1000;
-	median = stk->max_len / 2;
-	diff = 1;
-	need_two = 0;
-	min_score = execute_if_score_smaler(stk, flags, fp);
-	if (min_score != 0)
-		push_median(stk, flags, fp, median);
-
-	while (stk->b_len != stk->max_len && min_score != 0)
-	{
-		while (stk->a[stk->a_len - 1] - median != diff && stk->a[stk->a_len - 1] - median != -diff)
-		{
-			ft_printf("diff========%d\n", diff);
-			ra(&stk, flags, fp);
-		}
-		need_two++;
-		pb(&stk, flags, fp);
-		if (stk->b[stk->b_len - 1] < stk->b[stk->b_len - 2])
-		{
-			rb(&stk, flags, fp);
-		}
-		if (need_two == 2)
-		{
-			diff++;
-			need_two = 0;
-		}
-	}
- 	while (stk->a_len != stk->max_len)
-		pa(&stk, flags, fp);
-	ft_printf("%d operations in total\n", stk->count);
-
-
 }
 
 // void	perfect_b_algo(t_stack *stk, char flags, FILE *fp)

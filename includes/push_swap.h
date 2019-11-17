@@ -90,6 +90,7 @@ void			print_according_to_flags(char flags, FILE *fp, char *str,
 void			print_lst(t_list *lst);
 
 void			sort_an_increasing_tab(int *tab, int tab_len);
+void	median_algo(t_stack *stk, char flags, FILE *fp);
 
 
 void			sa(t_stack **stk, char flags, FILE *fp);
@@ -112,6 +113,8 @@ int				top2_exist(t_stack *stk, char a_or_b);
 int				calculate_score(t_stack *stk);
 int				try_ins(t_stack *cp, int *score);
 t_stack 	*copy_stack(t_stack *stk);
+int		both_ab_right_order(t_stack *stk);
+int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp);
 
 
 void			free_push_swap_stack(t_stack *stk);
