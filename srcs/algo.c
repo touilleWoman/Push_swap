@@ -61,13 +61,6 @@ int		both_ab_right_order(t_stack *stk)
 	return (TRUE);
 }
 
-/*
-** I want to swap or rotate a or b, but if rr or ss shold be used,
-** it will choose rr or ss rather than sa ra sb rb
-*/
-
-
-
 int			find_min(int *score_tab, int len, int *min_score)
 {
 	int		i;
@@ -89,24 +82,7 @@ int			find_min(int *score_tab, int len, int *min_score)
 
 }
 
-// void		execute_ins(int fun_index, int flags, FILE *fp, t_stack *stk)
-// {
-// 	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
-// 	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
-// 	};
-// 	int	i;
 
-// 	i = 0;
-// 	while (i < INSTRUCTION_NB)
-// 	{
-// 		if (funs[i].ins == fun_index)
-// 		{
-// 			funs[i].f(&stk, flags, fp);
-// 			break;
-// 		}
-// 		i++;
-// 	}
-// }
 void		execute_ins(int fun_index, int flags, FILE *fp, t_stack *stk)
 {
 	t_funs	funs[9] = {{SA, sa}, {SB, sb}, {SS, ss}, {RA, ra}, {RB, rb},
@@ -187,44 +163,23 @@ void 	push_back_to_a(t_stack *stk, char flags, FILE *fp)
 	}
 }
 
-// void	perfect_b_algo(t_stack *stk, char flags, FILE *fp)
-// {
-// 	int	min_fun_index;
-// 	int	min_score;
-// 	int 	to_b = 0;
+void	best_score_algo(t_stack *stk, char flags, FILE *fp)
+{
+	int		min_score;
+	int		median;
 
-
-// 	min_fun_index = 0;
-// 	min_score = 1000;
-// 	min_score = execute_if_score_smaler(stk, flags, fp);
-// 	while(to_b < stk->max_len - 1)
-// 	{
-// 		while (stk->a_len > 1  && min_score != 0)
-// 		{
-// 			pb(&stk, flags, fp);
-// 			min_score = execute_if_score_smaler(stk, flags, fp);
-// 			// printf("============%d\n", min_score);
-
-// 		if (min_score == 0)
-// 			{
-// 				break;
-// 			}
-// 		}
-// 		while (stk->b_len > 1 && min_score != 0)
-// 		{
-// 			pa(&stk, flags, fp);
-// 			min_score = execute_if_score_smaler(stk, flags, fp);
-// 			if (min_score == 0)
-// 			{
-// 				break;
-// 			}
-// 		}
-// 	}
-// 	while (stk->a_len != stk->max_len)
-// 		pa(&stk, flags, fp);
-
-
-// }
+	median = stk->max_len / 2;
+	min_score = 1000;
+	min_score = execute_if_score_smaler(stk, flags, fp);
+	while(both_ab_right_order(stk) == FALSE && min_score)
+	{
+		push_half_to_b(stk, flags, fp, median);
+		push_back_to_a(stk, flags, fp);
+	}
+	while (stk->a_len != stk->max_len)
+		pa(&stk, flags, fp);
+	ft_printf("%d operations in total\n", stk->count);
+}
 
 
 
@@ -233,10 +188,8 @@ void	algo(t_stack *stk, char flags, FILE *fp)
 	// t_stack *cp;
 
 	// cp = copy_stack(stk);
-	// while (final_order_check(stk) == FALSE)
-	// 	one_round(stk, flags, fp);
 	// ft_printf("%d operations in total\n", stk->count);
-	median_algo(stk, flags, fp);
-	// perfect_b_algo(stk, flags, fp);
+	// median_algo(stk, flags, fp);
+	best_score_algo(stk, flags, fp);
 
 }
