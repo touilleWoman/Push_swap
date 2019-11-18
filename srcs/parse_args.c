@@ -12,71 +12,27 @@
 
 #include "push_swap.h"
 
-int			is_integer_string(const char *str)
-{
-	int			i;
-	int			len;
-	long long	nb_long;
-
-	i = 0;
-	len = ft_strlen(str);
-	if (len > 11)
-		return (FALSE);
-	if ((str[i] == '+') || (str[i] == '-'))
-		i++;
-	while (i < len)
-	{
-		if (ft_isdigit(str[i]) == FALSE)
-			return (FALSE);
-		i++;
-	}
-	if (len == 11 || len == 10)
-	{
-		nb_long = a_to_long(str);
-		if (nb_long > 2147483647 || nb_long < -2147483648)
-			return (FALSE);
-	}
-	return (TRUE);
-}
-
-int			args_check(int argc, char const **argv, int *args_nb)
-{
-	int		i;
-
-	i = 1;
-	while (i < argc)
-	{
-		if (ft_strcmp(argv[i], "-v") == 0
-			|| ft_strcmp(argv[i], "-f") == 0)
-			(*args_nb)--;
-		else if (is_integer_string(argv[i]) == FALSE)
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
-}
-
 /*
 **	args_nb is the number of integers, not including flags.
 **  Initialed as "argc -1", then it will change in args_check()
 */
-int			*read_args_and_flags(int argc, char const **argv, char *flags,
+int			*read_args_and_flags(int sstr_len, char **sstr, char *flags,
 								int args_nb)
 {
 	int	i;
 	int	j;
 	int	*args;
 
-	j = 1;
+	j = 0;
 	i = args_nb - 1;
 	args = (int*)malloc(sizeof(int) * args_nb);
 	if (!args)
 		return (NULL);
-	while (j < argc)
+	while (j < sstr_len)
 	{
-		if (is_flag_then_activate(argv[j], flags) == FALSE)
+		if (is_flag_then_activate(sstr[j], flags) == FALSE)
 		{
-			args[i] = ft_atoi(argv[j]);
+			args[i] = ft_atoi(sstr[j]);
 			i--;
 		}
 		j++;
@@ -111,23 +67,83 @@ int			duplicate_args_exist(int *args, int args_nb)
 	return (FALSE);
 }
 
+int			args_check(int sstr_len, char **sstr, int *args_nb)
+{
+	int		i;
+
+	i = 0;
+	while (i < sstr_len)
+	{
+		if (ft_strcmp(sstr[i], "-v") == 0
+			|| ft_strcmp(sstr[i], "-f") == 0)
+			(*args_nb)--;
+		else if (is_integer_string(sstr[i]) == FALSE)
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+char		**copy_argv_without_first(int sstr_len, char const **argv)
+{
+	char	**sstr;
+	int		i;
+	int		len;
+	
+	i = 0;
+	len = 0;
+	sstr = (char**)malloc(sizeof(char*) * (sstr_len + 1));
+	if (!sstr)
+		return (NULL);
+	ft_memcpy(sstr, argv + 1, sizeof(char*) * len);
+	sstr[sstr_len] = 0;
+	while (i < sstr_len)
+	{
+		len = ft_strlen(argv[i + 1]);
+		sstr[i] = (char*)malloc(sizeof(char) * (len + 1));
+		if (!sstr[i])
+		{	
+			free_sstr(sstr, sstr_len);
+			return (NULL);
+		}
+		ft_strcpy(sstr[i], argv[i + 1]);
+		i++;
+	}
+	return (sstr);
+}
+
+void		free_sstr_and_exit(char **sstr, int sstr_len)
+{
+	ft_putendl_fd("Error", 2);
+	free_sstr(sstr, sstr_len);
+	exit(0);
+}
+
 int			*parse_args_and_flags(int argc, char const **argv,
 									char *flags, int *args_nb)
 {
-	int	*args;
+	int		*args;
+	char	**sstr;
+	int		sstr_len;
 
-	*args_nb = argc - 1;
-	if (args_check(argc, argv, args_nb))
+	sstr_len = argc - 1;
+	if (argc == 2)
+		sstr = ft_strsplit(argv[1], ' ');
+	else
+		sstr = copy_argv_without_first(sstr_len, argv);
+	if (sstr == NULL)
+		free_sstr_and_exit(sstr, sstr_len);
+	*args_nb = sstr_len;
+	if (args_check(sstr_len, sstr, args_nb) == FALSE)
+		free_sstr_and_exit(sstr, sstr_len);
+	args = read_args_and_flags(sstr_len, sstr, flags, *args_nb);
+	if (args == NULL)
+		free_sstr_and_exit(sstr, sstr_len);
+	if (duplicate_args_exist(args, *args_nb))
 	{
-		args = read_args_and_flags(argc, argv, flags, *args_nb);
-		if (args != NULL)
-		{
-			if (duplicate_args_exist(args, *args_nb) == FALSE)
-				return (args);
-			else
-				free(args);
-		}
+		free(args);
+		free_sstr_and_exit(sstr, sstr_len);
 	}
-	ft_putendl_fd("Error", 2);
-	exit(0);
+	free_sstr(sstr, sstr_len);
+	return (args);
 }

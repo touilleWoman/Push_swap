@@ -69,7 +69,7 @@ typedef struct	s_funs
 	void			(*f)(t_stack **stk, char flags, FILE *fp);
 }				t_funs;
 
-int				args_check(int argc, char const **argv, int *args_nb);
+int				args_check(int argc, char **sstr, int *args_nb);
 int				*parse_args_and_flags(int argc, char const **argv,
 									char *flags, int *args_nb);
 int				parse_instructions(t_list **lst, char flags);
@@ -83,7 +83,8 @@ void			show_stack(t_stack *stk);
 
 void			usage(void);
 void			free_list(t_list *lst);
-long long		a_to_long(const char *str);
+int				is_integer_string(const char *str);
+
 int				is_flag_then_activate(char const *str, char *flags);
 void			print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk);
@@ -110,7 +111,9 @@ t_stack 	*copy_stack(t_stack *stk);
 int		both_ab_right_order(t_stack *stk);
 int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp);
 void	choose_algo(t_stack *stk, char flags, FILE *fp);
+void	perfect_b_algo(t_stack *stk, char flags, FILE *fp);
 
+void			free_sstr(char **sstr, int sstr_len);
 
 void			free_push_swap_stack(t_stack *stk);
 

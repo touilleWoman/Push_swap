@@ -18,9 +18,9 @@ NAME_CK = checker
 NAME_PS = push_swap
 
 SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
-			instructions2.c instructions3.c parse_args.c list_related.c \
+			instructions2.c instructions3.c parse_args.c free.c \
 			display_functions.c tools.c launch_push_swap.c choose_algo.c\
-			algo_tools.c score.c stack.c median_algo.c\
+			algo_tools.c score.c stack.c perfect_b_algo.c\
 
 
 SRCS_PATH = ./srcs

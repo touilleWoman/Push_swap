@@ -35,6 +35,35 @@ long long	a_to_long(const char *str)
 	return (ret * neg);
 }
 
+
+int			is_integer_string(const char *str)
+{
+	int			i;
+	int			len;
+	long long	nb_long;
+
+	i = 0;
+	len = ft_strlen(str);
+	if (len > 11)
+		return (FALSE);
+	if ((str[i] == '+') || (str[i] == '-'))
+		i++;
+	while (i < len)
+	{
+		if (ft_isdigit(str[i]) == FALSE)
+			return (FALSE);
+		i++;
+	}
+	if (len == 11 || len == 10)
+	{
+		nb_long = a_to_long(str);
+		if (nb_long > 2147483647 || nb_long < -2147483648)
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+
 int			is_flag_then_activate(char const *str, char *flags)
 {
 	int		ret;
