@@ -123,8 +123,8 @@ void		show_stack_with_index_stack(t_stack *s)
 
 
 /*
-** fputs() should be activated only when F_FLAG present,
-**and in push_wap, not in checker
+** fputs() allows to write on a file, it should be used only when F_FLAG present,
+** and only in push_wap, not in checker
 */
 void		print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk)

@@ -58,7 +58,7 @@ int			args_check(int argc, char const **argv, int *args_nb)
 
 /*
 **	args_nb is the number of integers, not including flags.
-**  Initialed "argc -1", then will change in args_check()
+**  Initialed as "argc -1", then it will change in args_check()
 */
 int			*read_args_and_flags(int argc, char const **argv, char *flags,
 								int args_nb)

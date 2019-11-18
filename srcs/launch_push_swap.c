@@ -20,16 +20,25 @@
 void	read_flags_then_choose_algo(t_stack *stk, char *flags)
 {
 	FILE		*fp;
+	char		filename[100];
+	int			len;
 
 	*flags = (*flags) | COUNT;
 	fp = NULL;
 	if ((*flags) & F_FLAG)
 	{
-		fp = fopen("instructions", "w");
-		if (fp == NULL)
+		ft_printf("Pleases give the path of file:\n");
+		if(fgets(filename, 50, stdin))
 		{
-			ft_putendl_fd("Unable to create file!", 2);
-			return ;
+			len = ft_strlen(filename);
+			if (filename[len - 1] == '\n')
+				filename[len - 1] = 0;
+			fp = fopen(filename, "w");
+			if (fp == NULL)
+			{
+				ft_putendl_fd("Unable to create file!", 2);
+				return ;
+			}
 		}
 	}
 	else
