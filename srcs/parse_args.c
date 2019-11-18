@@ -128,11 +128,20 @@ int			*parse_args_and_flags(int argc, char const **argv,
 
 	sstr_len = argc - 1;
 	if (argc == 2)
+	{
 		sstr = ft_strsplit(argv[1], ' ');
+		sstr_len = ft_strlen(sstr);
+	}
 	else
 		sstr = copy_argv_without_first(sstr_len, argv);
 	if (sstr == NULL)
 		free_sstr_and_exit(sstr, sstr_len);
+	int	n = 0;
+	while (n < sstr_len)
+	{
+		ft_printf("%s\n", sstr[n]);
+		n++;
+	}
 	*args_nb = sstr_len;
 	if (args_check(sstr_len, sstr, args_nb) == FALSE)
 		free_sstr_and_exit(sstr, sstr_len);

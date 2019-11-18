@@ -147,7 +147,7 @@ void	choose_algo(t_stack *stk, char flags, FILE *fp)
 	algo1_nb = cp->count;
 	free_push_swap_stack(cp);
 	cp = copy_stack(stk);
-	algo2_nb = best_score_algo(cp, flags_for_test, fp, algo1_nb);
+	algo2_nb = best_score_algo(cp, flags, fp, algo1_nb);
 	free_push_swap_stack(cp);
 	if (algo1_nb < algo2_nb)
 	{
