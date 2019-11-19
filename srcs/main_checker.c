@@ -55,23 +55,23 @@ int			main(int argc, char const **argv)
 	t_list	*ins_lst;
 	t_stack	*stk;
 	char	flags;
-	int		nb_args;
+	int		nb_integer;
 
 	ins_lst = NULL;
 	flags = 0;
-	nb_args = argc - 1;
+	nb_integer = argc - 1;
 	stk = NULL;
 	if (argc < 2)
 		usage_then_quit();
-	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
+	args = parse_args_and_flags(argc, argv, &flags, &nb_integer);
 	if (parse_instructions(&ins_lst, flags) == FALSE)
 	{
 		free_all(stk, ins_lst);
 		ft_putendl_fd("Error", 2);
 		return (0);
 	}
-	stk = execute_instructions(ins_lst, args, nb_args, &flags);
-	check_order(stk, nb_args);
+	stk = execute_instructions(ins_lst, args, nb_integer, &flags);
+	check_order(stk, nb_integer);
 	free_all(stk, ins_lst);
 	return (0);
 }

@@ -49,6 +49,6 @@ void	perfect_b_algo(t_stack *stk, char flags, FILE *fp)
 	}
  	while (stk->a_len != stk->max_len)
 		pa(&stk, flags, fp);
-	ft_printf("Perfect B %d operations in total\n", stk->count);
+	// ft_printf("Perfect B %d operatkions in total\n", stk->count);
 }
 

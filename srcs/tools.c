@@ -46,7 +46,7 @@ int			is_integer_string(const char *str)
 	len = ft_strlen(str);
 	if (len > 11)
 		return (FALSE);
-	if ((str[i] == '+') || (str[i] == '-'))
+	if (str[i] == '-')
 		i++;
 	while (i < len)
 	{
@@ -63,6 +63,36 @@ int			is_integer_string(const char *str)
 	return (TRUE);
 }
 
+
+int			is_space_separated_integer_string(const char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] != ' ') && (str[i] != '-') && ft_isdigit(str[i]) == FALSE)
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+int			is_flag_string(char const *str)
+{
+	int		ret;
+
+	ret = FALSE;
+	if (ft_strcmp(str, "-v") == 0)
+	{
+		ret = TRUE;
+	}
+	else if (ft_strcmp(str, "-f") == 0)
+	{
+		ret = TRUE;
+	}
+	return (ret);
+}
 
 int			is_flag_then_activate(char const *str, char *flags)
 {

@@ -14,20 +14,17 @@ void	free_list(t_list *lst)
 	}
 }
 
-void		free_sstr(char **sstr, int sstr_len)
+void		free_sstr(char **sstr)
 {
 	int		i;
 
 	i = 0;
 	if (sstr != NULL)
 	{
-		while (i < sstr_len)
+		while (sstr[i])
 		{
-			if (sstr[i] != NULL)
-			{
-				free(sstr[i]);
-				sstr[i] = NULL;
-			}
+			free(sstr[i]);
+			sstr[i] = NULL;
 			i++;
 		}
 		free(sstr);

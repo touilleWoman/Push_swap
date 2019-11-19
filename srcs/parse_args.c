@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_args.c                                       :+:      :+:    :+:   */
+/*   parse_int_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,52 +12,18 @@
 
 #include "push_swap.h"
 
-/*
-**	args_nb is the number of integers, not including flags.
-**  Initialed as "argc -1", then it will change in args_check()
-*/
-int			*read_args_and_flags(int sstr_len, char **sstr, char *flags,
-								int args_nb)
-{
-	int	i;
-	int	j;
-	int	*args;
-
-	j = 0;
-	i = args_nb - 1;
-	args = (int*)malloc(sizeof(int) * args_nb);
-	if (!args)
-		return (NULL);
-	while (j < sstr_len)
-	{
-		if (is_flag_then_activate(sstr[j], flags) == FALSE)
-		{
-			args[i] = ft_atoi(sstr[j]);
-			i--;
-		}
-		j++;
-	}
-	if (i != -1)
-	{
-		ft_putendl_fd("Error in parser", 2);
-		free(args);
-		args = NULL;
-	}
-	return (args);
-}
-
-int			duplicate_args_exist(int *args, int args_nb)
+int			duplicate_int_exist(int *int_array, int nb_int)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = i + 1;
-	while (i < args_nb - 1)
+	while (i < nb_int - 1)
 	{
-		while (j < args_nb)
+		while (j < nb_int)
 		{
-			if (args[i] == args[j])
+			if (int_array[i] == int_array[j])
 				return (TRUE);
 			j++;
 		}
@@ -67,92 +33,174 @@ int			duplicate_args_exist(int *args, int args_nb)
 	return (FALSE);
 }
 
-int			args_check(int sstr_len, char **sstr, int *args_nb)
+int			need_split(int argc, char const **argv)
 {
 	int		i;
 
-	i = 0;
-	while (i < sstr_len)
+	i = 1;
+	while (i < argc)
 	{
-		if (ft_strcmp(sstr[i], "-v") == 0
-			|| ft_strcmp(sstr[i], "-f") == 0)
-			(*args_nb)--;
-		else if (is_integer_string(sstr[i]) == FALSE)
+		if (is_flag_string(argv[i]) == FALSE
+			&& is_space_separated_integer_string(argv[i]) == FALSE)
 			return (FALSE);
 		i++;
 	}
 	return (TRUE);
 }
 
-char		**copy_argv_without_first(int sstr_len, char const **argv)
+void		free_sstr_and_exit(char **sstr)
+{
+	ft_putendl_fd("Error", 2);
+	free_sstr(sstr);
+	exit(0);
+}
+
+int			get_flags_nb_and_activate(int argc, char const **argv, char *flags)
+{
+	int		i;
+	int		flag_nb;
+
+	flag_nb = 0;
+	i = 1;
+	while (i < argc)
+	{
+		if (is_flag_then_activate(argv[i], flags))
+			flag_nb++;
+		i++;
+	}
+	return (flag_nb);
+}
+
+char		**split_and_update_nb_int(char const **argv, int *nb_integer)
+{
+	int		i;
+	char	**sstr;
+
+	i = 1;
+	while (argv[i])
+	{
+		if (is_flag_string(argv[i]) == FALSE)
+		{
+			sstr = ft_strsplit(argv[i], ' ');
+		}
+		i++;
+	}
+	i = 0;
+	while (sstr[i] != NULL)
+		i++;
+	*nb_integer = i;
+	return (sstr);
+}
+
+int			*convert_to_int_arry(char **sstr, int nb_int)
+{
+	int		i;
+	int		j;
+	int		*int_array;
+
+	i = 0;
+	j = nb_int - 1;
+	int_array = (int*)malloc(sizeof(int) * nb_int);
+	if (!int_array)
+		return (NULL);
+	while (i < nb_int)
+	{
+		if (is_integer_string(sstr[i]))
+		{
+			int_array[j] = ft_atoi(sstr[i]);
+		}
+		i++;
+		j--;
+	}
+	return (int_array);
+}
+
+// int			*read_int_array(int sstr_len, char **sstr, char *flags,
+// 								int nb_int)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	*int_array;
+
+// 	j = 0;
+// 	i = nb_int - 1;
+// 	int_array = (int*)malloc(sizeof(int) * nb_int);
+// 	if (!int_array)
+// 		return (NULL);
+// 	while (j < sstr_len)
+// 	{
+// 		if (is_flag_then_activate(sstr[j], flags) == FALSE)
+// 		{
+// 			int_array[i] = ft_atoi(sstr[j]);
+// 			i--;
+// 		}
+// 		j++;
+// 	}
+// 	if (i != -1)
+// 	{
+// 		ft_putendl_fd("Error in parser", 2);
+// 		free(int_array);
+// 		int_array = NULL;
+// 	}
+// 	return (int_array);
+// }
+
+
+char		**copy_argv_without_flags(int nb_int, char const **argv)
 {
 	char	**sstr;
 	int		i;
+	int		j;
 	int		len;
 	
-	i = 0;
+	i = 1;
 	len = 0;
-	sstr = (char**)malloc(sizeof(char*) * (sstr_len + 1));
+	j = 0;
+	sstr = (char**)malloc(sizeof(char*) * (nb_int + 1));
 	if (!sstr)
 		return (NULL);
-	ft_memcpy(sstr, argv + 1, sizeof(char*) * len);
-	sstr[sstr_len] = 0;
-	while (i < sstr_len)
+	sstr[nb_int] = 0;
+	while (argv[i])
 	{
-		len = ft_strlen(argv[i + 1]);
-		sstr[i] = (char*)malloc(sizeof(char) * (len + 1));
-		if (!sstr[i])
-		{	
-			free_sstr(sstr, sstr_len);
-			return (NULL);
+		if (is_flag_string(argv[i]) == FALSE)
+		{
+			len = ft_strlen(argv[i]);
+			sstr[j] = (char*)malloc(sizeof(char) * (len + 1));
+			if (!sstr[j])
+			{	
+				free_sstr(sstr);
+				return (NULL);
+			}
+			ft_strcpy(sstr[j], argv[i]);
+			j++;
 		}
-		ft_strcpy(sstr[i], argv[i + 1]);
 		i++;
 	}
 	return (sstr);
 }
 
-void		free_sstr_and_exit(char **sstr, int sstr_len)
-{
-	ft_putendl_fd("Error", 2);
-	free_sstr(sstr, sstr_len);
-	exit(0);
-}
 
 int			*parse_args_and_flags(int argc, char const **argv,
-									char *flags, int *args_nb)
+									char *flags, int *nb_int)
 {
-	int		*args;
+	int		*int_array;
 	char	**sstr;
-	int		sstr_len;
+	int		flag_nb;
 
-	sstr_len = argc - 1;
-	if (argc == 2)
-	{
-		sstr = ft_strsplit(argv[1], ' ');
-		sstr_len = ft_strlen(sstr);
-	}
+	flag_nb = get_flags_nb_and_activate(argc, argv, flags);
+	*nb_int = argc - 1 - flag_nb;
+	if (argc - flag_nb == 2 && need_split(argc, argv))
+		sstr = split_and_update_nb_int(argv, nb_int);
 	else
-		sstr = copy_argv_without_first(sstr_len, argv);
-	if (sstr == NULL)
-		free_sstr_and_exit(sstr, sstr_len);
-	int	n = 0;
-	while (n < sstr_len)
+		sstr = copy_argv_without_flags(*nb_int, argv);
+	int_array = convert_to_int_arry(sstr, *nb_int);
+	if (int_array == NULL)
+		free_sstr_and_exit(sstr);
+	if (duplicate_int_exist(int_array, *nb_int))
 	{
-		ft_printf("%s\n", sstr[n]);
-		n++;
+		free(int_array);
+		free_sstr_and_exit(sstr);
 	}
-	*args_nb = sstr_len;
-	if (args_check(sstr_len, sstr, args_nb) == FALSE)
-		free_sstr_and_exit(sstr, sstr_len);
-	args = read_args_and_flags(sstr_len, sstr, flags, *args_nb);
-	if (args == NULL)
-		free_sstr_and_exit(sstr, sstr_len);
-	if (duplicate_args_exist(args, *args_nb))
-	{
-		free(args);
-		free_sstr_and_exit(sstr, sstr_len);
-	}
-	free_sstr(sstr, sstr_len);
-	return (args);
+	free_sstr(sstr);
+	return (int_array);
 }

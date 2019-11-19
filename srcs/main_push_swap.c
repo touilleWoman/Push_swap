@@ -14,28 +14,28 @@
 
 
 /*
-** args are the list of integers that we read from stdin or a file,
+** int_array are the list of integers that we read from stdin or a file,
 ** after excluding flags
 */
 int main(int argc, char const **argv)
 {
-	int		*args;
+	int		*int_array;
 	t_stack	*stk;
 	char	flags;
-	int		nb_args;
+	int		nb_integer;
 
 	flags = 0;
-	nb_args = 0;
+	nb_integer = 0;
 	if (argc < 2)
 		return (0);
 	flags = flags | PUSH_SWAP;
-	args = parse_args_and_flags(argc, argv, &flags, &nb_args);
-	if (args == NULL)
+	int_array = parse_args_and_flags(argc, argv, &flags, &nb_integer);
+	if (int_array == NULL)
 	{
 		ft_putendl_fd("Error", 2);
 		return (0);
 	}
-	stk = launch_push_swap(args, &flags, nb_args);
+	stk = launch_push_swap(int_array, &flags, nb_integer);
 	free_push_swap_stack(stk);
 	return (0);
 }
