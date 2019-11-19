@@ -85,6 +85,7 @@ int			parse_instructions(t_list **lst, char flags)
 		if ( len < 2 || len > 3 )
 			return (FALSE);
 		check_instruction_then_convert(line, &ins);
+		free(line);
 		if (ins != ERROR)
 		{
 			new = ft_lstnew(&ins, sizeof(int));

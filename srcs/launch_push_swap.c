@@ -48,7 +48,7 @@ void	read_flags_then_choose_algo(t_stack *stk, char *flags)
 		fclose(fp);
 }
 
-int		*create_index_array(int *sorted, int *args, int nb_args)
+int		*create_index_array(int *sorted, int *args, int nb_int)
 {
 	int		*index;
 	int		i;
@@ -56,12 +56,12 @@ int		*create_index_array(int *sorted, int *args, int nb_args)
 
 	i = 0;
 	j = 0;
-	index = (int*)malloc(sizeof(int) * nb_args);
+	index = (int*)malloc(sizeof(int) * nb_int);
 	if (!index)
 		return (0);
-	while (i < nb_args)
+	while (i < nb_int)
 	{
-		while (j < nb_args && args[i] != sorted[j])
+		while (j < nb_int && args[i] != sorted[j])
 			j++;
 		index[i] = j;
 		i++;
@@ -70,17 +70,17 @@ int		*create_index_array(int *sorted, int *args, int nb_args)
 	return (index);
 }
 
-int 		*index_array_of_args(int *args, int nb_args)
+int 		*index_array_of_args(int *args, int nb_int)
 {
 	int *sorted;
 	int	*index;
 
-	sorted = (int*)malloc(sizeof(int) * nb_args);
+	sorted = (int*)malloc(sizeof(int) * nb_int);
 	if (!sorted)
 		return (NULL);
-	ft_memcpy(sorted, args, sizeof(int) * nb_args);
-	sort_an_increasing_tab(sorted, nb_args);
-	index = create_index_array(sorted, args, nb_args);
+	ft_memcpy(sorted, args, sizeof(int) * nb_int);
+	sort_an_increasing_tab(sorted, nb_int);
+	index = create_index_array(sorted, args, nb_int);
 	free(sorted);
 	return (index);
 }
@@ -104,23 +104,23 @@ int			*copy_int_array(int	*tab, int tab_len)
 ** when coming to print results, with index, we can find the origin
 ** integer then print.
 */
-t_stack		*launch_push_swap(int *args, char *flags, int nb_args)
+t_stack		*launch_push_swap(int *int_array, char *flags, int nb_int)
 {
 	t_stack		*stk;
 	int			*origin_index;
 	int			*index;
 
 
-	origin_index = index_array_of_args(args, nb_args);
+	origin_index = index_array_of_args(int_array, nb_int);
 	if (!origin_index)
 		return (NULL);
-	index = copy_int_array(origin_index, nb_args);
+	index = copy_int_array(origin_index, nb_int);
 	if (!index)
 	{
 		free(origin_index);
 		return (NULL);
 	}
-	stk = init_stack_push_swap(args, nb_args, origin_index, index);
+	stk = init_stack_push_swap(int_array, nb_int, origin_index, index);
 	if (stk == NULL)
 	{
 		ft_putendl_fd("Init stack failed!", 2);

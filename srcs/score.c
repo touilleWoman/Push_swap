@@ -84,6 +84,41 @@ int 	try_ins(t_stack *stk, int *score)
 	return (TRUE);
 }
 
+// int		calculate_score(t_stack *stk)
+// {
+// 	int		score;
+// 	int		al;
+// 	int		bl;
+
+// 	al = stk->a_len;
+// 	bl = stk->b_len;
+// 	score = 0;
+// 	if (al > 0 && bl > 0)
+// 	{
+// 		if (stk->a[al - 1] < stk->b[bl - 1])
+// 			score += 2;
+// 		else if (stk->a[al - 1] - stk->b[bl - 1] != 1)
+// 			score++;
+// 	}
+// 	while (al > 1)
+// 	{
+// 		if (stk->a[al - 1] > stk->a[al - 2])
+// 			score += 2;
+// 		else if (stk->a[al - 1] - stk->a[al - 2] != -1)
+// 			score++;
+// 		al--;
+// 	}
+// 	while (bl > 1)
+// 	{
+// 		if (stk->b[bl - 1] < stk->b[bl - 2])
+// 			score += 2;
+// 		else if (stk->b[bl - 1] - stk->b[bl - 2] != 1)
+// 			score++;
+// 		bl--;
+// 	}
+// 	return (score);
+// }
+
 int		calculate_score(t_stack *stk)
 {
 	int		score;
@@ -95,24 +130,18 @@ int		calculate_score(t_stack *stk)
 	score = 0;
 	if (al > 0 && bl > 0)
 	{
-		if (stk->a[al - 1] < stk->b[bl - 1])
-			score += 2;
-		else if (stk->a[al - 1] - stk->b[bl - 1] != 1)
+		if (stk->a[al - 1] - stk->b[bl - 1] != 1)
 			score++;
 	}
 	while (al > 1)
 	{
-		if (stk->a[al - 1] > stk->a[al - 2])
-			score += 2;
-		else if (stk->a[al - 1] - stk->a[al - 2] != -1)
+		if (stk->a[al - 1] - stk->a[al - 2] != -1)
 			score++;
 		al--;
 	}
 	while (bl > 1)
 	{
-		if (stk->b[bl - 1] < stk->b[bl - 2])
-			score += 2;
-		else if (stk->b[bl - 1] - stk->b[bl - 2] != 1)
+		if (stk->b[bl - 1] - stk->b[bl - 2] != 1)
 			score++;
 		bl--;
 	}

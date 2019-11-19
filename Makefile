@@ -20,7 +20,7 @@ NAME_PS = push_swap
 SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
 			instructions2.c instructions3.c parse_args.c free.c \
 			display_functions.c tools.c launch_push_swap.c choose_algo.c\
-			algo_tools.c score.c stack.c perfect_b_algo.c\
+			algo_tools.c score.c stack.c perfect_b_algo.c parse_tools.c\
 
 
 SRCS_PATH = ./srcs
@@ -46,18 +46,18 @@ HEADER = $(shell find includes -type f) $(shell find libft/includes -type f)
 
 LIBFTA = ./libft/libft.a
 
-DEBUG =  -g -fsanitize=address
-# DEBUG =  -g
+# DEBUG =  -g -fsanitize=address
+DEBUG =  -g 
 
 all: $(NAME_CK) $(NAME_PS)
 
-$(NAME_PS):$(OBJ) $(OBJ_PS)
+$(NAME_PS):$(OBJ) $(OBJ_PS) $(LIBFTA)
 	$(CC)  $(CFLAGS) -o $(NAME_PS) $(SRC_PS) $(OBJ) $(LIBFTA) $(DEBUG) $(IFLAG)
 
-$(NAME_CK): $(OBJ) $(OBJ_CK)
+$(NAME_CK): $(OBJ) $(OBJ_CK) $(LIBFTA)
 	$(CC)  $(CFLAGS) -o $(NAME_CK) $(SRC_CK) $(OBJ) $(LIBFTA) $(DEBUG) $(IFLAG)
 
-%.o: %.c $(HEADER) $(LIBFTA)
+%.o: %.c $(HEADER) 
 	$(CC) $(CFLAGS) -o $@ -c $< $(IFLAG)
 
 $(LIBFTA): FORCE

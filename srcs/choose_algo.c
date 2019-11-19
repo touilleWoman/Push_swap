@@ -2,36 +2,38 @@
 
 #include "push_swap.h"
 
-int		both_ab_right_order(t_stack *stk)
-{
-	int		count;
+// int		both_ab_right_order(t_stack *stk)
+// {
+// 	int		count;
 
-	count = stk->a_len - 1;
-	if (stk->a[stk->a_len - 1] - stk->b[stk->b_len - 1] != 1)
-		return (FALSE);
-	while (count)
-	{
-		if (stk->a[count] - stk->a[count - 1] != -1)
-		{
-			break;
-		}
-		count--;
-	}
-	if (count != 0)
-		return (FALSE);
-	if (stk->b_len == 0)
-		return (TRUE);
-	count = stk->b_len - 1;
-	while (count)
-	{
-		if (stk->b[count] - stk->b[count - 1] != 1)
-			break;
-		count--;
-	}
-	if (count != 0)
-		return (FALSE);
-	return (TRUE);
-}
+// 	count = stk->a_len - 1;
+// 	if (stk->a_len > 1 && stk->b_len > 1
+// 		&& stk->a[stk->a_len - 1] - stk->b[stk->b_len - 1] != 1)
+// 		return (FALSE);
+// 	while (count)
+// 	{
+// 		if (stk->a[count] - stk->a[count - 1] != -1)
+// 		{
+// 			break;
+// 		}
+// 		count--;
+// 	}
+// 	if (count != 0)
+// 		return (FALSE);
+// 	if (stk->b_len == 0)
+// 		return (TRUE);
+// 	count = stk->b_len - 1;
+// 	while (count)
+// 	{
+// 		if (stk->b[count] - stk->b[count - 1] != 1)
+// 			break;
+// 		count--;
+// 	}
+// 	if (count != 0)
+// 		return (FALSE);
+// 	return (TRUE);
+// }
+
 
 int			find_min_in_scoretab(int *score_tab, int len, int *min_score)
 {
@@ -120,7 +122,7 @@ int		best_score_algo(t_stack *stk, char flags, FILE *fp, int last_algo_nb)
 
 	i = 0;
 	min_score = execute_if_score_smaler(stk, flags, fp);
-	while(both_ab_right_order(stk) == FALSE && min_score)
+	while(min_score)
 	{
 		push_to_b(stk, flags, fp, &min_score);
 		min_score = execute_if_score_smaler(stk, flags, fp);

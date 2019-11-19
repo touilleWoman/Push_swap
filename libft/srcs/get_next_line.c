@@ -101,27 +101,27 @@ char			**get_pend(int fd)
 int				get_next_line(const int fd, char **line)
 {
 	int				ret;
-	char			**end;
+	static char		*end = NULL;
 
-	if (BUFF_SIZE < 1 || line == 0 || fd < 0 || (!(end = get_pend(fd))))
+	if (BUFF_SIZE < 1 || line == 0 || fd < 0 )
 		return (-1);
-	while ((*end == NULL) || (ft_strchr(*end, '\n') == NULL))
+	while ((end == NULL) || (ft_strchr(end, '\n') == NULL))
 	{
-		ret = read_and_stock(fd, end);
-		if ((ret == -1) || ((ret == 0) && (*end == NULL)))
+		ret = read_and_stock(fd, &end);
+		if ((ret == -1) || ((ret == 0) && (end == NULL)))
 			return (ret);
 		if (ret == 0)
 		{
-			if ((*end)[0] == '\0')
+			if (end[0] == '\0')
 			{
-				free(*end);
-				*end = NULL;
+				free(end);
+				end = NULL;
 				return (0);
 			}
-			*line = *end;
-			*end = NULL;
+			*line = end;
+			end = NULL;
 			return (1);
 		}
 	}
-	return (renew_end(line, end));
+	return (renew_end(line, &end));
 }

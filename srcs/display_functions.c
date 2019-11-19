@@ -12,18 +12,6 @@
 
 #include "push_swap.h"
 
-void	show_args(int *args, int args_nb)
-{
-	int	i;
-
-	i = args_nb - 1;
-	while(i >= 0)
-	{
-		ft_printf("%d\n", args[i]);
-		i--;
-	}
-}
-
 void	print_lst(t_list *lst)
 {
 	int 	i = 0;
@@ -62,16 +50,16 @@ void		show_stack(t_stack *stk)
 /*
 ** find original integer with index
 */
-int			args_index_dictionary(int *args, int *index, int elem_index, int args_nb)
+int			int_array_index_dictionary(int *int_array, int *index, int elem_index, int nb_int)
 {
 	int		i;
 
 	i = 0;
-	while (i < args_nb)
+	while (i < nb_int)
 	{
 		if (index[i] == elem_index)
 		{
-			return (args[i]);
+			return (int_array[i]);
 		}
 		i++;
 	}
@@ -94,23 +82,22 @@ void		show_stack_with_index_stack(t_stack *s)
 	max = (i > j ? i : j);
 	while (max - 1 >= 0)
 	{
-
 		if (i == max && j == max)
 		{
-			elem_a = args_index_dictionary(s->args, s->origin_index, s->a[max - 1], s->max_len);
-			elem_b = args_index_dictionary(s->args, s->origin_index, s->b[max - 1], s->max_len);
+			elem_a = int_array_index_dictionary(s->int_array, s->origin_index, s->a[max - 1], s->max_len);
+			elem_b = int_array_index_dictionary(s->int_array, s->origin_index, s->b[max - 1], s->max_len);
 			ft_printf("%d   %d\n", elem_a, elem_b);
 			// ft_printf("%d   %d\n", s->a[max - 1], s->b[max - 1]);
 		}
 		else if (i == max && j != max)
 		{
-			elem_a = args_index_dictionary(s->args, s->origin_index, s->a[max - 1], s->max_len);
+			elem_a = int_array_index_dictionary(s->int_array, s->origin_index, s->a[max - 1], s->max_len);
 			ft_printf("%d    \n", elem_a);
 			// ft_printf("%d    \n", s->a[max - 1]);
 		}
 		else if (i != max && j == max)
 		{
-			elem_b = args_index_dictionary(s->args, s->origin_index, s->b[max - 1], s->max_len);
+			elem_b = int_array_index_dictionary(s->int_array, s->origin_index, s->b[max - 1], s->max_len);
 			ft_printf("     %d\n", elem_b);
 		}
 		i == max ? i-- : 0;
@@ -137,10 +124,4 @@ void		print_according_to_flags(char flags, FILE *fp, char *str,
 		show_stack(*stk);
 	if ((flags & V_FLAG) && (flags & PUSH_SWAP))
 		show_stack_with_index_stack(*stk);
-	// ft_printf("score:%d\n", calculate_score(*stk));
-
-	// if (str[0] == 's' && str[1] == 'a')
-	// {
-	// 	ft_printf("INS_STDOUT%d\n", flags & INS_STDOUT);
-	// }
 }

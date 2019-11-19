@@ -20,12 +20,4 @@
 
 # define BUFF_SIZE 40
 
-typedef struct	s_fd_buf
-{
-	int			fd;
-	char		*end;
-}				t_fd_buf;
-
-
-
 #endif

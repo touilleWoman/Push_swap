@@ -14,7 +14,7 @@ void	free_list(t_list *lst)
 	}
 }
 
-void		free_sstr(char **sstr)
+void	free_sstr(char **sstr)
 {
 	int		i;
 
@@ -39,13 +39,21 @@ void	free_push_swap_stack(t_stack *stk)
 		stk->b != NULL ? free(stk->b) : 0;
 		stk->a != NULL ? free(stk->a) : 0;
 		stk->origin_index != NULL ? free(stk->origin_index) : 0;
-		stk->args != NULL ? free(stk->args) : 0;
+		stk->int_array != NULL ? free(stk->int_array) : 0;
 		stk->b = NULL;
 		stk->a = NULL;
 		stk->origin_index = NULL;
-		stk->args = NULL;
+		stk->int_array = NULL;
 		free(stk);
 		stk = NULL;
 	}
 }
+
+void	free_sstr_and_exit(char **sstr)
+{
+	ft_putendl_fd("Error", 2);
+	free_sstr(sstr);
+	exit(0);
+}
+
 

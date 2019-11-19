@@ -42,7 +42,7 @@ typedef	struct	stack
 	int		max_len;
 	int		count;
 	int		*origin_index;
-	int		*args;
+	int		*int_array;
 }				t_stack;
 
 
@@ -69,33 +69,35 @@ typedef struct	s_funs
 	void			(*f)(t_stack **stk, char flags, FILE *fp);
 }				t_funs;
 
-int				args_check(int argc, char **sstr, int *args_nb);
+
+/*
+** parse
+*/
 int				*parse_args_and_flags(int argc, char const **argv,
 									char *flags, int *nb_int);
 int				parse_instructions(t_list **lst, char flags);
-t_stack			*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags);
+t_stack			*execute_instructions(t_list *ins_lst, int *args,
+										int nb_args, char *flags);
 t_stack			*init_stack_checker(int *args, int nb_args);
 t_stack			*init_stack_push_swap(int *args, int nb_args,
 									int *origin_index, int *index);
-void			show_args(int *args, int args_nb);
-
-void			show_stack(t_stack *stk);
-int			is_flag_string(char const *str);
-
 void			usage(void);
 void			free_list(t_list *lst);
 int				is_integer_string(const char *str);
-
+int				is_flag_string(char const *str);
+int				get_flags_nb_and_activate(int argc, char const **argv, char *flags);
+int				is_space_separated_integer_string(const char *str);
 int				is_flag_then_activate(char const *str, char *flags);
 void			print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk);
 void			print_lst(t_list *lst);
-int			is_space_separated_integer_string(const char *str);
-
 void			sort_an_increasing_tab(int *tab, int tab_len);
-void	median_algo(t_stack *stk, char flags, FILE *fp);
+int				duplicate_int_exist(int *int_array, int nb_int);
 
 
+/*
+** instructions 
+*/
 void			sa(t_stack **stk, char flags, FILE *fp);
 void			sb(t_stack **stk, char flags, FILE *fp);
 void			ss(t_stack **stk, char flags, FILE *fp);
@@ -107,19 +109,24 @@ void			rr(t_stack **stk, char flags, FILE *fp);
 void			rra(t_stack **stk, char flags, FILE *fp);
 void			rrb(t_stack **stk, char flags, FILE *fp);
 void			rrr(t_stack **stk, char flags, FILE *fp);
+
+/*
+** algo
+*/
+t_stack			*launch_push_swap(int *args, char *flags, int args_nb);
 int				calculate_score(t_stack *stk);
 int				try_ins(t_stack *cp, int *score);
-t_stack 	*copy_stack(t_stack *stk);
-int		both_ab_right_order(t_stack *stk);
-int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp);
-void	choose_algo(t_stack *stk, char flags, FILE *fp);
-void	perfect_b_algo(t_stack *stk, char flags, FILE *fp);
+t_stack 		*copy_stack(t_stack *stk);
+int				both_ab_right_order(t_stack *stk);
+int				execute_if_score_smaler(t_stack *stk, char flags, FILE *fp);
+void			choose_algo(t_stack *stk, char flags, FILE *fp);
+void			perfect_b_algo(t_stack *stk, char flags, FILE *fp);
 
 void			free_sstr(char **sstr);
-
 void			free_push_swap_stack(t_stack *stk);
+void			free_sstr_and_exit(char **sstr);
 
-t_stack		*launch_push_swap(int *args, char *flags, int args_nb);
+void			show_stack(t_stack *stk);
 
 
 

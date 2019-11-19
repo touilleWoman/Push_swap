@@ -45,33 +45,36 @@ void	free_all(t_stack *stk, t_list *ins_lst)
 		stk->a != NULL ? free(stk->a) : 0;
 		free(stk);
 	}
-	// args != NULL ? free(args) : 0;
 	ins_lst != NULL ? free_list(ins_lst) : 0;
 }
 
 int			main(int argc, char const **argv)
 {
-	int		*args;
+	int		*int_array;
 	t_list	*ins_lst;
 	t_stack	*stk;
 	char	flags;
-	int		nb_integer;
+	int		nb_int;
 
 	ins_lst = NULL;
 	flags = 0;
-	nb_integer = argc - 1;
+	nb_int = 0;
 	stk = NULL;
-	if (argc < 2)
-		usage_then_quit();
-	args = parse_args_and_flags(argc, argv, &flags, &nb_integer);
+	argc < 2 ? usage_then_quit() : 0;
+	int_array = parse_args_and_flags(argc, argv, &flags, &nb_int);
+	if (int_array == NULL)
+	{
+		ft_putendl_fd("Error", 2);
+		return (0);
+	}
 	if (parse_instructions(&ins_lst, flags) == FALSE)
 	{
 		free_all(stk, ins_lst);
 		ft_putendl_fd("Error", 2);
 		return (0);
 	}
-	stk = execute_instructions(ins_lst, args, nb_integer, &flags);
-	check_order(stk, nb_integer);
+	stk = execute_instructions(ins_lst, int_array, nb_int, &flags);
+	check_order(stk, nb_int);
 	free_all(stk, ins_lst);
 	return (0);
 }
