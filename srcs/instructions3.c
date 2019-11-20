@@ -23,4 +23,3 @@ void		rrr(t_stack **stk, char flags, FILE *fp)
 	if (flags & COUNT)
 		(*stk)->count++;
 }
-

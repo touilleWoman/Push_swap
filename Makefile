@@ -47,7 +47,6 @@ HEADER = $(shell find includes -type f) $(shell find libft/includes -type f)
 
 LIBFTA = ./libft/libft.a
 
-# DEBUG =  -g -fsanitize=address
 DEBUG =  -g
 
 all: $(NAME_CK) $(NAME_PS)

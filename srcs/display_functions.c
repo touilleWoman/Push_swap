@@ -88,7 +88,8 @@ void		show_stack_with_index_stack(t_stack *s, int a_len, int b_len)
 }
 
 /*
-** fputs() allows to write on a file, it should be used only when F_FLAG present,
+** fputs() allows to write on a file,
+** it should be used only when F_FLAG present,
 ** and only in push_wap, not in checker
 */
 

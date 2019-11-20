@@ -20,7 +20,7 @@ int			find_min_in_scoretab(int *score_tab, int len, int *min_score)
 	*min_score = 1000;
 	i = 0;
 	min_fun_index = 0;
-	while(i < len)
+	while (i < len)
 	{
 		if (score_tab[i] < *min_score)
 		{
@@ -29,16 +29,16 @@ int			find_min_in_scoretab(int *score_tab, int len, int *min_score)
 		}
 		i++;
 	}
-	return(min_fun_index);
+	return (min_fun_index);
 }
 
 void		execute_ins(int fun_index, int flags, FILE *fp, t_stack *stk)
 {
-	t_funs	funs[9] = {{SA, sa}, {SB, sb}, {SS, ss}, {RA, ra}, {RB, rb},
-	{RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
+	static t_funs	funs_for_try[9] = {{SA, sa}, {SB, sb}, {SS, ss}, {RA, ra},
+	{RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
 
-	funs[fun_index].f(&stk, flags, fp);
+	funs_for_try[fun_index].f(&stk, flags, fp);
 }
 
 int			get_min_score(t_stack *stk, int *min_fun_index, int *min_score)
@@ -49,11 +49,11 @@ int			get_min_score(t_stack *stk, int *min_fun_index, int *min_score)
 	{
 		*min_fun_index = find_min_in_scoretab(score_tab, 9, min_score);
 		return (TRUE);
-	};
+	}
 	return (FALSE);
 }
 
-int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
+int			execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 {
 	int	min_fun_index;
 	int	min_score;
@@ -66,16 +66,14 @@ int		execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 		if (min_score < present_score)
 			execute_ins(min_fun_index, flags, fp, stk);
 		if (min_score == 0 || min_score >= present_score)
-			break;
+			break ;
 	}
 	return (min_score);
 }
 
-
-
-void	choose_algo(t_stack *stk, char flags, FILE *fp)
+void		choose_algo(t_stack *stk, char flags, FILE *fp)
 {
-	t_stack 	*cp;
+	t_stack		*cp;
 	int			algo1_nb;
 	int			algo2_nb;
 	int			flags_for_test;

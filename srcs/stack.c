@@ -104,4 +104,3 @@ void		show_stack(t_stack *stk)
 	}
 	ft_printf("-----\na   b\n");
 }
-
