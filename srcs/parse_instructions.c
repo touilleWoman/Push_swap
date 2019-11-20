@@ -21,25 +21,28 @@ int			check_instruction_then_convert(char *s, t_instruction *ins)
 	int		ret;
 
 	ret = TRUE;
-	if (s[0] == 's')
-	{
-		(s[1] == 'a' && s[2] == 0) ? (*ins = SA) : 0;
-		(s[1] == 'b' && s[2] == 0) ? (*ins = SB) : 0;
-	}
-	else if (s[0] == 'p')
-	{
-		(s[1] == 'a' && s[2] == 0) ? (*ins = PA) : 0;
-		(s[1] == 'b' && s[2] == 0) ? (*ins = PB) : 0;
-	}
-	else if (s[0] == 'r')
-	{
-		(s[1] == 'a' && s[2] == 0) ? (*ins = RA) : 0;
-		(s[1] == 'b' && s[2] == 0) ? (*ins = RB) : 0;
-		(s[1] == 'r' && s[2] == 0) ? (*ins = RR) : 0;
-		(s[1] == 'r' && s[2] == 'a' && s[3] == 0) ? (*ins = RRA) : 0;
-		(s[1] == 'r' && s[2] == 'b' && s[3] == 0) ? (*ins = RRB) : 0;
-		(s[1] == 'r' && s[2] == 'r' && s[3] == 0) ? (*ins = RRR) : 0;
-	}
+	if (ft_strcmp(s, 'sa') == 0)
+		*ins = SA;
+	else if (ft_strcmp(s, 'sb') == 0)
+		*ins = SB;
+	else if (ft_strcmp(s, 'ss') == 0)
+		*ins = SS;
+	else if (ft_strcmp(s, 'pa') == 0)
+		*ins = PA;
+	else if (ft_strcmp(s, 'pb') == 0)
+		*ins = PB;
+	else if (ft_strcmp(s, 'ra') == 0)
+		*ins = RA;
+	else if (ft_strcmp(s, 'rb') == 0)
+		*ins = RB;
+	else if (ft_strcmp(s, 'rr') == 0)
+		*ins = RR;
+	else if (ft_strcmp(s, 'rra') == 0)
+		*ins = RRA;
+	else if (ft_strcmp(s, 'rrb') == 0)
+		*ins = RRB;
+	else if (ft_strcmp(s, 'rrr') == 0)
+		*ins = RRR;
 	else
 		ret = FALSE;
 	return (ret);
