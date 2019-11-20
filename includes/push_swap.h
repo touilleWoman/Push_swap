@@ -15,14 +15,13 @@
 
 # include "libft.h"
 # include <stdio.h>
+
 /*
 ** V_FLAG is to show stack at each operation
 ** F_FLAG is to read and write on file instead of STDIN STDOUT
 */
 
 # define INSTRUCTION_NB	11
-
-
 # define V_FLAG	1 << 0
 # define F_FLAG	1 << 1
 # define INS_STDOUT 1 << 2
@@ -32,7 +31,7 @@
 /*
 ** in checker, only a, a_len, b, b_len are used
 */
-typedef	struct	stack
+typedef	struct	s_stack
 {
 	int		*a;
 	int		a_len;
@@ -57,7 +56,6 @@ typedef	enum	e_instruction
 	RRA,
 	RRB,
 	RRR,
-	// ERROR,
 }				t_instruction;
 
 typedef struct	s_funs
@@ -81,13 +79,15 @@ void			free_list(t_list *lst);
 void			usage(void);
 int				is_integer_string(const char *str);
 int				is_flag_string(char const *str);
-int				get_flags_nb_and_activate(int argc, char const **argv, char *flags);
+int				get_flags_nb_and_activate(int argc, char const **argv,
+										char *flags);
 int				is_space_separated_integer_string(const char *str);
 int				duplicate_int_exist(int *int_array, int nb_int);
 
 /*
 ** instructions
 */
+
 void			sa(t_stack **stk, char flags, FILE *fp);
 void			sb(t_stack **stk, char flags, FILE *fp);
 void			ss(t_stack **stk, char flags, FILE *fp);
@@ -103,10 +103,11 @@ void			rrr(t_stack **stk, char flags, FILE *fp);
 /*
 ** algo
 */
+
 t_stack			*launch_push_swap(int *int_array, char *flags, int nb_int);
 int				calculate_score(t_stack *stk);
 int				try_ins(t_stack *cp, int *score);
-t_stack 		*copy_stack(t_stack *stk);
+t_stack			*copy_stack(t_stack *stk);
 int				*copy_int_array(int	*tab, int tab_len);
 int				both_ab_right_order(t_stack *stk);
 int				execute_if_score_smaler(t_stack *stk, char flags, FILE *fp);

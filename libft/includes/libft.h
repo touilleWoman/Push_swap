@@ -18,7 +18,7 @@
 # include <string.h>
 # include <fcntl.h>
 
-typedef enum 	e_bool
+typedef enum	e_bool
 {
 	TRUE = 1,
 	FALSE = 0,
@@ -107,7 +107,8 @@ int				ft_islower(int c);
 int				ft_isupper(int c);
 
 /*
-** ft_aatoii : convertir un tableux de string {"0", "5", "10"} vers un tableau de int
+** ft_aatoii : convertir un tableux de string {"0", "5", "10"}
+** vers un tableau de int
 ** [0, 10, 5]
 */
 int				*ft_aatoii(char **pptr);

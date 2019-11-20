@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	sort_an_increasing_tab(int *tab, int tab_len)
+void		sort_an_increasing_tab(int *tab, int tab_len)
 {
 	int	i;
 	int	j;
@@ -38,7 +38,7 @@ void	sort_an_increasing_tab(int *tab, int tab_len)
 	}
 }
 
-int			*copy_int_array(int	*tab, int tab_len)
+int			*copy_int_array(int *tab, int tab_len)
 {
 	int		*ret;
 

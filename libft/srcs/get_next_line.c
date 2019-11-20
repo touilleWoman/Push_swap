@@ -81,7 +81,7 @@ int				get_next_line(const int fd, char **line)
 	int				ret;
 	static char		*end = NULL;
 
-	if (BUFF_SIZE < 1 || line == 0 || fd < 0 )
+	if (BUFF_SIZE < 1 || line == 0 || fd < 0)
 		return (-1);
 	while ((end == NULL) || (ft_strchr(end, '\n') == NULL))
 	{

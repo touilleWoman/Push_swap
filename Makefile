@@ -47,7 +47,7 @@ HEADER = $(shell find includes -type f) $(shell find libft/includes -type f)
 
 LIBFTA = ./libft/libft.a
 
-DEBUG =  -g
+DEBUG =  -g -ggdb
 
 all: $(NAME_CK) $(NAME_PS)
 

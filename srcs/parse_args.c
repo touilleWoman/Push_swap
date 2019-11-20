@@ -61,10 +61,12 @@ int			*convert_to_int_arry(char **sstr, int nb_int)
 		return (NULL);
 	while (i < nb_int)
 	{
-		if (is_integer_string(sstr[i]))
+		if (is_integer_string(sstr[i]) == FALSE)
 		{
-			int_array[j] = ft_atoi(sstr[i]);
+			free(int_array);
+			return (NULL);
 		}
+		int_array[j] = ft_atoi(sstr[i]);
 		i++;
 		j--;
 	}
