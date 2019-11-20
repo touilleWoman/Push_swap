@@ -125,8 +125,10 @@ void			free_sstr_and_exit(char **sstr);
 /*
 ** display
 */
-void			show_stack(t_stack *stk);
+void			show_stack(t_stack *stk, int a_len, int b_len);
 void			print_lst(t_list *lst);
+void			print_one_line(int elem_a, int elem_b,
+						t_bool a_exist, t_bool b_exist);
 void			print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk);
 

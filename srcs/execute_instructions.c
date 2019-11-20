@@ -24,7 +24,7 @@ t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 	if ((*flags) & V_FLAG)
 	{
 		ft_printf("Init stack:\n");
-		show_stack(stk);
+		show_stack(stk, stk->a_len, stk->b_len);
 	}
 	while (ins_lst != NULL)
 	{

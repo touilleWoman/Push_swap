@@ -81,26 +81,35 @@ t_stack		*copy_stack(t_stack *stk)
 	return (cp);
 }
 
-void		show_stack(t_stack *stk)
+void		show_stack(t_stack *stk, int a_len, int b_len)
 {
 	int		max;
-	int		i;
-	int		j;
+	int		elem_a;
+	int		elem_b;
+	t_bool	a_exist;
+	t_bool	b_exist;
 
-	i = stk->a_len;
-	j = stk->b_len;
-	max = (i > j ? i : j);
+	elem_a = 0;
+	elem_b = 0;
+	a_exist = FALSE;
+	b_exist = FALSE;
+	max = (a_len > b_len ? a_len : b_len);
 	while (max - 1 >= 0)
 	{
-		if (i == max && j == max)
-			ft_printf("%d   %d\n", stk->a[max - 1], stk->b[max - 1]);
-		else if (i == max && j != max)
-			ft_printf("%d    \n", stk->a[max - 1]);
-		else if (i != max && j == max)
-			ft_printf("     %d\n", stk->b[max - 1]);
-		i == max ? i-- : 0;
-		j == max ? j-- : 0;
+		if (a_len == max)
+		{
+			elem_a = stk->a[max - 1];
+			a_exist = TRUE;
+		}
+		if (b_len == max)
+		{
+			elem_b = stk->b[max - 1];
+			b_exist = TRUE;
+		}
+		print_one_line(elem_a, elem_b, a_exist, b_exist);
+		a_len == max ? a_len-- : 0;
+		b_len == max ? b_len-- : 0;
 		max--;
 	}
-	ft_printf("-----\na   b\n");
+	ft_printf("-----------------------------\na              b\n\n");
 }

@@ -101,7 +101,7 @@ void		print_according_to_flags(char flags, FILE *fp, char *str,
 	else if ((flags & F_FLAG) && (flags & PUSH_SWAP))
 		fputs(str, fp);
 	if ((flags & V_FLAG) && ((flags & PUSH_SWAP) == 0))
-		show_stack(*stk);
+		show_stack(*stk, (*stk)->a_len, (*stk)->b_len);
 	if ((flags & V_FLAG) && (flags & PUSH_SWAP))
 		show_stack_with_index_stack(*stk, (*stk)->a_len, (*stk)->b_len);
 }
