@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_int_array.c                                       :+:      :+:    :+:   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 19:11:50 by jleblond          #+#    #+#             */
-/*   Updated: 2019/11/12 19:11:52 by jleblond         ###   ########.fr       */
+/*   Created: 2019/11/20 11:10:59 by jleblond          #+#    #+#             */
+/*   Updated: 2019/11/20 11:11:03 by jleblond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,8 @@ char		**copy_argv_without_flags(int nb_int, char const **argv)
 	char	**sstr;
 	int		i;
 	int		j;
-	int		len;
-	
+
 	i = 1;
-	len = 0;
 	j = 0;
 	sstr = (char**)malloc(sizeof(char*) * (nb_int + 1));
 	if (!sstr)
@@ -89,14 +87,12 @@ char		**copy_argv_without_flags(int nb_int, char const **argv)
 	{
 		if (is_flag_string(argv[i]) == FALSE)
 		{
-			len = ft_strlen(argv[i]);
-			sstr[j] = (char*)malloc(sizeof(char) * (len + 1));
+			sstr[j] = ft_strdup(argv[i]);
 			if (!sstr[j])
-			{	
+			{
 				free_sstr(sstr);
 				return (NULL);
 			}
-			ft_strcpy(sstr[j], argv[i]);
 			j++;
 		}
 		i++;

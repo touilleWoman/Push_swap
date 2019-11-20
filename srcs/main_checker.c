@@ -12,17 +12,17 @@
 
 #include "push_swap.h"
 
-void		check_order(t_stack *stk, int nb_args)
+void		check_order(t_stack *stk, int nb_int)
 {
-	if (stk->b_len == 0 && stk->a_len == nb_args)
+	if (stk->b_len == 0 && stk->a_len == nb_int)
 	{
-		while (nb_args - 1)
+		while (nb_int - 1)
 		{
-			if (stk->a[nb_args - 1] > stk->a[nb_args - 2])
+			if (stk->a[nb_int - 1] > stk->a[nb_int - 2])
 				break ;
-			nb_args--;
+			nb_int--;
 		}
-		nb_args == 1 ? ft_printf("OK\n") : ft_printf("KO\n");
+		nb_int - 1 == 0 ? ft_printf("OK\n") : ft_printf("KO\n");
 	}
 	else
 		ft_printf("KO\n");
@@ -36,16 +36,26 @@ void		usage_then_quit(void)
 	exit(0);
 }
 
+/*
+** no need to free stk->a, because stk->a is int_array.
+*/
 
-void	free_all(t_stack *stk, t_list *ins_lst)
+void		free_all(t_stack *stk, t_list *ins_lst, int *int_array)
 {
 	if (stk != NULL)
 	{
 		stk->b != NULL ? free(stk->b) : 0;
-		stk->a != NULL ? free(stk->a) : 0;
 		free(stk);
+		stk = NULL;
 	}
 	ins_lst != NULL ? free_list(ins_lst) : 0;
+	int_array != NULL ? free(int_array) : 0;
+}
+
+void		error_and_exit(void)
+{
+	ft_putendl_fd("Error", 2);
+	exit(0);
 }
 
 int			main(int argc, char const **argv)
@@ -63,18 +73,15 @@ int			main(int argc, char const **argv)
 	argc < 2 ? usage_then_quit() : 0;
 	int_array = parse_args_and_flags(argc, argv, &flags, &nb_int);
 	if (int_array == NULL)
-	{
-		ft_putendl_fd("Error", 2);
-		return (0);
-	}
+		error_and_exit();
 	if (parse_instructions(&ins_lst, flags) == FALSE)
 	{
-		free_all(stk, ins_lst);
+		free_all(NULL, ins_lst, int_array);
 		ft_putendl_fd("Error", 2);
 		return (0);
 	}
 	stk = execute_instructions(ins_lst, int_array, nb_int, &flags);
 	check_order(stk, nb_int);
-	free_all(stk, ins_lst);
+	free_all(stk, ins_lst, int_array);
 	return (0);
 }

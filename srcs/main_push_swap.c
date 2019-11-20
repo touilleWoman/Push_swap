@@ -12,12 +12,12 @@
 
 #include "push_swap.h"
 
-
 /*
 ** int_array are the list of integers that we read from stdin or a file,
 ** after excluding flags
 */
-int main(int argc, char const **argv)
+
+int		main(int argc, char const **argv)
 {
 	int		*int_array;
 	t_stack	*stk;

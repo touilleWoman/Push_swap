@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_stack			*init_stack_checker(int *args, int nb_int)
+t_stack		*init_stack_checker(int *args, int nb_int)
 {
 	t_stack		*stk;
 
@@ -32,7 +32,7 @@ t_stack			*init_stack_checker(int *args, int nb_int)
 	return (stk);
 }
 
-t_stack			*init_stack_push_swap(int *int_array, int nb_int,
+t_stack		*init_stack_push_swap(int *int_array, int nb_int,
 									int *origin_index, int *index)
 {
 	t_stack		*stk;
@@ -57,7 +57,7 @@ t_stack			*init_stack_push_swap(int *int_array, int nb_int,
 	return (stk);
 }
 
-t_stack 	*copy_stack(t_stack *stk)
+t_stack		*copy_stack(t_stack *stk)
 {
 	t_stack	*cp;
 
@@ -80,3 +80,28 @@ t_stack 	*copy_stack(t_stack *stk)
 	ft_memcpy(cp->int_array, stk->int_array, sizeof(int) * stk->max_len);
 	return (cp);
 }
+
+void		show_stack(t_stack *stk)
+{
+	int		max;
+	int		i;
+	int		j;
+
+	i = stk->a_len;
+	j = stk->b_len;
+	max = (i > j ? i : j);
+	while (max - 1 >= 0)
+	{
+		if (i == max && j == max)
+			ft_printf("%d   %d\n", stk->a[max - 1], stk->b[max - 1]);
+		else if (i == max && j != max)
+			ft_printf("%d    \n", stk->a[max - 1]);
+		else if (i != max && j == max)
+			ft_printf("     %d\n", stk->b[max - 1]);
+		i == max ? i-- : 0;
+		j == max ? j-- : 0;
+		max--;
+	}
+	ft_printf("-----\na   b\n");
+}
+

@@ -38,7 +38,31 @@ void	sort_an_increasing_tab(int *tab, int tab_len)
 	}
 }
 
+int			*copy_int_array(int	*tab, int tab_len)
+{
+	int		*ret;
 
+	ret = (int*)malloc(sizeof(int) * tab_len);
+	if (!ret)
+		return (NULL);
+	ft_memcpy(ret, tab, sizeof(int) * tab_len);
+	return (ret);
+}
 
+int			find_int_from_index_dict(int *int_array, int *index,
+										int elem_index, int nb_int)
+{
+	int		i;
 
-
+	i = 0;
+	while (i < nb_int)
+	{
+		if (index[i] == elem_index)
+		{
+			return (int_array[i]);
+		}
+		i++;
+	}
+	ft_putendl_fd("Error, can't find integer in dictionary\n", 2);
+	return (0);
+}

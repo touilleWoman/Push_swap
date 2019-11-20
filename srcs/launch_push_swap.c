@@ -17,38 +17,47 @@
 ** INS_STDOUT flag to print on stdout
 ** COUNT flag to count each instruction when activated
 */
-void	read_flags_then_choose_algo(t_stack *stk, char *flags)
+
+FILE		*get_fp_from_input(void)
 {
-	FILE		*fp;
 	char		filename[100];
 	int			len;
+	FILE		*fp;
+
+	fp = NULL;
+	len = 0;
+	ft_printf("Pleases give the path of file:\n");
+	if (fgets(filename, 50, stdin))
+	{
+		len = ft_strlen(filename);
+		(filename[len - 1] == '\n') ? filename[len - 1] = 0 : 0;
+		fp = fopen(filename, "w");
+		if (fp == NULL)
+			ft_putendl_fd("fopen failed!", 2);
+	}
+	return (fp);
+}
+
+void		read_flags_then_choose_algo(t_stack *stk, char *flags)
+{
+	FILE		*fp;
 
 	*flags = (*flags) | COUNT;
 	fp = NULL;
 	if ((*flags) & F_FLAG)
 	{
-		ft_printf("Pleases give the path of file:\n");
-		if(fgets(filename, 50, stdin))
-		{
-			len = ft_strlen(filename);
-			if (filename[len - 1] == '\n')
-				filename[len - 1] = 0;
-			fp = fopen(filename, "w");
-			if (fp == NULL)
-			{
-				ft_putendl_fd("Unable to create file!", 2);
-				return ;
-			}
-		}
+		fp = get_fp_from_input();
+		if (fp == NULL)
+			return ;
 	}
 	else
 		(*flags) = (*flags) | INS_STDOUT;
 	choose_algo(stk, *flags, fp);
-	if ((*flags) & F_FLAG)
+	if (fp)
 		fclose(fp);
 }
 
-int		*create_index_array(int *sorted, int *args, int nb_int)
+int			*create_index_array(int *sorted, int *args, int nb_int)
 {
 	int		*index;
 	int		i;
@@ -70,7 +79,7 @@ int		*create_index_array(int *sorted, int *args, int nb_int)
 	return (index);
 }
 
-int 		*index_array_of_args(int *args, int nb_int)
+int			*index_array_of_args(int *args, int nb_int)
 {
 	int *sorted;
 	int	*index;
@@ -85,31 +94,20 @@ int 		*index_array_of_args(int *args, int nb_int)
 	return (index);
 }
 
-int			*copy_int_array(int	*tab, int tab_len)
-{
-	int		*ret;
-
-	ret = (int*)malloc(sizeof(int) * tab_len);
-	if (!ret)
-		return (NULL);
-	ft_memcpy(ret, tab, sizeof(int) * tab_len);
-	return (ret);
-}
-
-
 /*
-** repalce args(list of integers) by a list of index,
+** repalce int_array(list of integers) by an array of index,
 ** so it will be two stacks of indexs that we work on,
-** it will be easier to do the algo on consecutive index then on args
-** when coming to print results, with index, we can find the origin
+** it will be easier to do the algo on consecutive index int
+** then on a list of integers
+** when it comes to printing results, with index, we can find the origin
 ** integer then print.
 */
+
 t_stack		*launch_push_swap(int *int_array, char *flags, int nb_int)
 {
 	t_stack		*stk;
 	int			*origin_index;
 	int			*index;
-
 
 	origin_index = index_array_of_args(int_array, nb_int);
 	if (!origin_index)

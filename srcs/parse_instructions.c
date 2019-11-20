@@ -16,9 +16,11 @@
 ** convert instructions from string to emum t_instructions
 */
 
-void		check_instruction_then_convert(char *s, t_instruction *ins)
+int			check_instruction_then_convert(char *s, t_instruction *ins)
 {
-	*ins = ERROR;
+	int		ret;
+
+	ret = TRUE;
 	if (s[0] == 's')
 	{
 		(s[1] == 'a' && s[2] == 0) ? (*ins = SA) : 0;
@@ -38,10 +40,12 @@ void		check_instruction_then_convert(char *s, t_instruction *ins)
 		(s[1] == 'r' && s[2] == 'b' && s[3] == 0) ? (*ins = RRB) : 0;
 		(s[1] == 'r' && s[2] == 'r' && s[3] == 0) ? (*ins = RRR) : 0;
 	}
+	else
+		ret = FALSE;
+	return (ret);
 }
 
-
-int			get_fd(char flags)
+int			get_fd_if_flagf_activated(char flags)
 {
 	int			fd;
 	char		filename[100];
@@ -50,7 +54,7 @@ int			get_fd(char flags)
 	if (flags & F_FLAG)
 	{
 		ft_printf("Pleases give the path of file:\n");
-		if(fgets(filename, 100, stdin))
+		if (fgets(filename, 100, stdin))
 		{
 			len = ft_strlen(filename);
 			if (filename[len - 1] == '\n')
@@ -71,28 +75,20 @@ int			parse_instructions(t_list **lst, char flags)
 {
 	char				*line;
 	t_instruction		ins;
-	t_list				*new;
 	int					gnl_ret;
-	int					len;
 	int					fd;
+	int					all_ins_good;
 
-	fd = get_fd(flags);
+	fd = get_fd_if_flagf_activated(flags);
 	if (fd < 0)
 		return (FALSE);
 	while ((gnl_ret = get_next_line(fd, &line)))
 	{
-		len = ft_strlen(line);
-		if ( len < 2 || len > 3 )
-			return (FALSE);
-		check_instruction_then_convert(line, &ins);
+		all_ins_good = check_instruction_then_convert(line, &ins);
 		free(line);
-		if (ins != ERROR)
-		{
-			new = ft_lstnew(&ins, sizeof(int));
-			ft_lstadd_bot(lst, new);
-		}
-		else
+		if (all_ins_good == FALSE)
 			return (FALSE);
+		ft_lstadd_bot(lst, ft_lstnew(&ins, sizeof(int)));
 	}
 	return (gnl_ret == -1 ? FALSE : TRUE);
 }

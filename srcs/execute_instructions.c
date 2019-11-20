@@ -14,10 +14,11 @@
 
 t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 {
-	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
-	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
+	static t_funs	funs[INSTRUCTION_NB] =
+	{{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa}, {PB, pb}, {RA, ra}, {RB, rb},
+	{RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
-	int		index;
+	int				index;
 
 	index = 0;
 	if ((*flags) & V_FLAG)
@@ -39,11 +40,12 @@ t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 	return (stk);
 }
 
-t_stack		*execute_instructions(t_list *ins_lst, int *args, int nb_args, char *flags)
+t_stack		*execute_instructions(t_list *ins_lst, int *int_array,
+										int nb_int, char *flags)
 {
 	t_stack	*stk;
 
-	stk = init_stack_checker(args, nb_args);
+	stk = init_stack_checker(int_array, nb_int);
 	if (stk == NULL)
 	{
 		ft_putendl_fd("Init stack failed!", 2);

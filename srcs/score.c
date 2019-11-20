@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   score.c                                              :+:      :+:    :+:   */
+/*   score.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_stack 	*incomplete_copy_stack_for_try(t_stack *stk)
+t_stack		*incomplete_copy_stack_for_try(t_stack *stk)
 {
 	t_stack	*cp;
 
@@ -40,35 +40,14 @@ t_stack 	*incomplete_copy_stack_for_try(t_stack *stk)
 	return (cp);
 }
 
-// int 	try_ins(t_stack *stk, int *score)
-// {
-// 	t_funs	funs[INSTRUCTION_NB] = {{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa},
-// 	{PB, pb}, {RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
-// 	};
-// 	int	i;
-// 	t_stack *cp;
-
-// 	i = 0;
-// 	while (i < INSTRUCTION_NB)
-// 	{
-// 		cp = incomplete_copy_stack_for_try(stk);
-// 		if (!cp)
-// 			return (FALSE);
-// 		funs[i].f(&cp, 0 , NULL);
-// 		score[i] = calculate_score(cp);
-// 		free_push_swap_stack(cp);
-// 		i++;
-// 	}
-// 	return (TRUE);
-// }
-
-int 	try_ins(t_stack *stk, int *score)
+int			try_ins(t_stack *stk, int *score)
 {
-	t_funs	funs[9] = {{SA, sa}, {SB, sb}, {SS, ss},
+	static t_funs	funs[9] = {
+	{SA, sa}, {SB, sb}, {SS, ss},
 	{RA, ra}, {RB, rb}, {RR, rr}, {RRA, rra}, {RRB, rrb}, {RRR, rrr}
 	};
-	int	i;
-	t_stack *cp;
+	int				i;
+	t_stack			*cp;
 
 	i = 0;
 	while (i < 9)
@@ -76,7 +55,7 @@ int 	try_ins(t_stack *stk, int *score)
 		cp = incomplete_copy_stack_for_try(stk);
 		if (!cp)
 			return (FALSE);
-		funs[i].f(&cp, 0 , NULL);
+		funs[i].f(&cp, 0, NULL);
 		score[i] = calculate_score(cp);
 		free_push_swap_stack(cp);
 		i++;
@@ -84,42 +63,7 @@ int 	try_ins(t_stack *stk, int *score)
 	return (TRUE);
 }
 
-// int		calculate_score(t_stack *stk)
-// {
-// 	int		score;
-// 	int		al;
-// 	int		bl;
-
-// 	al = stk->a_len;
-// 	bl = stk->b_len;
-// 	score = 0;
-// 	if (al > 0 && bl > 0)
-// 	{
-// 		if (stk->a[al - 1] < stk->b[bl - 1])
-// 			score += 2;
-// 		else if (stk->a[al - 1] - stk->b[bl - 1] != 1)
-// 			score++;
-// 	}
-// 	while (al > 1)
-// 	{
-// 		if (stk->a[al - 1] > stk->a[al - 2])
-// 			score += 2;
-// 		else if (stk->a[al - 1] - stk->a[al - 2] != -1)
-// 			score++;
-// 		al--;
-// 	}
-// 	while (bl > 1)
-// 	{
-// 		if (stk->b[bl - 1] < stk->b[bl - 2])
-// 			score += 2;
-// 		else if (stk->b[bl - 1] - stk->b[bl - 2] != 1)
-// 			score++;
-// 		bl--;
-// 	}
-// 	return (score);
-// }
-
-int		calculate_score(t_stack *stk)
+int			calculate_score(t_stack *stk)
 {
 	int		score;
 	int		al;
@@ -147,4 +91,3 @@ int		calculate_score(t_stack *stk)
 	}
 	return (score);
 }
-

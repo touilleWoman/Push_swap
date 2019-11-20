@@ -76,28 +76,6 @@ int				renew_end(char **line, char **end)
 	return (1);
 }
 
-char			**get_pend(int fd)
-{
-	static t_list	*elems = NULL;
-	t_list			*p;
-	t_fd_buf		data;
-
-	p = elems;
-	while (p)
-	{
-		if (((t_fd_buf*)p->content)->fd == fd)
-			return (&((t_fd_buf*)p->content)->end);
-		p = p->next;
-	}
-	data.fd = fd;
-	data.end = NULL;
-	p = ft_lstnew(&data, sizeof(data));
-	if (p == NULL)
-		return (0);
-	ft_lstadd_top(&elems, p);
-	return (&((t_fd_buf*)elems->content)->end);
-}
-
 int				get_next_line(const int fd, char **line)
 {
 	int				ret;
