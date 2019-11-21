@@ -79,7 +79,7 @@ int			*create_index_array(int *sorted, int *args, int nb_int)
 	return (index);
 }
 
-int			*index_array_of_args(int *args, int nb_int)
+int			*index_array_of_args(int *int_array, int nb_int)
 {
 	int *sorted;
 	int	*index;
@@ -87,9 +87,9 @@ int			*index_array_of_args(int *args, int nb_int)
 	sorted = (int*)malloc(sizeof(int) * nb_int);
 	if (!sorted)
 		return (NULL);
-	ft_memcpy(sorted, args, sizeof(int) * nb_int);
+	ft_memcpy(sorted, int_array, sizeof(int) * nb_int);
 	sort_an_increasing_tab(sorted, nb_int);
-	index = create_index_array(sorted, args, nb_int);
+	index = create_index_array(sorted, int_array, nb_int);
 	free(sorted);
 	return (index);
 }

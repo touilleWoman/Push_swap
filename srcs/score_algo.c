@@ -50,5 +50,6 @@ int		best_score_algo(t_stack *stk, char flags, FILE *fp, int last_algo_nb)
 	}
 	while (stk->a_len != stk->max_len)
 		pa(&stk, flags, fp);
+	ft_printf("best score in total:%d\n", stk->count);
 	return (stk->count);
 }
