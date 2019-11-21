@@ -73,21 +73,23 @@ int			execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 
 void		choose_algo(t_stack *stk, char flags, FILE *fp)
 {
-	t_stack		*cp;
-	int			algo1_nb;
-	int			algo2_nb;
-	int			flags_for_test;
+	// t_stack		*cp;
+	// int			algo1_nb;
+	// int			algo2_nb;
+	// int			flags_for_test;
 
-	flags_for_test = 0 | COUNT;
-	cp = copy_stack(stk);
-	perfect_b_algo(cp, flags_for_test, fp);
-	algo1_nb = cp->count;
-	free_push_swap_stack(cp);
-	cp = copy_stack(stk);
-	algo2_nb = best_score_algo(cp, flags_for_test, fp, algo1_nb);
-	free_push_swap_stack(cp);
-	if (algo1_nb < algo2_nb)
-		perfect_b_algo(stk, flags, fp);
-	else
-		best_score_algo(stk, flags, fp, algo1_nb);
+	// flags_for_test = 0 | COUNT;
+	// cp = copy_stack(stk);
+	// perfect_b_algo(cp, flags_for_test, fp);
+	// algo1_nb = cp->count;
+	// free_push_swap_stack(cp);
+	// cp = copy_stack(stk);
+	// algo2_nb = best_score_algo(cp, flags_for_test, fp, algo1_nb);
+	// free_push_swap_stack(cp);
+	// if (algo1_nb < algo2_nb)
+	// 	perfect_b_algo(stk, flags, fp);
+	// else
+	// 	best_score_algo(stk, flags, fp, algo1_nb);
+	median_algo(stk, flags, fp);
+	ft_printf("in total:%d\n", stk->count);
 }

@@ -118,9 +118,12 @@ int				find_int_from_index_dict(int *int_array, int *index,
 										int elem_index, int nb_int);
 int				best_score_algo(t_stack *stk, char flags, FILE *fp,
 								int last_algo_nb);
+void			median_algo(t_stack *stk, char flags, FILE *fp);
+
 void			free_sstr(char **sstr);
 void			free_push_swap_stack(t_stack *stk);
 void			free_sstr_and_exit(char **sstr);
+int		position_on_stack(int *tab, int tab_len, int value);
 
 /*
 ** display
