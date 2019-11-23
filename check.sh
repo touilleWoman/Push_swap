@@ -35,12 +35,12 @@ progressbar()
 	bar="##################################################"
 	barlength=${#bar}
 	n=$(($1*barlength/100))
-	printf "\r[%-${barlength}s (%d%%)] " "${bar:0:n}" "$1" 
+	printf "\r[%-${barlength}s (%d%%)] " "${bar:0:n}" "$1"
 }
 
 while [ $x -le $max ]
 do
-	progressbar $x
+	# progressbar $x
 	new=$(ARG=`ruby -e "puts ($rmin..$rmax).to_a.shuffle.join(' ')"` && ./push_swap $ARG | wc -l )
 	total=$(( $total + $new ))
 	x=$(( $x + 1 ))

@@ -77,7 +77,7 @@ void		choose_algo(t_stack *stk, char flags, FILE *fp)
 	int			limit;
 	// int			algo2_nb;
 	// int			flags_for_test;
-	limit = 1000;
+	limit = 10;
 	// flags_for_test = 0 | COUNT;
 	// cp = copy_stack(stk);
 	// perfect_b_algo(cp, flags_for_test, fp);
@@ -89,9 +89,9 @@ void		choose_algo(t_stack *stk, char flags, FILE *fp)
 	// 	perfect_b_algo(stk, flags, fp);
 	// else
 	// 	best_score_algo(stk, flags, fp, limit);
-	if (stk->max_len <= 5)
-		// perfect_b_algo(stk, flags, fp);
-		best_score_algo(stk, flags, fp, limit);
-	else
+	// if (stk->max_len <= 6)
+	// 	// perfect_b_algo(stk, flags, fp);
+	// 	best_score_algo(stk, flags, fp, limit);
+	// else
 		median_algo(stk, flags, fp);
 }
