@@ -12,116 +12,117 @@
 
 #include "push_swap.h"
 
-void	small_half_to_b(t_stack *stk, char flags, FILE *fp)
+int 	find_median(int *tab, int tab_len)
 {
-	int		to_b_nb;
-	int		median;
-	// int		to_b_nb_total;
+	int *copy_tab;
+	int	median;
 
-	median = stk->max_len / 2;
-	// if (stk->max_len % 2 == 0)
-	// 	to_b_nb_total = median + 1;
-	// else
-	// 	to_b_nb_total = median;
+	copy_tab = copy_int_array(tab, tab_len);
+	sort_an_increasing_tab(copy_tab, tab_len);
+	if (tab_len % 2 != 0)
+		median = copy_tab[tab_len / 2];
+	else
+		median = copy_tab[(tab_len - 1) / 2];
+	free(copy_tab);
+	return (median);
+}
 
-	to_b_nb = 0;
-	while (to_b_nb < median)
+
+void	push_left_to_a(t_stack *stk, char flags, FILE *fp, int left)
+{
+	while (left > 0)
 	{
-		while (stk->a[stk->a_len - 1] >= median)
-			ra(&stk, flags, fp);
-		pb(&stk, flags, fp);
-		to_b_nb++;
+		pa(&stk, flags, fp);
+		left--;
 	}
 }
 
-void	push_another_half_to_b(t_stack *stk, char flags, FILE *fp)
+/*
+** Ex: median stays in smaller stack(stack b)
+*/
+
+
+
+
+/*
+** Ex: median gos to smaller stack(stack b)
+** Ex: median of "0 1 2 3 4" is 2, b="0 1 2" , a = "3 4"
+** Ex: median of "0 1 2 3 4 5" is also 2, b = "0 1 2" a="3 4 5"
+*/
+
+
+
+int		bigger_half_to_a(t_stack *stk, char flags, FILE *fp)
+{
+	int		to_a_nb;
+	int		median;
+	int		left;
+
+	median = find_median(stk->b, stk->b_len);
+	if (stk->b_len % 2 != 0)
+		to_a_nb = stk->b_len / 2;
+	else
+		to_a_nb = stk->b_len / 2;
+	left = stk->b_len - to_a_nb;
+	printf("median of b:%d, to_a_nb:%d\n", median, to_a_nb);
+
+	while (to_a_nb > 0)
+	{
+		while (stk->b[stk->b_len - 1] <= median)
+			rb(&stk, flags, fp);
+		pa(&stk, flags, fp);
+		// if (stk->b_len > 1 && stk->b[stk->b_len - 1] > stk->b[stk->b_len - 2])
+		// 	sa(&stk, flags, fp);
+		to_a_nb--;
+	}
+
+	return (left);
+
+}
+
+void		smaller_half_to_b(t_stack *stk, char flags, FILE *fp, int n)
 {
 	int		to_b_nb;
 	int		median;
+	int		left;
+	int		i;
 
-	median = stk->max_len / 2;
-	to_b_nb = stk->max_len - median + 1;
-	while (to_b_nb > 0)
+	if (n == 1)
 	{
-		rra(&stk, flags, fp);
 		pb(&stk, flags, fp);
-		to_b_nb--;
-	}
-}
-
-void	rrb_or_rb(t_stack *stk, char flags, FILE *fp, int to_a)
-{
-	int		to_a_pos;
-
-	to_a_pos = position_on_stack(stk->b, stk->b_len, to_a);
-	// printf("==============:%d, %d\n", to_a, to_a_pos);
-	if (to_a_pos < 0)
-	{
-		ft_printf("Error in rrb_or_rrb()\n");
+		rb(&stk, flags, fp);
 		return ;
 	}
-	if (to_a_pos < stk->b_len / 2)
-	{
-		while (stk->b[stk->b_len - 1] != to_a)
-			rrb(&stk, flags, fp);
-	}
+	i = 0;
+	median = find_median(stk->a, n);
+	if (stk->a_len % 2 != 0)
+		to_b_nb = stk->a_len / 2 + 1;
 	else
+		to_b_nb = stk->a_len / 2;
+	left = stk->a_len - to_b_nb;
+	printf("median:%d, to_b_nb:%d\n", median, to_b_nb);
+
+	while (i < to_b_nb)
 	{
-		while (stk->b[stk->b_len - 1] != to_a)
-			rb(&stk, flags, fp);
+		while (stk->a[stk->a_len - 1] > median)
+			ra(&stk, flags, fp);
+		pb(&stk, flags, fp);
+		// if (stk->b_len > 1 && stk->b[stk->b_len - 1] < stk->b[stk->b_len - 2])
+		// 	sb(&stk, flags, fp);
+		i++;
 	}
-}
+	smaller_half_to_b(stk, flags, fp, left);
 
-void	push_half_back_to_a(t_stack *stk, char flags, FILE *fp)
-{
-	int		to_a_pos;
-	int		to_a;
+	push_left_to_a(stk, flags, fp, to_b_nb);
 
-	to_a = stk->max_len / 2 - 1;
-	to_a_pos = position_on_stack(stk->b, stk->b_len, to_a);
-	// printf("==============:%d, %d\n", to_a, to_a_pos);
-	if (to_a_pos == -1)
-		ft_putendl_fd("Error in algo median!\n", 2);
-	while (stk->b_len != 0)
-	{
-		while (stk->b[stk->b_len - 1] != to_a)
-			rrb_or_rb(stk, flags, fp, to_a);
-		pa(&stk, flags, fp);
-		to_a--;
-	}
-}
+	smaller_half_to_b(stk, flags, fp, left);
 
-void	push_another_half_back_to_a(t_stack *stk, char flags, FILE *fp)
-{
-	int		to_a_pos;
-	int		to_a;
-
-	to_a = stk->max_len / 2 - 1;
-	to_a_pos = position_on_stack(stk->b, stk->b_len, to_a);
-	// printf("==============:%d, %d\n", to_a, to_a_pos);
-	if (to_a_pos == -1)
-		ft_putendl_fd("Error in algo median!\n", 2);
-	while (stk->b_len != 0)
-	{
-		if (stk->b[stk->b_len - 1] != to_a)
-			rrb_or_rb(stk, flags, fp, to_a);
-		pa(&stk, flags, fp);
-		ra(&stk, flags, fp);
-		to_a++;
-	}
 }
 
 void	quick_sort_algo(t_stack *stk, char flags, FILE *fp)
 {
-	int		min_score;
+	smaller_half_to_b(stk, flags, fp, stk->max_len);
 
-	// min_score = execute_if_score_smaler(stk, flags, fp);
-	// if (min_score)
-	// {
-		small_half_to_b(stk, flags, fp);
-		push_half_back_to_a(stk, flags, fp);
-		push_another_half_to_b(stk, flags, fp);
-		push_another_half_back_to_a(stk, flags, fp);
-	// }
+
 	ft_printf("quick_sort in total:%d\n", stk->count);
 }

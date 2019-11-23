@@ -93,5 +93,7 @@ void		choose_algo(t_stack *stk, char flags, FILE *fp)
 	// 	// perfect_b_algo(stk, flags, fp);
 	// 	best_score_algo(stk, flags, fp, limit);
 	// else
-		median_algo(stk, flags, fp);
+		// median_algo(stk, flags, fp);
+	quick_sort_algo(stk, flags, fp);
+
 }

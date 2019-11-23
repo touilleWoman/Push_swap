@@ -123,7 +123,9 @@ void			median_algo(t_stack *stk, char flags, FILE *fp);
 void			free_sstr(char **sstr);
 void			free_push_swap_stack(t_stack *stk);
 void			free_sstr_and_exit(char **sstr);
-int		position_on_stack(int *tab, int tab_len, int value);
+int				position_on_stack(int *tab, int tab_len, int value);
+void			quick_sort_algo(t_stack *stk, char flags, FILE *fp);
+
 
 /*
 ** display
