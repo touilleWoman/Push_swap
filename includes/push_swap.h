@@ -31,10 +31,7 @@
 
 # define KEEP 1
 # define OUT 2
-# define DONE 3
 
-# define KRED  "\x1B[31m"
-# define KGRN  "\x1B[32m"
 /*
 ** in checker, only a, a_len, b, b_len are used
 */
