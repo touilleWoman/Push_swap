@@ -73,22 +73,10 @@ int		calculate_rotate_a_steps(t_stack *stk, int to_a)
 	return (rotate_a_steps);
 }
 
-void	rotate_stack_a(t_stack *stk, int to_a_value, char flags, FILE *fp)
-{
-	int	wanted_top_a_value;
 
-	if (stk->a_len == 0 || stk->a_len == 1)
-		return ;
-	wanted_top_a_value = get_wanted_top_a_value(stk, to_a_value);
-	rra_or_ra(stk, flags, fp, wanted_top_a_value);
-}
 
-void	rotate_stack_b(t_stack *stk, int to_a_value, char flags, FILE *fp)
-{
-	if (stk->b_len == 0 || stk->b_len == 1)
-		return ;
-	rrb_or_rb(stk, flags, fp, to_a_value);
-}
+
+
 
 int		calculate_steps(t_stack *stk, int value, int value_pos)
 {
@@ -132,10 +120,103 @@ static int		choose_best_to_push(t_stack *stk)
 	return (best_value);
 }
 
+int		get_rotate_a_nb(t_stack *stk, int to_top, t_instruction *which)
+{
+	int		to_top_pos;
+
+	to_top_pos = position_on_stack(stk->a, stk->a_len, to_top);
+	if (to_top_pos < 0)
+		return (-1);
+	if (stk->a_len - 1 - to_top_pos < to_top_pos + 1)
+	{
+		*which = RA;
+		return (stk->a_len - 1 - to_top_pos);
+	}
+	else
+	{
+		*which = RRA;
+		return (to_top_pos + 1);
+	}
+}
+
+int		get_rotate_b_nb(t_stack *stk, int to_top, t_instruction *which)
+{
+	int		to_top_pos;
+
+	to_top_pos = position_on_stack(stk->b, stk->b_len, to_top);
+	if (to_top_pos < 0)
+		return (-1);
+	if (stk->b_len - 1 - to_top_pos < to_top_pos + 1)
+	{
+		*which = RB;
+		return (stk->b_len - 1 - to_top_pos);
+	}
+	else
+	{
+		*which = RRB;
+		return (to_top_pos + 1);
+	}
+}
+
+void	rotate_a_and_b(t_stack *stk, int to_a_value, char flags, FILE *fp)
+{
+	int				wanted_top_a_value;
+	int				rotate_a_nb;
+	int				rotate_b_nb;
+	t_instruction 	which_for_a;
+	t_instruction 	which_for_b;
+
+	which_for_a = -1;
+	which_for_b = -1;
+	rotate_b_nb = -1;
+ 	rotate_a_nb = -1;
+	if (stk->a_len > 1)
+	{
+		wanted_top_a_value = get_wanted_top_a_value(stk, to_a_value);
+		rotate_a_nb = get_rotate_a_nb(stk, wanted_top_a_value, &which_for_a);
+	}
+	if (stk->b_len > 1)
+		rotate_b_nb = get_rotate_b_nb(stk, to_a_value, &which_for_b);
+	while (rotate_a_nb > 0 && rotate_b_nb > 0)
+	{
+		if (which_for_a == RA && which_for_b == RB)
+			rr(&stk, flags, fp);
+		else if (which_for_a == RRA && which_for_b == RRB)
+			rrr(&stk, flags, fp);
+		else if (which_for_a == RA && which_for_b == RRB)
+		{
+			ra(&stk, flags, fp);
+			rrb(&stk, flags, fp);
+		}
+		else if (which_for_a == RRA && which_for_b == RB)
+		{
+			rra(&stk, flags, fp);
+			rb(&stk, flags, fp);
+		}
+		rotate_b_nb--;
+		rotate_a_nb--;
+	}
+	while (rotate_a_nb > 0)
+	{
+		if (which_for_a == RA)
+			ra(&stk, flags, fp);
+		else
+			rra(&stk, flags, fp);
+		rotate_a_nb--;
+	}
+	while (rotate_b_nb > 0)
+	{
+		if (which_for_b == RB)
+			rb(&stk, flags, fp);
+		else
+			rrb(&stk, flags, fp);
+		rotate_b_nb--;
+	}
+}
+
 void	push_the_chosen_one(t_stack *stk, int to_a, char flags, FILE *fp)
 {
-	rotate_stack_a(stk, to_a, flags, fp);
-	rotate_stack_b(stk, to_a, flags, fp);
+	rotate_a_and_b(stk, to_a, flags, fp);
 	pa(&stk, flags, fp);
 }
 
