@@ -30,6 +30,7 @@
 
 # define KEEP 1
 # define OUT 2
+# define DONE 3
 
 /*
 ** in checker, only a, a_len, b, b_len are used

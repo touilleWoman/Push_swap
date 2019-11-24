@@ -105,7 +105,7 @@ int		calculate_steps(t_stack *stk, int value, int value_pos)
 	return (go_to_top_b_steps + rotate_a_steps + 1);
 }
 
-int		choose_best_to_push(t_stack *stk, int *best_value_pos)
+static int		choose_best_to_push(t_stack *stk)
 {
 	int	best_value;
 	int	i;
@@ -121,13 +121,11 @@ int		choose_best_to_push(t_stack *stk, int *best_value_pos)
 		{
 			min_steps = steps_nb;
 			best_value = stk->b[i];
-			*best_value_pos = i;
 		}
 		else if (steps_nb < min_steps)
 		{
 			min_steps = steps_nb;
 			best_value = stk->b[i];
-			*best_value_pos = i;
 		}
 		i++;
 	}
@@ -149,7 +147,7 @@ void	insert_all_to_a(t_stack *stk, char flags, FILE *fp)
 	to_a_pos = 0;
 	while (stk->b_len != 0)
 	{
-		to_a = choose_best_to_push(stk, &to_a_pos);
+		to_a = choose_best_to_push(stk);
 		push_the_chosen_one(stk, to_a, flags, fp);
 	}
 }
