@@ -40,7 +40,7 @@ progressbar()
 
 while [ $x -le $max ]
 do
-	# progressbar $x
+	progressbar $x
 	new=$(ARG=`ruby -e "puts ($rmin..$rmax).to_a.shuffle.join(' ')"` && ./push_swap $ARG | wc -l )
 	total=$(( $total + $new ))
 	x=$(( $x + 1 ))

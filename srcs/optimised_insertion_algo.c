@@ -52,11 +52,9 @@ void	optimised_insertion_algo(t_stack *stk, char flags, FILE *fp)
 {
 	int	*mark;
 
-	printf("Init Stack\n");
-	show_stack(stk, stk->a_len, stk->b_len);
 	mark = mark_a(stk);
 	push_marked_to_b(stk, mark, flags, fp);
 	insert_all_to_a(stk, flags, fp);
 	rra_or_ra(stk, flags, fp, 0);
-	printf("In total, optimised_insertion_algo: %d\n", stk->count);
+	// printf("In total, optimised_insertion_algo: %d\n", stk->count);
 }

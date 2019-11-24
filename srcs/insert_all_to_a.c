@@ -116,7 +116,7 @@ int		choose_best_to_push(t_stack *stk, int *best_value_pos)
 	while (i < stk->b_len)
 	{
 		steps_nb = calculate_steps(stk, stk->b[i], i);
-		printf("steps_nb= %d for value=%d\n",steps_nb, stk->b[i]);
+		// printf("steps_nb= %d for value=%d\n",steps_nb, stk->b[i]);
 		if (i == 0)
 		{
 			min_steps = steps_nb;
@@ -150,7 +150,6 @@ void	insert_all_to_a(t_stack *stk, char flags, FILE *fp)
 	while (stk->b_len != 0)
 	{
 		to_a = choose_best_to_push(stk, &to_a_pos);
-		printf("to_a = %d, to_a_pos=%d\n", to_a, to_a_pos);
 		push_the_chosen_one(stk, to_a, flags, fp);
 	}
 }

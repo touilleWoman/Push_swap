@@ -104,3 +104,22 @@ void	rra_or_ra(t_stack *stk, char flags, FILE *fp, int to_top)
 			rra(&stk, flags, fp);
 	}
 }
+
+void	rrb_or_rb(t_stack *stk, char flags, FILE *fp, int to_top)
+{
+	int		to_top_pos;
+
+	to_top_pos = position_on_stack(stk->b, stk->b_len, to_top);
+	if (to_top_pos < 0)
+		return ;
+	if (stk->b_len - 1 - to_top_pos < to_top_pos + 1)
+	{
+		while (stk->b[stk->b_len - 1] != to_top)
+			rb(&stk, flags, fp);
+	}
+	else
+	{
+		while (stk->b[stk->b_len - 1] != to_top)
+			rrb(&stk, flags, fp);
+	}
+}

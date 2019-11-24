@@ -112,12 +112,11 @@ int		*mark_a(t_stack *stk)
 	best_keep_nb = 0;
 	best_head_pos = 0;
 	best_head = find_best_head_value(stk->a, stk->a_len, &best_keep_nb, &best_head_pos);
-	printf("best_head=%d, is in position=%d, best_keep_nb=%d\n", best_head, best_head_pos, best_keep_nb);
+	// printf("best_head=%d, is in position=%d, best_keep_nb=%d\n", best_head, best_head_pos, best_keep_nb);
 	mark = do_mark(stk, best_head, best_head_pos, best_keep_nb);
-	for (int i = 0; i < stk->a_len; ++i)
-	{
-		printf("mark[%d] == %d\n", i, mark[i]);
-	}
-	show_stack(stk, stk->a_len, stk->b_len);
+	// for (int i = 0; i < stk->a_len; ++i)
+	// {
+	// 	printf("mark[%d] == %d\n", i, mark[i]);
+	// }
 	return (mark);
 }
