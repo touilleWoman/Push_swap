@@ -28,13 +28,6 @@ void		check_order(t_stack *stk, int nb_int)
 		ft_printf("KO\n");
 }
 
-void		usage_then_quit(void)
-{
-	ft_printf("Usage: ./checker [-v(optional): show stack at every step]\n "
-		"[-f(optional): read instructions from a file]\n"
-		"[arguments: a list of integer numbers seperated by space]\n");
-	exit(0);
-}
 
 /*
 ** no need to free stk->a, because stk->a is int_array.
@@ -70,7 +63,7 @@ int			main(int argc, char const **argv)
 	flags = 0;
 	nb_int = 0;
 	stk = NULL;
-	argc < 2 ? usage_then_quit() : 0;
+	argc < 2 ? exit (0) : 0;
 	int_array = parse_args_and_flags(argc, argv, &flags, &nb_int);
 	if (int_array == NULL)
 		error_and_exit();

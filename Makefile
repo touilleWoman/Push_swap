@@ -45,8 +45,6 @@ HEADER = $(shell find includes -type f) $(shell find libft/includes -type f)
 
 LIBFTA = ./libft/libft.a
 
-# -g -fsanitize=address
-
 all: $(NAME_CK) $(NAME_PS)
 
 $(NAME_PS):$(OBJ) $(OBJ_PS) $(LIBFTA)
