@@ -28,6 +28,9 @@
 # define PUSH_SWAP  1 << 3
 # define COUNT 1 << 4
 
+# define KEEP 1
+# define OUT 2
+
 /*
 ** in checker, only a, a_len, b, b_len are used
 */
@@ -125,6 +128,7 @@ void			free_push_swap_stack(t_stack *stk);
 void			free_sstr_and_exit(char **sstr);
 int				position_on_stack(int *tab, int tab_len, int value);
 void			quick_sort_algo(t_stack *stk, char flags, FILE *fp);
+void	optimised_insertion_algo(t_stack *stk, char flags, FILE *fp);
 
 
 /*

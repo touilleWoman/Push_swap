@@ -74,10 +74,8 @@ int			execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 void		choose_algo(t_stack *stk, char flags, FILE *fp)
 {
 	// t_stack		*cp;
-	int			limit;
 	// int			algo2_nb;
 	// int			flags_for_test;
-	limit = 10;
 	// flags_for_test = 0 | COUNT;
 	// cp = copy_stack(stk);
 	// perfect_b_algo(cp, flags_for_test, fp);
@@ -94,6 +92,7 @@ void		choose_algo(t_stack *stk, char flags, FILE *fp)
 	// 	best_score_algo(stk, flags, fp, limit);
 	// else
 		// median_algo(stk, flags, fp);
-	quick_sort_algo(stk, flags, fp);
+	// quick_sort_algo(stk, flags, fp);
 
+	optimised_insertion_algo(stk, flags, fp);
 }

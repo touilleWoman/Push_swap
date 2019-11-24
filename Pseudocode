@@ -1,0 +1,40 @@
+
+1. find best head
+Objectif : find the best mark head to keep Maximum de int in stack A
+current_head = 0
+best_head = 0;
+best_keep_nb = 0;
+while current_head < stack_a_len
+	calculate keep_nb of current_head
+		if keep_nb > best_keep_nb
+			best_head = current_head
+			best_keep_nb = keep_nb
+	current_head++
+
+2. mark which integer goes to b with given best_head
+
+malloc an array : int *marks
+Index of array corresponds to value of int
+Ex :  marks[5] = TRUE  value 5 stays in stack A
+Ex :  marks[4] = FALSE  value 4 will go to stak B
+
+3. push certains integers to stack b
+The number of integers going to be pushed to be will be :
+to_b_nb = total length of stack A - best_keep_nb
+
+while (to_b_nb > 0)
+	while (top value of stack A has mark TRUE)
+		ra()
+	pb()
+	to_b_nb--
+
+(This can be optimised later)
+
+3. Push all the int on stack B back to stack A
+
+Calculate for each int on stack B:
+steps needed for rotate b, rotate a, then pa()
+
+Choose the best int then push.
+
+Keep doing this until stak B is empty
