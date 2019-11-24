@@ -45,13 +45,15 @@ HEADER = $(shell find includes -type f) $(shell find libft/includes -type f)
 
 LIBFTA = ./libft/libft.a
 
+# -g -fsanitize=address
+
 all: $(NAME_CK) $(NAME_PS)
 
 $(NAME_PS):$(OBJ) $(OBJ_PS) $(LIBFTA)
-	$(CC)  $(CFLAGS) -o $(NAME_PS) $(SRC_PS) $(OBJ) $(LIBFTA) $(IFLAG)
+	$(CC)  $(CFLAGS) -o $(NAME_PS) $(SRC_PS) $(OBJ) $(LIBFTA) $(IFLAG) 
 
 $(NAME_CK): $(OBJ) $(OBJ_CK) $(LIBFTA)
-	$(CC)  $(CFLAGS) -o $(NAME_CK) $(SRC_CK) $(OBJ) $(LIBFTA) $(IFLAG)
+	$(CC)  $(CFLAGS) -o $(NAME_CK) $(SRC_CK) $(OBJ) $(LIBFTA) $(IFLAG) 
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $< $(IFLAG)

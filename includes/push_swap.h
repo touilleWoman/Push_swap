@@ -27,11 +27,14 @@
 # define INS_STDOUT 1 << 2
 # define PUSH_SWAP  1 << 3
 # define COUNT 1 << 4
+# define C_FLAG 1 << 5
 
 # define KEEP 1
 # define OUT 2
 # define DONE 3
 
+# define KRED  "\x1B[31m"
+# define KGRN  "\x1B[32m"
 /*
 ** in checker, only a, a_len, b, b_len are used
 */

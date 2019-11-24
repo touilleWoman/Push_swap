@@ -25,6 +25,10 @@ int			is_flag_string(char const *str)
 	{
 		ret = TRUE;
 	}
+	else if (ft_strcmp(str, "-c") == 0)
+	{
+		ret = TRUE;
+	}
 	return (ret);
 }
 
@@ -41,6 +45,11 @@ int			is_flag_then_activate(char const *str, char *flags)
 	else if (ft_strcmp(str, "-f") == 0)
 	{
 		*flags = (*flags) | F_FLAG;
+		ret = TRUE;
+	}
+	else if (ft_strcmp(str, "-c") == 0)
+	{
+		*flags = (*flags) | C_FLAG;
 		ret = TRUE;
 	}
 	return (ret);
