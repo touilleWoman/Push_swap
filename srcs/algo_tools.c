@@ -66,3 +66,41 @@ int			find_int_from_index_dict(int *int_array, int *index,
 	ft_putendl_fd("Error, can't find integer in dictionary\n", 2);
 	return (0);
 }
+
+int		position_on_stack(int *tab, int tab_len, int value)
+{
+	int	i;
+	int	value_pos;
+
+	i = 0;
+	value_pos = -1;
+	while (i < tab_len)
+	{
+		if (tab[i] == value)
+		{
+			value_pos = i;
+			break ;
+		}
+		i++;
+	}
+	return (value_pos);
+}
+
+void	rra_or_ra(t_stack *stk, char flags, FILE *fp, int to_top)
+{
+	int		to_top_pos;
+
+	to_top_pos = position_on_stack(stk->a, stk->a_len, to_top);
+	if (to_top_pos < 0)
+		return ;
+	if (stk->a_len - 1 - to_top_pos < to_top_pos + 1)
+	{
+		while (stk->a[stk->a_len - 1] != to_top)
+			ra(&stk, flags, fp);
+	}
+	else
+	{
+		while (stk->a[stk->a_len - 1] != to_top)
+			rra(&stk, flags, fp);
+	}
+}

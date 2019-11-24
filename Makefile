@@ -21,7 +21,8 @@ SRCS_NAME = parse_instructions.c execute_instructions.c instructions.c \
 			instructions2.c instructions3.c parse_args.c free.c \
 			display_functions.c flag.c launch_push_swap.c choose_algo.c\
 			algo_tools.c score.c stack.c perfect_b_algo.c parse_tools.c\
-			score_algo.c median_algo.c quick_sort.c optimised_insertion_algo.c
+			score_algo.c median_algo.c quick_sort.c optimised_insertion_algo.c\
+			mark_stack_a.c insert_all_to_a.c\
 
 SRCS_PATH = ./srcs
 
