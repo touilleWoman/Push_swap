@@ -35,8 +35,7 @@ int			sub_check_instruction_then_convert(char *s, t_instruction *ins)
 		*ins = RRR;
 	else
 		ret = FALSE;
-	return(ret);
-
+	return (ret);
 }
 
 int			check_instruction_then_convert(char *s, t_instruction *ins)

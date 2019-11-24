@@ -12,6 +12,26 @@
 
 #include "push_swap.h"
 
+static t_stack		*init_stack_checker(int *args, int nb_int)
+{
+	t_stack		*stk;
+
+	stk = (t_stack*)malloc(sizeof(t_stack));
+	if (stk == NULL)
+		return (NULL);
+	ft_bzero(stk, sizeof(t_stack));
+	stk->b = (int*)malloc(sizeof(int) * nb_int);
+	if (stk->b == NULL)
+	{
+		free(stk);
+		return (NULL);
+	}
+	stk->a = args;
+	stk->a_len = nb_int;
+	stk->b_len = 0;
+	return (stk);
+}
+
 t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 {
 	static t_funs	funs[INSTRUCTION_NB] =

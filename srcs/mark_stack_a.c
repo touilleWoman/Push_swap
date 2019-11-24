@@ -41,7 +41,8 @@ int		calculat_keep_nb(int *array, int arr_len, int head_pos)
 	return (keep_nb);
 }
 
-int		find_best_head_value(int *array, int arr_len, int *best_keep_nb, int *best_head_pos)
+int		find_best_head_value(int *array, int arr_len,
+							int *best_keep_nb, int *best_head_pos)
 {
 	int	current;
 	int	current_keep_nb;
@@ -55,7 +56,6 @@ int		find_best_head_value(int *array, int arr_len, int *best_keep_nb, int *best_
 	{
 		current = array[i];
 		current_keep_nb = calculat_keep_nb(array, arr_len, i);
-		// printf("keep_nb for %d(array[%d]) is %d \n", current, i, current_keep_nb);
 		if (current_keep_nb > *best_keep_nb)
 		{
 			*best_keep_nb = current_keep_nb;
@@ -67,12 +67,11 @@ int		find_best_head_value(int *array, int arr_len, int *best_keep_nb, int *best_
 	return (best_head_value);
 }
 
-int		*do_mark(t_stack *stk, int head, int head_pos, int keep_nb)
+int		*do_mark(t_stack *stk, int head, int head_pos)
 {
 	int		i;
 	int		j;
 	int		*mark;
-	int		count;//delete later
 
 	mark = (int*)malloc(sizeof(int) * (stk->a_len));
 	if (!mark)
@@ -81,23 +80,17 @@ int		*do_mark(t_stack *stk, int head, int head_pos, int keep_nb)
 	i = head_pos;
 	j = head_pos - 1;
 	(j == -1) ? j = stk->a_len - 1 : 0;
-	count = 1; //delete later
 	while (j != head_pos)
 	{
 		if (stk->a[j] > stk->a[i])
 		{
 			mark[(stk->a)[j]] = KEEP;
-			count++;
 			i = j;
 		}
 		else
 			mark[(stk->a)[j]] = OUT;
 		j--;
 		(j == -1) ? j = stk->a_len - 1 : 0;
-	}
-	if (keep_nb != count)
-	{
-		printf("Error in mark!!!!!!!!!!!!!!\n");
 	}
 	return (mark);
 }
@@ -111,7 +104,8 @@ int		*mark_a(t_stack *stk)
 
 	best_keep_nb = 0;
 	best_head_pos = 0;
-	best_head = find_best_head_value(stk->a, stk->a_len, &best_keep_nb, &best_head_pos);
-	mark = do_mark(stk, best_head, best_head_pos, best_keep_nb);
+	best_head = find_best_head_value(stk->a, stk->a_len,
+		&best_keep_nb, &best_head_pos);
+	mark = do_mark(stk, best_head, best_head_pos);
 	return (mark);
 }

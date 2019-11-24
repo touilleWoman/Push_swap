@@ -47,6 +47,7 @@ typedef	struct	s_stack
 	int		*int_array;
 }				t_stack;
 
+
 typedef	enum	e_instruction
 {
 	SA = 0,
@@ -62,6 +63,14 @@ typedef	enum	e_instruction
 	RRR,
 }				t_instruction;
 
+typedef struct s_rotate
+{
+	int 			a_nb;
+	int 			b_nb;
+	t_instruction 	a_direction;
+	t_instruction 	b_direction;
+}				t_rotate;
+
 typedef struct	s_funs
 {
 	t_instruction	ins;
@@ -76,7 +85,6 @@ int				*parse_args_and_flags(int argc, char const **argv,
 int				parse_instructions(t_list **lst, char flags);
 t_stack			*execute_instructions(t_list *ins_lst, int *int_array,
 										int nb_int, char *flags);
-t_stack			*init_stack_checker(int *int_array, int nb_int);
 t_stack			*init_stack_push_swap(int *int_array, int nb_int,
 									int *origin_index, int *index);
 void			free_list(t_list *lst);
@@ -113,28 +121,22 @@ int				calculate_score(t_stack *stk);
 int				try_ins(t_stack *cp, int *score);
 t_stack			*copy_stack(t_stack *stk);
 int				*copy_int_array(int	*tab, int tab_len);
-int				both_ab_right_order(t_stack *stk);
 int				execute_if_score_smaler(t_stack *stk, char flags, FILE *fp);
 void			choose_algo(t_stack *stk, char flags, FILE *fp);
-void			perfect_b_algo(t_stack *stk, char flags, FILE *fp);
 void			sort_an_increasing_tab(int *tab, int tab_len);
 int				find_int_from_index_dict(int *int_array, int *index,
 										int elem_index, int nb_int);
-int				best_score_algo(t_stack *stk, char flags, FILE *fp,
-								int last_algo_nb);
-void			median_algo(t_stack *stk, char flags, FILE *fp);
-
 void			free_sstr(char **sstr);
 void			free_push_swap_stack(t_stack *stk);
 void			free_sstr_and_exit(char **sstr);
 int				position_on_stack(int *tab, int tab_len, int value);
-void			quick_sort_algo(t_stack *stk, char flags, FILE *fp);
-void	optimised_insertion_algo(t_stack *stk, char flags, FILE *fp);
-int		*mark_a(t_stack *stk);
-int		position_on_stack(int *tab, int tab_len, int value);
-void	rra_or_ra(t_stack *stk, char flags, FILE *fp, int to_top);
-void	rrb_or_rb(t_stack *stk, char flags, FILE *fp, int to_top);
-void	insert_all_to_a(t_stack *stk, char flags, FILE *fp);
+void			optimised_insertion_algo(t_stack *stk, char flags, FILE *fp);
+int				*mark_a(t_stack *stk);
+void			insert_all_to_a(t_stack *stk, char flags, FILE *fp);
+int				choose_best_to_push(t_stack *stk);
+void			push_marked_to_b(t_stack *stk, int *mark, char flags, FILE *fp);
+int				get_wanted_top_a_value(t_stack *stk, int to_a);
+void			best_way_to_rotate(t_stack *stk, int to_a_value, char flags, FILE *fp);
 
 
 /*

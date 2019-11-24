@@ -12,26 +12,6 @@
 
 #include "push_swap.h"
 
-t_stack		*init_stack_checker(int *args, int nb_int)
-{
-	t_stack		*stk;
-
-	stk = (t_stack*)malloc(sizeof(t_stack));
-	if (stk == NULL)
-		return (NULL);
-	ft_bzero(stk, sizeof(t_stack));
-	stk->b = (int*)malloc(sizeof(int) * nb_int);
-	if (stk->b == NULL)
-	{
-		free(stk);
-		return (NULL);
-	}
-	stk->a = args;
-	stk->a_len = nb_int;
-	stk->b_len = 0;
-	return (stk);
-}
-
 t_stack		*init_stack_push_swap(int *int_array, int nb_int,
 									int *origin_index, int *index)
 {
@@ -81,18 +61,20 @@ t_stack		*copy_stack(t_stack *stk)
 	return (cp);
 }
 
-int			get_a_and_exist(t_stack *stk, int position, int *a_len, t_bool *a_exist)
+int			get_a_and_exist(t_stack *stk, int position, int *a_len,
+							t_bool *a_exist)
 {
 	(*a_len)--;
 	*a_exist = TRUE;
-	return(stk->a[position]);
+	return (stk->a[position]);
 }
 
-int 		get_b_and_exist(t_stack *stk, int position, int *b_len, t_bool *b_exist)
+int			get_b_and_exist(t_stack *stk, int position, int *b_len,
+							t_bool *b_exist)
 {
 	(*b_len)--;
 	*b_exist = TRUE;
-	return(stk->b[position]);
+	return (stk->b[position]);
 }
 
 void		show_stack(t_stack *stk, int a_len, int b_len)

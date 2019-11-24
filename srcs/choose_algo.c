@@ -71,17 +71,26 @@ int			execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 	return (min_score);
 }
 
+/*
+** if stacks can be sorted without pb(min_score == 0),
+** then don't start optimised insertion algo
+*/
+
 void		choose_algo(t_stack *stk, char flags, FILE *fp)
 {
-	int	min_score;
+	int		min_score;
+	t_stack *cp;
 
-	min_score = 0;
-	if (stk->max_len <= 5)
+	cp = copy_stack(stk);
+	if (cp)
 	{
-		min_score = execute_if_score_smaler(stk, flags, fp);
-		if (min_score)
-			optimised_insertion_algo(stk, flags, fp);
+		min_score = execute_if_score_smaler(cp, 0, fp);
+		free_push_swap_stack(cp);
+		if (min_score == 0)
+		{
+			execute_if_score_smaler(stk, flags, fp);
+			return ;
+		}
 	}
-	else
-		optimised_insertion_algo(stk, flags, fp);
+	optimised_insertion_algo(stk, flags, fp);
 }
