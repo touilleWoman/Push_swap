@@ -73,26 +73,15 @@ int			execute_if_score_smaler(t_stack *stk, char flags, FILE *fp)
 
 void		choose_algo(t_stack *stk, char flags, FILE *fp)
 {
-	// t_stack		*cp;
-	// int			algo2_nb;
-	// int			flags_for_test;
-	// flags_for_test = 0 | COUNT;
-	// cp = copy_stack(stk);
-	// perfect_b_algo(cp, flags_for_test, fp);
-	// free_push_swap_stack(cp);
-	// cp = copy_stack(stk);
-	// algo2_nb = best_score_algo(cp, flags_for_test, fp, limit);
-	// free_push_swap_stack(cp);
-	// if (limit < algo2_nb)
-	// 	perfect_b_algo(stk, flags, fp);
-	// else
-	// 	best_score_algo(stk, flags, fp, limit);
-	// if (stk->max_len <= 6)
-	// 	// perfect_b_algo(stk, flags, fp);
-	// 	best_score_algo(stk, flags, fp, limit);
-	// else
-		// median_algo(stk, flags, fp);
-	// quick_sort_algo(stk, flags, fp);
+	int	min_score;
 
-	optimised_insertion_algo(stk, flags, fp);
+	min_score = 0;
+	if (stk->max_len <= 5)
+	{
+		min_score = execute_if_score_smaler(stk, flags, fp);
+		if (min_score)
+			optimised_insertion_algo(stk, flags, fp);
+	}
+	else
+		optimised_insertion_algo(stk, flags, fp);
 }
