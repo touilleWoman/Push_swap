@@ -42,6 +42,12 @@ void	push_marked_to_b(t_stack *stk, int *mark, char flags, FILE *fp)
 	}
 }
 
+/*
+** explaination to : rra_or_ra(stk, flags, fp, 0)
+** at this moment, stack B is empty, stack A is in good order,
+** only need rotate 0 to the top.
+*/
+
 void	optimised_insertion_algo(t_stack *stk, char flags, FILE *fp)
 {
 	int	*mark;
@@ -51,4 +57,6 @@ void	optimised_insertion_algo(t_stack *stk, char flags, FILE *fp)
 	mark = mark_a(stk);
 	push_marked_to_b(stk, mark, flags, fp);
 	insert_all_to_a(stk, flags, fp);
+	rra_or_ra(stk, flags, fp, 0);
+	printf("In total, optimised_insertion_algo: %d\n", stk->count);
 }
