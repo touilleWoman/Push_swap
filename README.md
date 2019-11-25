@@ -67,18 +67,19 @@ if it is bigger than the last kept one, we mark KEEP to keep it on stack A,
 else we mark OUT to push it to stack B
 
 EX:
-if mark head is 0
+if mark head is 0, keep_nb = 4
 
 ```
 1 OUT
 7 KEEP
 0 KEEP
 2 KEEP
-5 OUT
-3 KEEP
-4 KEEP
+5 KEEP
+3 OUT
+4 OUT
 ```
-if mark head is 0, then keep_nb = 5
+
+if mark head is 5, then keep_nb = 2
 ```
 1 OUT
 7 KEEP
@@ -88,7 +89,6 @@ if mark head is 0, then keep_nb = 5
 3 OUT
 4 OUT
 ```
-if mark head is 5, then keep_nb = 2
 
 So 0 is a better mark head, do this to all the numbers and find the best mark head
 
