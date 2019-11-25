@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    check.sh                                           :+:      :+:    :+:    #
+#    test_script.sh                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chcoutur <chcoutur@student.42.fr>          +#+  +:+       +#+         #
+#    By: jleblond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/07 12:03:28 by chcoutur          #+#    #+#              #
-#    Updated: 2019/10/07 12:03:44 by chcoutur         ###   ########.fr        #
+#    Created: 2019/11/25 09:03:09 by jleblond          #+#    #+#              #
+#    Updated: 2019/11/25 09:03:11 by jleblond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ x=1
 total=0
 new=0
 max=100
+checker_good="OK\n"
+error_info="All Good\n"
 
 progressbar()
 {
@@ -41,7 +43,12 @@ progressbar()
 while [ $x -le $max ]
 do
 	progressbar $x
+
 	new=$(ARG=`ruby -e "puts ($rmin..$rmax).to_a.shuffle.join(' ')"` && ./push_swap $ARG | wc -l )
+	checker_good = read $(./push_swap $ARG | ./checker $ARG)
+	if [[ $checker_good != "OK\n" ]]; then
+		error_info="Certain test failed\n"
+	fi
 	total=$(( $total + $new ))
 	x=$(( $x + 1 ))
 	done
@@ -50,4 +57,4 @@ clear
 printf "On ${cyn}$max${end} tests : \n"
 echo "With a range from ${red}$rmin${end} to ${grn}$rmax${end}\n"
 echo "Average move =\t ${grn}$(( total / x ))${end}"
-
+echo $error_info
