@@ -17,6 +17,6 @@ void		last_in_color(t_stack *stk)
 	int score;
 
 	score = calculate_score(stk);
-	if (score == 0)
+	if (score == 0 && stk->b_len == 0)
 		ft_printf("\033[0;31m");
 }
