@@ -1,3 +1,5 @@
+
+
 # Push_swap
 42 School project
 
@@ -23,11 +25,51 @@ The checker program reads a random list of integers from the stdin, then it read
 
 The push_swap program calculates the instructions to sort the integers, then print instructions on stdout.
 
-flag -f : read instructions from a file(checker) and write instructions on a file(push_swap)
+flag -f : read instructions from a file(for checker) and write instructions on a file(for push_swap)
 flag -v : print stack at each step
+flag -c : print last move in color
 
 Ex:
 ./push_swap 2 6 9 -1
 ./push_swap "2 6 9 -1"
-./push_swap 2 6 9 -1 -v -f
- ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`; ./push_swap $ARG | ./checker -v $ARG
+./push_swap 2 6 9 -1 -v -f -v
+ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`; ./push_swap $ARG | ./checker -v $ARG
+
+
+# Algorithem
+
+1. find best head
+Objectif : find the best mark head to keep Maximum de int in stack A
+current_head = 0
+best_head = 0;
+best_keep_nb = 0;
+for all the integer value on stack A
+	set integer as head
+	find the head which has the highest keep_nb
+
+2. mark which integer goes to b with given best_head
+
+malloc an array : int *marks
+Index of array corresponds to value of int
+Ex :  if marks[5] = TRUE,  value 5 stays in stack A
+Ex :  if marks[4] = FALSE, value 4 will go to stak B
+
+
+3. push certains integers to stack b
+The number of integers going to be pushed to be will be to_b_nb = total length of stack A - best_keep_nb
+
+while (to_b_nb > 0)
+	while (top value of stack A has mark TRUE)
+		ra() or rra()
+	pb()
+	to_b_nb--
+
+
+4. Push all the int on stack B back to stack A
+
+Calculate for each int on stack B:
+steps needed for rotate b + rotate a + pa()
+
+Choose the best int then push.
+
+Keep doing this until stak B is empty

@@ -101,7 +101,7 @@ void	best_way_to_rotate(t_stack *stk, int to_a_value, char flags, FILE *fp)
 	r.a_direction = -1;
 	r.b_direction = -1;
 	r.b_nb = -1;
- 	r.a_nb = -1;
+	r.a_nb = -1;
 	if (stk->a_len > 1)
 	{
 		wanted_top_a_value = get_wanted_top_a_value(stk, to_a_value);

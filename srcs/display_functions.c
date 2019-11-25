@@ -93,15 +93,6 @@ void		show_stack_with_index_stack(t_stack *s, int a_len, int b_len)
 ** and only in push_wap, not in checker
 */
 
-void		last_in_color(t_stack *stk)
-{	
-	int score;
-
-	score = calculate_score(stk);
-	if (score == 0)
-		ft_printf("\033[0;31m");
-}
-
 void		print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk)
 {

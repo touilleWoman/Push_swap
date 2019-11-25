@@ -17,8 +17,12 @@
 # include <stdio.h>
 
 /*
-** V_FLAG is to show stack at each operation
+** V_FLAG is to print stack at each operation
 ** F_FLAG is to read and write on file instead of STDIN STDOUT
+** INS_STDOUT is to print instructions in stdout
+** C_FLAG is to print last operation in color
+** COUNT : when activated, count each instruction done to stack and stored in
+** t_stack structure
 */
 
 # define INSTRUCTION_NB	11
@@ -47,7 +51,6 @@ typedef	struct	s_stack
 	int		*int_array;
 }				t_stack;
 
-
 typedef	enum	e_instruction
 {
 	SA = 0,
@@ -63,12 +66,12 @@ typedef	enum	e_instruction
 	RRR,
 }				t_instruction;
 
-typedef struct s_rotate
+typedef struct	s_rotate
 {
-	int 			a_nb;
-	int 			b_nb;
-	t_instruction 	a_direction;
-	t_instruction 	b_direction;
+	int				a_nb;
+	int				b_nb;
+	t_instruction	a_direction;
+	t_instruction	b_direction;
 }				t_rotate;
 
 typedef struct	s_funs
@@ -80,6 +83,7 @@ typedef struct	s_funs
 /*
 ** parse
 */
+
 int				*parse_args_and_flags(int argc, char const **argv,
 									char *flags, int *nb_int);
 int				parse_instructions(t_list **lst, char flags);
@@ -87,8 +91,6 @@ t_stack			*execute_instructions(t_list *ins_lst, int *int_array,
 										int nb_int, char *flags);
 t_stack			*init_stack_push_swap(int *int_array, int nb_int,
 									int *origin_index, int *index);
-void			free_list(t_list *lst);
-void			usage(void);
 int				is_integer_string(const char *str);
 int				is_flag_string(char const *str);
 int				get_flags_nb_and_activate(int argc, char const **argv,
@@ -126,9 +128,6 @@ void			choose_algo(t_stack *stk, char flags, FILE *fp);
 void			sort_an_increasing_tab(int *tab, int tab_len);
 int				find_int_from_index_dict(int *int_array, int *index,
 										int elem_index, int nb_int);
-void			free_sstr(char **sstr);
-void			free_push_swap_stack(t_stack *stk);
-void			free_sstr_and_exit(char **sstr);
 int				position_on_stack(int *tab, int tab_len, int value);
 void			optimised_insertion_algo(t_stack *stk, char flags, FILE *fp);
 int				*mark_a(t_stack *stk);
@@ -136,8 +135,8 @@ void			insert_all_to_a(t_stack *stk, char flags, FILE *fp);
 int				choose_best_to_push(t_stack *stk);
 void			push_marked_to_b(t_stack *stk, int *mark, char flags, FILE *fp);
 int				get_wanted_top_a_value(t_stack *stk, int to_a);
-void			best_way_to_rotate(t_stack *stk, int to_a_value, char flags, FILE *fp);
-
+void			best_way_to_rotate(t_stack *stk, int to_a_value,
+									char flags, FILE *fp);
 
 /*
 ** display
@@ -148,5 +147,14 @@ void			print_one_line(int elem_a, int elem_b,
 						t_bool a_exist, t_bool b_exist);
 void			print_according_to_flags(char flags, FILE *fp, char *str,
 									t_stack **stk);
+void			last_in_color(t_stack *stk);
+
+/*
+** free
+*/
+void			free_sstr(char **sstr);
+void			free_push_swap_stack(t_stack *stk);
+void			free_sstr_and_exit(char **sstr);
+void			free_list(t_list *lst);
 
 #endif

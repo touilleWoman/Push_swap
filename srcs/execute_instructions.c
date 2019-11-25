@@ -32,7 +32,8 @@ static t_stack		*init_stack_checker(int *args, int nb_int)
 	return (stk);
 }
 
-t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
+t_stack				*loop_instructions(t_list *ins_lst,
+										t_stack *stk, char *flags)
 {
 	static t_funs	funs[INSTRUCTION_NB] =
 	{{SA, sa}, {SB, sb}, {SS, ss}, {PA, pa}, {PB, pb}, {RA, ra}, {RB, rb},
@@ -60,7 +61,7 @@ t_stack		*loop_instructions(t_list *ins_lst, t_stack *stk, char *flags)
 	return (stk);
 }
 
-t_stack		*execute_instructions(t_list *ins_lst, int *int_array,
+t_stack				*execute_instructions(t_list *ins_lst, int *int_array,
 										int nb_int, char *flags)
 {
 	t_stack	*stk;

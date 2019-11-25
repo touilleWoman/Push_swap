@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int		nb_to_be_kicked_out(int *mark, int len)
+int				nb_to_be_kicked_out(int *mark, int len)
 {
 	int	i;
 	int out_nb;
@@ -28,7 +28,7 @@ int		nb_to_be_kicked_out(int *mark, int len)
 	return (out_nb);
 }
 
-static int					try_rra(t_stack *cp, int *mark, int out_nb)
+static int		try_rra(t_stack *cp, int *mark, int out_nb)
 {
 	int		i;
 	int		count;
@@ -47,7 +47,7 @@ static int					try_rra(t_stack *cp, int *mark, int out_nb)
 	return (count);
 }
 
-static int					try_ra(t_stack *cp, int *mark, int out_nb)
+static int		try_ra(t_stack *cp, int *mark, int out_nb)
 {
 	int		i;
 	int		count;
@@ -66,7 +66,7 @@ static int					try_ra(t_stack *cp, int *mark, int out_nb)
 	return (count);
 }
 
-t_instruction		copy_stack_to_test_steps(t_stack *stk, int *mark, int out_nb)
+t_instruction	copy_stack_to_test_steps(t_stack *stk, int *mark, int out_nb)
 {
 	t_stack *cp;
 	int		count_for_ra;
@@ -86,7 +86,7 @@ t_instruction		copy_stack_to_test_steps(t_stack *stk, int *mark, int out_nb)
 		return (RA);
 }
 
-void	push_marked_to_b(t_stack *stk, int *mark, char flags, FILE *fp)
+void			push_marked_to_b(t_stack *stk, int *mark, char flags, FILE *fp)
 {
 	int				out_nb;
 	t_instruction	better;
