@@ -17,7 +17,7 @@ sb - swap top two numbers at top of stack B
 pa - push top element from stack A onto stack B
 pb - push stack B
 
-Usage :
+**Usage**
 Run make
 create two programs: checker and push_swap.
 
@@ -31,21 +31,21 @@ flag -v : print stack at each step
 flag -c : print last move in color
 
 Ex:
-./checker 2 1 3
-sa
-<Ctrl + D>
+>./checker 2 1 3
+>sa
+><Ctrl + D>
 
-./push_swap 2 6 9 -1
-./push_swap "2 6 9 -1"
-./push_swap 2 6 9 -1 -v -f -v
-ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`; ./push_swap $ARG | ./checker -v $ARG
+>./push_swap 2 6 9 -1
+>./push_swap "2 6 9 -1"
+>./push_swap 2 6 9 -1 -v -f -v
+>ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`; ./push_swap $ARG | ./checker -v $ARG
 
 
-Algorithm
+**Algorithm**
 1. Repalce the integers by a list of consecutive numbers, and creat a dictionary
 Ex :
-Origin Index Array: -1 0 1000 3
-Replaced by 	  : 0  1  3   2
+>Origin Index Array: -1 0 1000 3
+>Replaced by 	  : 0  1  3   2
 
 This allows an easier calculate, later when print, with dictionary, we find the origin number to print
 
@@ -60,13 +60,13 @@ else we mark OUT to push it to stack B
 EX:
 if mark head is 0
 
-1 OUT
-7 KEEP
-0 KEEP
-2 KEEP
-5 OUT
-3 KEEP
-4 KEEP
+>1 OUT
+>7 KEEP
+>0 KEEP
+>2 KEEP
+>5 OUT
+>3 KEEP
+>4 KEEP
 keep_nb of head 0 is = 5
 
 current_head = 0
