@@ -18,6 +18,7 @@ pa - push top element from stack A onto stack B
 pb - push stack B
 
 **Usage**
+
 Run make
 create two programs: checker and push_swap.
 
@@ -31,47 +32,66 @@ flag -v : print stack at each step
 flag -c : print last move in color
 
 Ex:
->./checker 2 1 3
->sa
-><Ctrl + D>
+```
+./checker 2 1 3
+sa
+<Ctrl + D>
 
->./push_swap 2 6 9 -1
->./push_swap "2 6 9 -1"
->./push_swap 2 6 9 -1 -v -f -v
->ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`; ./push_swap $ARG | ./checker -v $ARG
+./push_swap 2 6 9 -1
 
+./push_swap "2 6 9 -1"
+
+./push_swap 2 6 9 -1 -v -f -v
+
+ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`; ./push_swap $ARG | ./checker -v $ARG
+
+```
 
 **Algorithm**
+
 1. Repalce the integers by a list of consecutive numbers, and creat a dictionary
 Ex :
->Origin Index Array: -1 0 1000 3
->Replaced by 	  : 0  1  3   2
+```
+Origin Index Array: -1 0 1000 3
+Replaced by    	  : 0  1  3   2
+```
 
-This allows an easier calculate, later when print, with dictionary, we find the origin number to print
+This allows an easier calculate later, then when it comes to print, with dictionary, we find the origin number to print
 
 2. Go through stack to find best mark head before execute any instruction
 
-Objectif : find the best mark head to keep Maximum de int on stack A
+Objectif : find the best mark head to keep Maximum de numbers on stack A
 
-head is the integer from which we start marking, for integer below,
-if it is bigger than the last one, we mark KEEP to keep it on stack A,
+head is the integer from which we start marking, we keep the head on stack A, then for integer below,
+if it is bigger than the last kept one, we mark KEEP to keep it on stack A,
 else we mark OUT to push it to stack B
 
 EX:
 if mark head is 0
 
->1 OUT
->7 KEEP
->0 KEEP
->2 KEEP
->5 OUT
->3 KEEP
->4 KEEP
-keep_nb of head 0 is = 5
+```
+1 OUT
+7 KEEP
+0 KEEP
+2 KEEP
+5 OUT
+3 KEEP
+4 KEEP
+```
+if mark head is 0, then keep_nb = 5
+```
+1 OUT
+7 KEEP
+0 OUT
+2 OUT
+5 KEEP
+3 OUT
+4 OUT
+```
+if mark head is 5, then keep_nb = 2
 
-current_head = 0
-best_head = 0;
-best_keep_nb = 0;
+So 0 is a better mark head, do this to all the numbers and find the best mark head
+
 for all the integer value on stack A
 	set integer as head
 	find the head which has the highest keep_nb
